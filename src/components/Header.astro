@@ -1,14 +1,44 @@
 ---
 import Wortmarke from "./logos/Wortmarke.astro";
+import { anlass } from "../data/anlass";
+
+const seiten = [
+  { titel: "Kulinarik", weg: "/kulinarik" },
+  { titel: "Wein", weg: "/wein" },
+  { titel: "Organisation", weg: "/organisation" },
+  { titel: "Anmeldung", weg: "/anmeldung" },
+];
 ---
 <header id="hd">
-  <div class="bar">
-    <a class="brand" href="/#top"><Wortmarke /></a>
-    <nav class="mono">
-      <a href="/kulinarik">Kulinarik</a>
-      <a href="/wein">Wein</a>
-      <a href="/organisation">Organisation</a>
+  <div class="mnu" id="menu">
+    <nav>
+      {seiten.map((s) => (
+        <span class="ln">
+          <a href={s.weg}><span class="t">{s.titel}</span><span class="n">&#8599;</span></a>
+        </span>
+      ))}
     </nav>
-    <a class="cta mono" href="/anmeldung"><span>Platz sichern</span><span class="n">&#8599;</span></a>
+    <div class="fuss mono">
+      <div>
+        <span><a href={`mailto:${anlass.mail}`}>{anlass.mail}</a></span>
+        <span><a href="/agb">AGB</a> · <a href="/teilnahmebedingungen">Teilnahme</a> · <a href="/impressum">Impressum</a> · <a href="/datenschutz">Datenschutz</a></span>
+      </div>
+      <div class="eck">
+        <span>{anlass.datum}</span>
+        <span>{anlass.ort}, {anlass.dorf}</span>
+        <span>{anlass.preisText}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="bar">
+    <a class="brand" href="/"><Wortmarke /></a>
+    <a class="cta mono" href="/anmeldung">
+      <span class="lang">Platz sichern</span><span class="kurz">Anmelden</span><span class="n">&#8599;</span>
+    </a>
+    <button class="bg" id="bg" type="button"
+            aria-expanded="false" aria-controls="menu" aria-label="Menü öffnen">
+      <span></span><span></span>
+    </button>
   </div>
 </header>

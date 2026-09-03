@@ -24,7 +24,7 @@ import { anlass } from "../data/anlass";
 <section class="wrap top">
   <div class="grid">
     <h1 class="disp">Anmeldung</h1>
-    <p class="sub">19. September 2026, Clos du Cornalin über Salgesch. CHF 145.00 pro Person, 50 Plätze, ab 18 Jahren.</p>
+    <p class="sub">{anlass.datum}, {anlass.ort} über {anlass.dorf}. {anlass.preisText} pro Person, {anlass.plaetze} Plätze, ab {anlass.mindestalter} Jahren. Anmeldung bis {anlass.anmeldeschluss}.</p>
   </div>
 </section>
 
@@ -59,7 +59,7 @@ import { anlass } from "../data/anlass";
 
       <fieldset>
         <legend class="mono">( Bestätigung )</legend>
-        <div class="ck"><input type="checkbox" id="zustimmung"><p>Ich bin 18 Jahre oder älter und habe die <a href="/agb">AGB</a> und die <a href="/teilnahmebedingungen">Teilnahmebedingungen</a> gelesen.<small>Kostenfreie Stornierung bis 12. September. Danach wird das Ticket verrechnet, weil die Küche eingekauft hat. Bei Verhinderung melde dich, wir suchen eine Lösung.</small></p></div>
+        <div class="ck"><input type="checkbox" id="zustimmung"><p>Ich bin 18 Jahre oder älter und habe die <a href="/agb">AGB</a> und die <a href="/teilnahmebedingungen">Teilnahmebedingungen</a> gelesen.<small>Kostenfreie Stornierung bis {anlass.anmeldeschluss}. Danach wird das Ticket verrechnet, weil die Küche eingekauft hat. Bei Verhinderung melde dich, wir suchen eine Lösung.</small></p></div>
         <div class="ck"><input type="checkbox" id="news"><p>Ja, ich möchte Post von Fernand Cina.<small>Neuigkeiten zu Weinen und Anlässen. Abmeldung jederzeit.</small></p></div>
       </fieldset>
 

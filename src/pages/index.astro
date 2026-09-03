@@ -1,11 +1,17 @@
 ---
 import { Image } from "astro:assets";
 import Base from "../layouts/Base.astro";
+import { anlass } from "../data/anlass";
 import i_clos_morgenlicht from "../assets/img/clos-morgenlicht.jpg";
-import i_team from "../assets/img/team.jpg";
+import i_mood_messer from "../assets/img/mood-messer.jpg";
 import i_rebberg from "../assets/img/rebberg.jpg";
 import i_alisha_cina from "../assets/img/alisha-cina.jpg";
 import i_alain_lerjen from "../assets/img/alain-lerjen.jpg";
+
+// Anmeldeschluss fuer das Faktenfeld, Tag und Monat aus der Datendatei
+const monate = ["JAN", "FEB", "MRZ", "APR", "MAI", "JUN", "JUL", "AUG", "SEP", "OKT", "NOV", "DEZ"];
+const [, schlussMonat, schlussTag] = anlass.anmeldeschlussIso.split("-");
+const schlussKurz = { tag: `${Number(schlussTag)}.`, monat: monate[Number(schlussMonat) - 1] };
 ---
 <Base title="z'Wallis im Stah · 19. September 2026" description="19. September 2026 im Clos du Cornalin über Salgesch. Sieben Weine, sechs Gänge, elektronische Musik bis in den Abend. CHF 145.00, 50 Plätze." jsonld>
 <!-- HERO -->
@@ -39,12 +45,12 @@ import i_alain_lerjen from "../assets/img/alain-lerjen.jpg";
     <div class="lab mono sec fu"><span class="stick">( Der Anlass )</span></div>
     <div class="col-7">
       <h2 class="disp" style="max-width:11ch;">
-        <span class="rl"><span>Drei Häuser.</span></span>
+        <span class="rl"><span>Drei Marken.</span></span>
         <span class="rl"><span>Ein Rebberg.</span></span>
       </h2>
-      <p class="bodyl fu d2" style="max-width:42ch;margin-top:9vh;">Der Clos du Cornalin liegt oberhalb von Salgesch. Von dort geht der Blick das Rhonetal hinauf und hinunter.</p>
-      <p class="fu d3 sec" style="max-width:46ch;margin-top:4vh;">Die Idee kam von BergBox. Aus dem Wallis zusammenbringen, was zusammengehört. Fernand Cina macht hier seit 1956 Wein und öffnet Rebberg und Keller. Maison 13 baut die Küche auf, mitten unter den Gästen.</p>
-      <p class="fu d3 sec" style="max-width:46ch;margin-top:3vh;">Daraus wird ein Tag im Stehen. Acht Stunden, sechs Gänge in Wellen, ab dem Nachmittag elektronische Musik. Dazwischen bewegst du dich, sprichst mit Leuten, schaust ins Tal.</p>
+      <p class="bodyl fu d2" style="max-width:42ch;margin-top:9vh;">Nah. Echt. Logisch. Nach diesen Prinzipien handelt BergBox.</p>
+      <p class="fu d3 sec" style="max-width:46ch;margin-top:4vh;">Kein Zufall, dass die Marke für regionale Wertschöpfung hinter diesem Tag steht. Fernand Cina öffnet Rebberg und Keller. Maison 13 baut die Küche mitten unter die Gäste.</p>
+      <p class="fu d3 sec" style="max-width:46ch;margin-top:3vh;">Sieben Weine. Sechs Gänge. Acht Stunden über dem Rhonetal. Ein Datum, 50 Plätze.</p>
     </div>
   </div>
 </section>
@@ -92,12 +98,12 @@ import i_alain_lerjen from "../assets/img/alain-lerjen.jpg";
 
 <!-- BAND 1 -->
 <section class="band mm">
-  <div class="px" data-px="0.2"><Image src={i_team}
-         alt="Alisha Cina und Alain Lerjen im Kochhemd, hinter ihnen die Berge über dem Rhonetal"
+  <div class="px" data-px="0.2"><Image src={i_mood_messer}
+         alt="Kochmesser mit Holzgriff auf verwitterten Holzbrettern"
          widths={[960, 1440, 2000]} sizes="100vw" quality={72} format="webp" loading="lazy" /></div>
   <div class="q">
-    <h2 class="head fu">Zwei Häuser, ein Tisch.</h2>
-    <span class="mono fu d2">Alisha Cina und Alain Lerjen</span>
+    <h2 class="head fu">Sechs Gänge. Alle vor dir angerichtet.</h2>
+    <span class="mono fu d2">Maison 13 im Rebberg</span>
   </div>
 </section>
 
@@ -161,7 +167,7 @@ import i_alain_lerjen from "../assets/img/alain-lerjen.jpg";
       <div class="facts fu d2" style="margin-top:8vh;">
         <div><b>50</b><span class="mono">Plätze, ab 18 Jahren</span></div>
         <div><b>145<i>CHF</i></b><span class="mono">Weine, Gänge und Shuttle inbegriffen</span></div>
-        <div><b>12.<i>SEP</i></b><span class="mono">Anmeldeschluss, danach kauft die Küche ein</span></div>
+        <div><b>{schlussKurz.tag}<i>{schlussKurz.monat}</i></b><span class="mono">Anmeldeschluss, danach kauft die Küche ein</span></div>
       </div>
       <a class="send fu d3" style="margin-top:7vh;" href="/anmeldung"><span>Zur Anmeldung</span><span class="n">&#8599;</span></a>
       <p class="fu d3 sec" style="margin-top:4vh;max-width:40ch;">Sind alle Plätze vergeben, führt derselbe Weg auf die Warteliste.</p>

@@ -40,6 +40,28 @@
     document.querySelectorAll('.hero .rl, .hero .fu, .hero .px').forEach(function(el){ el.classList.add('in'); });
   }, 120);
 
+  /* Menue */
+  var hd = document.getElementById('hd');
+  var bg = document.getElementById('bg');
+  var mnu = document.getElementById('menu');
+  if (hd && bg && mnu){
+    var offen = false;
+    var setze = function(auf){
+      offen = auf;
+      hd.classList.toggle('open', auf);
+      bg.setAttribute('aria-expanded', auf ? 'true' : 'false');
+      bg.setAttribute('aria-label', auf ? 'Men\u00fc schliessen' : 'Men\u00fc \u00f6ffnen');
+      document.body.style.overflow = auf ? 'hidden' : '';
+    };
+    bg.addEventListener('click', function(){ setze(!offen); });
+    mnu.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){ setze(false); });
+    });
+    addEventListener('keydown', function(e){
+      if (e.key === 'Escape' && offen){ setze(false); bg.focus(); }
+    });
+  }
+
   /* Zeiger */
   if (fine && !reduce){
     document.body.classList.add('cc');

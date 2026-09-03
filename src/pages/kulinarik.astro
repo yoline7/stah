@@ -1,7 +1,8 @@
 ---
 import { Image } from "astro:assets";
 import Base from "../layouts/Base.astro";
-import i_mood_messer from "../assets/img/mood-messer.jpg";
+import { anlass } from "../data/anlass";
+import i_clos_du_cornalin from "../assets/img/clos-du-cornalin.jpg";
 import i_alain_lerjen from "../assets/img/alain-lerjen.jpg";
 ---
 <Base title="Kulinarik · z'Wallis im Stah" description="Sechs Gänge von Alain Lerjen und Maison 13, an offenen Stationen. Fleisch oder vegetarisch, Herkunft aus dem Wallis.">
@@ -39,12 +40,12 @@ import i_alain_lerjen from "../assets/img/alain-lerjen.jpg";
 
 <!-- BAND -->
 <section class="band mm">
-  <div class="px" data-px="0.18"><Image src={i_mood_messer}
-         alt="Kochmesser mit Holzgriff auf verwitterten Holzbrettern"
+  <div class="px" data-px="0.18"><Image src={i_clos_du_cornalin}
+         alt="Rebhaus im Clos du Cornalin über Salgesch, dahinter das Rhonetal im Morgenlicht"
          widths={[960, 1440, 2000]} sizes="100vw" quality={72} format="webp" loading="lazy" /></div>
   <div class="q">
     <h2 class="head fu">Angerichtet wird vor dir.</h2>
-    <span class="mono fu d2">Offene Stationen im Rebberg</span>
+    <span class="mono fu d2">Offene Stationen im Rebhaus</span>
   </div>
 </section>
 
@@ -72,7 +73,7 @@ import i_alain_lerjen from "../assets/img/alain-lerjen.jpg";
         <div><span class="mono">Kein Buffet</span><p>Jeder Gang wird angerichtet und ausgegeben. Brot und Wasser stehen frei.</p></div>
         <div><span class="mono">In Wellen</span><p>Die Gänge kommen nacheinander, jeder wird angesagt.</p></div>
         <div><span class="mono">Zwei Schienen</span><p>Fleisch oder vegetarisch über alle Gänge. Wahl bei der Anmeldung, verbindlich.</p></div>
-        <div><span class="mono">Allergien</span><p>Bis 12. September melden, per Antwort auf die Bestätigungsmail.</p></div>
+        <div><span class="mono">Allergien</span><p>Bis {anlass.anmeldeschluss} melden, per Antwort auf die Bestätigungsmail.</p></div>
       </div>
     </div>
   </div>
@@ -99,7 +100,7 @@ import i_alain_lerjen from "../assets/img/alain-lerjen.jpg";
   <div class="grid">
     <div class="col-8">
       <h2 class="head fu" style="max-width:16ch;">50 Plätze. Einer davon ist deiner.</h2>
-      <p class="fu d2 sec" style="max-width:40ch;margin-top:3vh;">CHF 145.00 pro Person. Anmeldung bis 12. September.</p>
+      <p class="fu d2 sec" style="max-width:40ch;margin-top:3vh;">{anlass.preisText} pro Person. Anmeldung bis {anlass.anmeldeschluss}.</p>
       <a class="send fu d3" href="/anmeldung"><span>Zur Anmeldung</span><span class="n">&#8599;</span></a>
     </div>
   </div>
