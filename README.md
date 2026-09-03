@@ -33,29 +33,103 @@ Kein Framework im Auslieferungsergebnis. Der Build erzeugt reines HTML, CSS und 
 
 ```
 im-stah/
+├── .gitignore
 ├── astro.config.mjs              Domain, Sitemap, Ausgabeformat
 ├── package.json
+├── package-lock.json
 ├── tsconfig.json
-├── public/                       robots.txt · favicon.svg · preview.jpg
+├── README.md
+├── public/                       favicon.svg · robots.txt · preview.jpg
 └── src/
     ├── data/anlass.ts            Eckdaten des Anlasses, einzige Quelle
     ├── layouts/
-    │   ├── Base.astro            Kopf, Metadaten, JSON-LD, Kopf- und Fussbereich
+    │   ├── Base.astro            Metadaten, JSON-LD, Kopf- und Fussbereich
     │   └── Legal.astro           Rahmen für die Rechtsseiten
     ├── components/
-    │   ├── Header.astro · Footer.astro · Partner.astro
-    │   └── logos/                Wortmarke · Maison13 · Yoline als Vektor
+    │   ├── Header.astro          Kopfzeile mit Navigation
+    │   ├── Footer.astro          Fusszeile
+    │   ├── Partner.astro         Partnerband
+    │   └── logos/
+    │       ├── Wortmarke.astro
+    │       ├── Maison13.astro
+    │       └── Yoline.astro
     ├── pages/
     │   ├── index.astro           Startseite: Was, Wer, Wie, Warum
     │   ├── kulinarik.astro       Menü, Koch, Herkunft
     │   ├── wein.astro            Weinbegleitung, Weingut, Winzerin
     │   ├── organisation.astro    Ablauf, Anfahrt, Fragen, Kontakt
     │   ├── anmeldung.astro       Formular, wird durch YoSuite ersetzt
-    │   └── agb · teilnahmebedingungen · impressum · datenschutz
-    ├── styles/                   site.css · anmeldung.css · legal.css
-    ├── scripts/                  site.js · anmeldung.js
-    └── assets/img/               Fotos, partner/ für Partnermarken
+    │   ├── agb.astro
+    │   ├── teilnahmebedingungen.astro
+    │   ├── impressum.astro
+    │   └── datenschutz.astro
+    ├── styles/
+    │   ├── site.css
+    │   ├── anmeldung.css
+    │   └── legal.css
+    ├── scripts/
+    │   ├── site.js
+    │   └── anmeldung.js
+    └── assets/img/
+        ├── clos-morgenlicht.jpg
+        ├── clos-du-cornalin.jpg
+        ├── rebhaus-drohne.jpg
+        ├── rebberg.jpg
+        ├── team.jpg
+        ├── mood-messer.jpg
+        ├── alisha-cina.jpg
+        ├── alain-lerjen.jpg
+        └── partner/
+            ├── fernand-cina.png
+            └── bergbox.png
 ```
+
+Neun Seiten, neun Dateien in `src/pages/`. Der Build legt sie nach `dist/`,
+die Startseite als `index.html`, die acht Unterseiten je als Ordner mit `index.html`.
+
+---
+
+## Bilder
+
+Jedes Bild steht genau einmal, die beiden Porträts zweimal.
+
+| Bild | Seite | Stelle |
+|---|---|---|
+| `clos-morgenlicht.jpg` | `index.astro` | Titelbild |
+| `team.jpg` | `index.astro` | Bildband nach dem Abschnitt «Die zwei» |
+| `rebberg.jpg` | `index.astro` | Bildband vor dem Abschluss |
+| `mood-messer.jpg` | `kulinarik.astro` | Bildband nach dem Menü |
+| `clos-du-cornalin.jpg` | `wein.astro` | Bildband nach der Begleitung |
+| `rebhaus-drohne.jpg` | `organisation.astro` | Bildband bei der Anfahrt |
+| `alisha-cina.jpg` | `index.astro`, `wein.astro` | Porträt |
+| `alain-lerjen.jpg` | `index.astro`, `kulinarik.astro` | Porträt |
+
+**Umrechnung.** Alles läuft über `astro:assets`. Astro erzeugt die Grössen beim Bauen
+und legt sie mit Prüfsumme nach `dist/_astro/`.
+
+| Bildart | Breiten | Qualität | Laden |
+|---|---|---|---|
+| Titelbild | 960, 1440, 2000 | 72 | `eager`, `fetchpriority="high"` |
+| Bildbänder | 960, 1440, 2000 | 72 | `lazy` |
+| Porträts | 480, 760, 1000 | 80 | `lazy` |
+| Partnermarken | keine Umrechnung | | `lazy` |
+
+Format ist `webp`. Astro rechnet nie hinauf. Liegt eine Vorlage unter der grössten
+angefragten Breite, fällt die Reihe entsprechend kürzer aus. `clos-du-cornalin.jpg`
+misst 820 mal 1100 Pixel und liefert deshalb nur eine Breite.
+
+Das Titelbild braucht Querformat und Breite. `clos-morgenlicht.jpg` misst
+1782 mal 970 Pixel und liefert drei Breiten, die angefragten 2000 fehlen.
+Zur Herkunft der Vorlagen siehe Offene Punkte 9 und 10.
+
+Partnermarken bleiben PNG mit Alphakanal und behalten ihre Grösse. Sie tragen
+`densities={[1]}`, damit `srcset` gesetzt ist, ohne dass umgerechnet wird.
+
+**Neues Bild einsetzen.** Datei nach `src/assets/img/`, im Frontmatter importieren,
+im Rumpf über `<Image>` einsetzen. Bildbänder folgen der Bauweise aus `index.astro`:
+`<section class="band mm">` mit `<div class="px" data-px="0.18">` und der Unterschrift
+in `.q`. Das `<img>` bleibt im `<div class="px">`, sonst hält die Parallaxe nicht.
+Jedes Bild braucht ein `alt`, das den Inhalt beschreibt.
 
 ---
 
@@ -73,23 +147,27 @@ npm run check     # Typen und Vorlagen prüfen
 
 ## Veröffentlichen
 
-**Vercel**
+Vercel, Projekt `stah`. Ein Weg, keine Nebenstrecke. Astro wird erkannt,
+Build `npm run build`, Ausgabeordner `dist`.
 
-Repository verbinden. Astro wird erkannt, Build `npm run build`, Ausgabeordner `dist`.
+| Was | Adresse |
+|---|---|
+| Produktion, Branch `main` | https://stah-yoline7s-projects.vercel.app |
+| Vorschau, dieser Branch | https://stah-git-claude-astro-repo-restructure-6pqpq1-yoline7s-projects.vercel.app |
+| Zieldomain, noch nicht aufgeschaltet | https://im-stah.ch |
 
-**Netlify**
+Vercel baut bei jedem Push. `main` geht in die Produktion, jeder andere Branch
+bekommt eine eigene Vorschauadresse. Ein Pull Request zeigt sie im Verlauf an.
 
-Build `npm run build`, Publish `dist`.
+**Zugriff.** Im Projekt steht die Vercel-Authentifizierung auf «all except custom
+domains». Beide `vercel.app`-Adressen verlangen deshalb einen Login im Team
+`yoline7's projects`, die Produktionsadresse eingeschlossen. Offen erreichbar wird
+die Seite erst über die eigene Domain. Wer die Seite vorher extern zeigen will,
+stellt den Schutz im Vercel-Projekt auf «only preview deployments» um.
 
-**GitHub Pages**
-
-Über Actions mit `withastro/action`. In `astro.config.mjs` bleibt `site` auf der Zieldomain.
-
-**Klassischer Webserver**
-
-`npm run build`, danach den Inhalt von `dist/` hochladen.
-
-Nach dem Aufschalten die Domain in `astro.config.mjs` prüfen. Sie steuert Canonical, Open Graph und Sitemap.
+Die Zieldomain steht in `astro.config.mjs` unter `site`. Sie steuert Canonical,
+Open Graph und Sitemap, unabhängig davon, unter welcher Adresse Vercel ausliefert.
+Nach dem Aufschalten von `im-stah.ch` die Domain im Vercel-Projekt hinterlegen.
 
 ---
 
@@ -117,7 +195,7 @@ Für den Produktivbetrieb gehören die Dateien lokal nach `assets/fonts/` und in
 
 ## Anmeldung
 
-`anmeldung.html` ist ein Entwurf. Die produktive Anmeldung läuft über YoSuite.
+`src/pages/anmeldung.astro` ist ein Entwurf. Die produktive Anmeldung läuft über YoSuite.
 
 **Felder**
 
@@ -164,12 +242,16 @@ Für den Produktivbetrieb gehören die Dateien lokal nach `assets/fonts/` und in
 6. **Französisch.** Salgesch liegt an der Sprachgrenze. Eine Fassung fehlt und ist ein offener Entscheid.
 7. **Wortmarke.** Die SVG-Datei ist nachgezeichnet. Die Konturen sind ab etwa 900 Pixel Breite sichtbar treppig. Für Druck ab A2 braucht es die Marke aus der Originalschrift.
 8. **Schriften.** Für den Produktivbetrieb nach `src/assets/fonts/` legen und über `@font-face` einbinden, statt vom fremden Server zu laden.
+9. **Titelbild aus einem Bildschirmfoto.** `clos-morgenlicht.jpg` ist eine Bildschirmaufnahme, 1782 mal 970 Pixel. Sie liefert 960, 1440 und 1782 Pixel Breite, die angefragten 2000 fehlen. Ein Bildschirmfoto trägt bereits eine Kompression, die zweite kommt beim Umrechnen dazu. Es braucht die Aufnahme aus dem Original ab 2000 Pixel Breite.
+10. **Mehrfach komprimierte Bänder.** `rebhaus-drohne.jpg` und `rebberg.jpg` sind bereits stark komprimiert. Beim Umrechnen auf WebP wachsen sie deshalb: 262 gegen 185 kB und 140 gegen 106 kB, je bei 1280 Pixel Breite. Die Qualität bleibt bei 72, tiefer zu gehen deckt den Fehler nur zu. Es braucht die Originale aus dem Bestand.
 
 ---
 
 ## Rechte
 
 Fotos, Wortmarke und Texte gehören der Fernand Cina SA. Die Partnermarken gehören den jeweiligen Inhaberinnen. Keine Nutzung ausserhalb dieses Anlasses ohne schriftliche Zustimmung.
+
+Porträts und Stimmungsbilder stammen aus dem Bestand der Fernand Cina SA.
 
 Cabinet Grotesk und Switzer stehen unter der Lizenz der Indian Type Foundry und dürfen kommerziell verwendet werden.
 

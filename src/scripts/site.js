@@ -4,7 +4,6 @@
 
   /* Fortschritt und Parallaxe */
   var pg = document.getElementById('pg');
-  var native = window.CSS && CSS.supports && CSS.supports('animation-timeline','view()');
   var pxs = [].slice.call(document.querySelectorAll('.px[data-px]'));
   function frame(){
     var h = document.documentElement.scrollHeight - innerHeight;

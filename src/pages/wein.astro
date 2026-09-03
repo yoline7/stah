@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import Base from "../layouts/Base.astro";
 import i_clos_du_cornalin from "../assets/img/clos-du-cornalin.jpg";
 import i_alisha_cina from "../assets/img/alisha-cina.jpg";
@@ -36,7 +37,9 @@ import i_alisha_cina from "../assets/img/alisha-cina.jpg";
 
 <!-- BAND 2 -->
 <section class="band mm">
-  <div class="px" data-px="0.18"><img src={i_clos_du_cornalin.src} alt="Clos du Cornalin oberhalb von Salgesch"></div>
+  <div class="px" data-px="0.18"><Image src={i_clos_du_cornalin}
+         alt="Rebhaus im Clos du Cornalin über Salgesch, dahinter das Rhonetal im Morgenlicht"
+         widths={[960, 1440, 2000]} sizes="100vw" quality={72} format="webp" loading="lazy" /></div>
   <div class="q">
     <h2 class="head fu">Der Rest steht am 19. September oben in den Reben.</h2>
     <span class="mono fu d2">Samstag, 19. September 2026 · Clos du Cornalin</span>
@@ -62,7 +65,10 @@ import i_alisha_cina from "../assets/img/alisha-cina.jpg";
     <div class="lab mono sec fu"><span class="stick">( Die Weinbegleitung )</span></div>
     <div class="duo" style="grid-template-columns:1fr;">
       <figure style="max-width:520px;">
-        <div class="ph mm"><div class="px" data-px="0.08"><img src={i_alisha_cina.src} alt="Alisha Cina"></div></div>
+        <div class="ph mm"><div class="px" data-px="0.08"><Image src={i_alisha_cina}
+               alt="Alisha Cina im schwarzen Shirt, lächelnd vor dem Rhonetal"
+               widths={[480, 760, 1000]} sizes="(min-width: 900px) 520px, 100vw"
+               quality={80} format="webp" loading="lazy" /></div></div>
         <h3 class="fu">Alisha Cina</h3>
         <span class="mono fu d1">Dritte Generation</span>
         <p class="fu d2" style="max-width:46ch;">Winzerin und Weintechnologin, ausgebildet an der Ecole d'agriculture du Valais. Seit 2024 an der Ecole d'Ingénieurs de Changins, Fachrichtung Önologie.</p>
