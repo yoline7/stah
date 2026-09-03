@@ -320,12 +320,14 @@ section{position:relative;}
 
 /* ---------- Partner ---------- */
 .partners{border-top:1px solid var(--hair-dark);padding-top:34px;}
-.partners .row{display:flex;align-items:flex-start;gap:clamp(38px,6vw,88px);flex-wrap:wrap;margin-top:40px;}
+/* Die Marken stehen ohne Unterschrift, auf einer gemeinsamen Grundlinie */
+.partners .row{display:flex;align-items:flex-end;gap:clamp(38px,6vw,88px);flex-wrap:wrap;margin-top:40px;}
 .partners figure{margin:0;}
 .partners img{height:clamp(38px,4vw,60px);width:auto;opacity:.92;}
 .partners .pl{height:clamp(30px,3.2vw,50px);width:auto;color:currentColor;opacity:.92;display:block;}
 .partners figure:nth-child(3) img{height:clamp(26px,2.8vw,42px);}
-.partners figcaption{margin-top:16px;}
+/* Fernand Cina traegt Ort, Wein und Rebberg, die Marke steht groesser */
+.partners .fc img{height:clamp(50px,5.2vw,78px);}
 .yorow{display:flex;align-items:center;gap:clamp(20px,2.4vw,34px);flex-wrap:wrap;
   margin-top:clamp(48px,6vw,80px);padding-top:28px;border-top:1px solid var(--hair-dark);}
 .yolink{display:block;line-height:0;transition:opacity .24s var(--soft);}

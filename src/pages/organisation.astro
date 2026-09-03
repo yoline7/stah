@@ -10,8 +10,8 @@ import i_team from "../assets/img/team.jpg";
   <div class="grid">
     <div class="lab mono sec fu"><span class="stick">( Organisation )</span></div>
     <div class="col-7">
-      <h1 class="disp" style="max-width:13ch;">Anfahrt, Ablauf, Antworten.</h1>
-      <p class="bodyl fu d2" style="max-width:44ch;margin-top:7vh;">Alles, was du vor dem 19. September wissen musst.</p>
+      <h1 class="disp" style="max-width:13ch;">Alles für deinen Tag im Wallis.</h1>
+      <p class="bodyl fu d2" style="max-width:44ch;margin-top:7vh;">Anreise, Ablauf und die wichtigsten Auskünfte für den {anlass.datum}.</p>
     </div>
   </div>
 </section>
@@ -22,13 +22,25 @@ import i_team from "../assets/img/team.jpg";
     <div class="lab mono sec fu"><span class="stick">( Der Tag )</span></div>
     <div class="col-8 fu">
       <div class="reg">
-        <div class="r"><div class="k mono sec">10:00</div><div class="v">Erster Wein in der Kellerei</div><div class="a mono">Salgesch</div></div>
-        <div class="r"><div class="k mono sec">ab 10:30</div><div class="v">Hinauf zum Clos du Cornalin</div><div class="a mono">Shuttle</div></div>
-        <div class="r"><div class="k mono sec">11:15</div><div class="v">Erster Gang</div><div class="a mono">Küche</div></div>
-        <div class="r"><div class="k mono sec">bis 14:00</div><div class="v">Sechs Gänge, sechs Weine</div><div class="a mono">Geführt</div></div>
-        <div class="r"><div class="k mono sec">ab 14:00</div><div class="v">Bar und elektronische Sounds</div><div class="a mono">Ausklang</div></div>
-        <div class="r"><div class="k mono sec">18:00</div><div class="v">Ende</div><div class="a mono">Rückfahrt</div></div>
+        <div class="r"><div class="k mono sec">{anlass.beginn}</div><div class="v">Empfang in der Kellerei, erster Wein bei Fernand Cina</div><div class="a mono">{anlass.dorf}</div></div>
+        <div class="r"><div class="k mono sec">ab 10:30</div><div class="v">Hinauf zum {anlass.ort}</div><div class="a mono">Shuttle</div></div>
+        <div class="r"><div class="k mono sec">11:15</div><div class="v">Erster Gang, die Küche beginnt</div><div class="a mono">Küche</div></div>
+        <div class="r"><div class="k mono sec">bis 14:00</div><div class="v">Sechs Gänge und sieben Weine, persönlich begleitet</div><div class="a mono">Geführt</div></div>
+        <div class="r"><div class="k mono sec">ab 14:00</div><div class="v">Bar und elektronische Musik</div><div class="a mono">Ausklang</div></div>
+        <div class="r"><div class="k mono sec">{anlass.ende}</div><div class="v">Ende und Rückfahrt nach {anlass.dorf}</div><div class="a mono">Shuttle</div></div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- DURCH -->
+<section class="wrap s-c">
+  <div class="grid">
+    <div class="lab mono sec fu"><span class="stick">( Durch den Tag )</span></div>
+    <div class="col-7">
+      <h2 class="head fu" style="max-width:16ch;">Alisha Cina und Alain Lerjen.</h2>
+      <p class="bodyl fu d2" style="max-width:44ch;margin-top:5vh;">Alisha begleitet dich durch die Weine. Alain durch die Küche.</p>
+      <p class="fu d2 sec" style="max-width:46ch;margin-top:3vh;">Beide sind den ganzen Tag vor Ort und Teil des Geschehens. Beide sagen an, auf Deutsch und auf Französisch.</p>
     </div>
   </div>
 </section>
@@ -49,12 +61,12 @@ import i_team from "../assets/img/team.jpg";
   <div class="grid">
     <div class="lab mono sec fu"><span class="stick">( Anfahrt )</span></div>
     <div class="col-7">
-      <h2 class="head fu" style="max-width:14ch;">Treffpunkt ist die Kellerei.</h2>
+      <h2 class="head fu" style="max-width:16ch;">Treffpunkt ist die Kellerei Fernand Cina.</h2>
       <div class="weg fu d2">
-        <div><span class="mono">Mit dem Zug</span><p>Bahnhof Salgesch, zwei Minuten zu Fuss.</p></div>
-        <div><span class="mono">Mit dem Auto</span><p>Parkplätze bei der Kellerei. Sieben Weine über den Tag, der Zug ist die bessere Wahl.</p></div>
-        <div><span class="mono">Hinauf und zurück</span><p>Shuttle ab 10:30, letzte Fahrt um 18:00. Der Fussweg führt durch die Reben.</p></div>
-        <div><span class="mono">Adresse</span><p>Kellerei Fernand Cina, Bahnhofstrasse 27, 3970 Salgesch.</p>
+        <div><span class="mono">Mit dem Zug</span><p>Bahnhof {anlass.dorf}. Von dort sind es rund zwei Minuten zu Fuss.</p></div>
+        <div><span class="mono">Mit dem Auto</span><p>Parkplätze stehen bei der Kellerei zur Verfügung. Wenn möglich, empfehlen wir die Anreise mit dem Zug. Wein gehört zum Tag.</p></div>
+        <div><span class="mono">Hinauf und zurück</span><p>Ab 10:30 bringt dich der Shuttle zum Rebberg, ab {anlass.ende} zurück nach {anlass.dorf}. Der Fussweg führt durch die Reben.</p></div>
+        <div><span class="mono">Adresse</span><p>{anlass.treffpunkt}.</p>
           <p style="margin-top:14px;"><a class="lnk" href="https://www.google.com/maps/search/?api=1&amp;query=Fernand+Cina+Bahnhofstrasse+27+3970+Salgesch" target="_blank" rel="noopener">Route öffnen</a> &nbsp;·&nbsp; <a class="lnk" href="https://www.sbb.ch/de" target="_blank" rel="noopener">Fahrplan SBB</a></p></div>
       </div>
     </div>
@@ -67,10 +79,11 @@ import i_team from "../assets/img/team.jpg";
     <div class="lab mono sec fu"><span class="stick">( Gut zu wissen )</span></div>
     <div class="col-7">
       <div class="weg fu" style="margin-top:0;">
-        <div><span class="mono">Schuhe</span><p>Du bist viel auf den Beinen. Nimm Schuhe, in denen du gut stehst.</p></div>
-        <div><span class="mono">Jacke</span><p>Ein Teil des Tages läuft draussen. Am Abend wird es kühler.</p></div>
-        <div><span class="mono">Sitzen</span><p>Stehtische und Sitzplätze stehen bereit. Ein fester Platz ist keiner zugeteilt.</p></div>
-        <div><span class="mono">Ab 14 Uhr</span><p>Die Bar bleibt offen bis sechs. Getränke ab diesem Zeitpunkt werden separat verrechnet.</p></div>
+        <div><span class="mono">Schuhe</span><p>Du bist über mehrere Stunden draussen und auf den Beinen. Bequeme Schuhe sind die beste Wahl.</p></div>
+        <div><span class="mono">Kleidung</span><p>Ein Teil des Tages findet draussen statt. Am Abend kann es im Rebberg kühler werden.</p></div>
+        <div><span class="mono">Sitzen</span><p>Es gibt Sitzmöglichkeiten und Stehtische. Einen festen Sitzplatz gibt es nicht.</p></div>
+        <div><span class="mono">Ab 14:00</span><p>Die Bar bleibt bis {anlass.ende} offen. Getränke ab 14:00 sind nicht im Preis enthalten und werden separat verrechnet.</p></div>
+        <div><span class="mono">Essen</span><p>Bei der Anmeldung entscheidest du dich für die Fleisch- oder die vegetarische Variante. Allergien und Unverträglichkeiten bis spätestens {anlass.anmeldeschluss} angeben.</p></div>
       </div>
     </div>
   </div>
@@ -82,15 +95,16 @@ import i_team from "../assets/img/team.jpg";
     <div class="lab mono sec fu"><span class="stick">( Fragen )</span></div>
     <div class="col-7 fu">
       <div class="faq">
-        <details><summary>Muss ich den ganzen Tag stehen?</summary><p>Sitzplätze sind da, Stehtische auch. Du wechselst, wann du willst.</p></details>
-        <details><summary>Welche Weine gibt es?</summary><p>Alisha Cina hat sieben ausgesucht, einen zu jedem Gang. Welche es sind, erfährst du vor Ort.</p></details>
+        <details><summary>Muss ich den ganzen Tag stehen?</summary><p>Nein. Es gibt Sitzmöglichkeiten und Stehtische. Einen festen Platz gibt es nicht.</p></details>
+        <details><summary>Welche Weine gibt es?</summary><p>Das bleibt bis zum Anlass eine Überraschung. Alisha Cina hat gemeinsam mit ihrem Vater Manfred sieben Weine ausgewählt und stellt sie vor Ort vor.</p></details>
+        <details><summary>Wird auch Französisch gesprochen?</summary><p>Alisha Cina und Alain Lerjen sagen jeden Gang auf Deutsch und auf Französisch an. Frag sie an, sie antworten dir in beiden Sprachen.</p></details>
         <details><summary>Was passiert bei Regen?</summary><p>Der Anlass findet statt. Nimm eine Jacke mit, wir sind auch draussen.</p></details>
-        <details><summary>Ich habe eine Allergie.</summary><p>Antworte auf die Bestätigungsmail, bis {anlass.anmeldeschluss}. Alain Lerjen richtet sich danach.</p></details>
-        <details><summary>Ich bin verhindert, was nun?</summary><p>Melde dich bei uns. Wir schauen uns den Fall an und suchen eine Lösung.</p></details>
-        <details><summary>Kommen wir als Gruppe unter?</summary><p>Ab acht Personen melde dich direkt bei uns, dann reservieren wir einen Block.</p></details>
-        <details><summary>Kann ich in der Nähe übernachten?</summary><p>Salgesch hat Zimmer im Dorf, Leukerbad und Siders liegen wenige Minuten entfernt. Mit dem Zug kommst du auch spät noch weg.</p></details>
-        <details><summary>Was, wenn alle Plätze weg sind?</summary><p>Dann führt die Anmeldung auf die Warteliste. Wir melden uns, sobald ein Platz frei wird.</p></details>
-        <details><summary>Warum erst ab 18 Jahren?</summary><p>Der Wein läuft über den ganzen Tag. Deshalb gilt 18 Jahre als Untergrenze.</p></details>
+        <details><summary>Ich habe eine Allergie oder Unverträglichkeit.</summary><p>Bitte bei der Anmeldung angeben. Änderungen sind bis {anlass.anmeldeschluss} möglich.</p></details>
+        <details><summary>Ich kann doch nicht teilnehmen. Was nun?</summary><p>Melde dich bei uns. Bis {anlass.anmeldeschluss} ist der Rücktritt kostenfrei, danach gilt Ziffer 6 der <a class="lnk" href="/agb">AGB</a>. Wir schauen uns den Fall an und suchen eine Lösung.</p></details>
+        <details><summary>Können wir als Gruppe kommen?</summary><p>Ab acht Personen kannst du dich direkt bei uns melden. Wir koordinieren die Anmeldung und die Menüauswahl gemeinsam.</p></details>
+        <details><summary>Kann ich in der Nähe übernachten?</summary><p>{anlass.dorf} und die umliegenden Orte bieten verschiedene Übernachtungsmöglichkeiten. Leukerbad und Siders liegen wenige Minuten entfernt.</p></details>
+        <details><summary>Was, wenn alle Plätze vergeben sind?</summary><p>Melde dich trotzdem bei uns. Wir führen eine Warteliste und melden uns, sobald ein Platz frei wird.</p></details>
+        <details><summary>Warum ist die Teilnahme erst ab {anlass.mindestalter} Jahren?</summary><p>Der Anlass beinhaltet eine umfassende Weinbegleitung und richtet sich deshalb an Erwachsene.</p></details>
       </div>
     </div>
   </div>
@@ -107,8 +121,8 @@ import i_team from "../assets/img/team.jpg";
           <a class="lnk" href="tel:+41274550908">027 455 09 08</a></p>
           <p style="margin-top:14px;color:var(--sec-light);">Fernand Cina SA, Bahnhofstrasse 27, 3970 Salgesch</p></div>
         <div><span class="mono">Gruppen und Firmen</span>
-          <p>Ab acht Personen melde dich direkt bei uns. Wir reservieren den Block und klären die Essenswahl gesammelt.</p>
-          <p style="margin-top:14px;color:var(--sec-light);">Der Anlass eignet sich als Teamtag. Anreise mit dem Zug aus der ganzen Schweiz.</p></div>
+          <p>Ab acht Personen kannst du dich direkt bei uns melden. Wir reservieren den gewünschten Block und koordinieren die Essensauswahl gemeinsam.</p>
+          <p style="margin-top:14px;color:var(--sec-light);">{anlass.name} eignet sich auch für einen gemeinsamen Tag mit deinem Team.</p></div>
       </div>
     </div>
   </div>
@@ -118,8 +132,8 @@ import i_team from "../assets/img/team.jpg";
 <section class="wrap s-e alt">
   <div class="grid">
     <div class="col-8">
-      <h2 class="head fu" style="max-width:16ch;">50 Plätze. Einer davon ist deiner.</h2>
-      <p class="fu d2 sec" style="max-width:40ch;margin-top:3vh;">{anlass.preisText} pro Person. Anmeldung bis {anlass.anmeldeschluss}.</p>
+      <h2 class="head fu" style="max-width:18ch;">{anlass.plaetze} Plätze. Ein kleiner Rahmen. Ein ganzer Tag.</h2>
+      <p class="fu d2 sec" style="max-width:40ch;margin-top:3vh;">{anlass.preisText} pro Person. {anlass.datum}, {anlass.ort} über {anlass.dorf}. Anmeldung bis {anlass.anmeldeschluss}.</p>
       <a class="send fu d3" href="/anmeldung"><span>Zur Anmeldung</span><span class="n">&#8599;</span></a>
     </div>
   </div>
