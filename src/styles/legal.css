@@ -1,3 +1,5 @@
+@import "./fonts.css";
+
 :root{
   --paper:#111214;--deep:#F4F4F2;--sec:#6C6E71;--hair:rgba(17,18,20,.16);
   --micro:11px;--body:clamp(15px,1.05vw,17px);--body-l:clamp(19px,1.5vw,24px);
@@ -7,7 +9,7 @@
 *,*::before,*::after{box-sizing:border-box;}
 html,body{margin:0;padding:0;}
 body{background:var(--deep);color:var(--paper);
- font-family:"Switzer","Helvetica Neue",Helvetica,Arial,sans-serif;font-size:var(--body);line-height:1.62;
+ font-family:"Schibsted Grotesk Variable","Helvetica Neue",Helvetica,Arial,sans-serif;font-size:var(--body);line-height:1.62;
  -webkit-font-smoothing:antialiased;text-align:left;}
 a{color:inherit;}
 h1,h2,h3,p,ul{margin:0;font-weight:400;}
@@ -17,7 +19,7 @@ h1,h2,h3,p,ul{margin:0;font-weight:400;}
 
 /* Anzeigeschnitt fuer alle Groessen ab 20px */
 h1,h2,h3,.disp,.head,.facts b,.mn .ti,.arw .t,.reg .v,.duo h3,.side b,.hero .lead,.top h1{
-  font-family:"Cabinet Grotesk","Switzer","Helvetica Neue",Helvetica,Arial,sans-serif;font-feature-settings:"ss01";}
+  font-family:"Cabinet Grotesk","Schibsted Grotesk Variable","Helvetica Neue",Helvetica,Arial,sans-serif;font-feature-settings:"ss01";}
 .wrap{padding-left:var(--padL);padding-right:var(--padR);}
 #hd{position:sticky;top:0;z-index:20;background:var(--deep);display:flex;align-items:center;
  justify-content:space-between;gap:2vw;padding:22px var(--padR) 22px var(--padL);
