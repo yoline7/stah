@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /anmeldung
+
+Sitemap: https://im-stah.ch/sitemap-index.xml
