@@ -33,7 +33,6 @@ Kein Framework im Auslieferungsergebnis. Der Build erzeugt reines HTML, CSS und 
 
 ```
 im-stah/
-├── .github/workflows/deploy.yml  Build und Auslieferung auf GitHub Pages
 ├── .gitignore
 ├── astro.config.mjs              Domain, Sitemap, Ausgabeformat
 ├── package.json
@@ -148,26 +147,20 @@ npm run check     # Typen und Vorlagen prüfen
 
 ## Veröffentlichen
 
-**Vercel**
+Vercel, Projekt `stah`. Ein Weg, keine Nebenstrecke. Astro wird erkannt,
+Build `npm run build`, Ausgabeordner `dist`.
 
-Repository verbinden. Astro wird erkannt, Build `npm run build`, Ausgabeordner `dist`.
+| Was | Adresse |
+|---|---|
+| Produktion, Branch `main` | https://stah-yoline7s-projects.vercel.app |
+| Zieldomain | https://im-stah.ch |
 
-**Netlify**
+Vercel baut bei jedem Push. `main` geht in die Produktion, jeder andere Branch
+bekommt eine eigene Vorschauadresse. Ein Pull Request zeigt sie im Verlauf an.
 
-Build `npm run build`, Publish `dist`.
-
-**GitHub Pages**
-
-`.github/workflows/deploy.yml` baut bei jedem Push auf `main` über `withastro/action@v3`
-mit Node 22 und liefert über `actions/deploy-pages@v4` aus. In `astro.config.mjs` bleibt
-`site` auf der Zieldomain. In den Repository-Einstellungen unter Pages muss die Quelle
-auf GitHub Actions stehen.
-
-**Klassischer Webserver**
-
-`npm run build`, danach den Inhalt von `dist/` hochladen.
-
-Nach dem Aufschalten die Domain in `astro.config.mjs` prüfen. Sie steuert Canonical, Open Graph und Sitemap.
+Die Zieldomain steht in `astro.config.mjs` unter `site`. Sie steuert Canonical,
+Open Graph und Sitemap, unabhängig davon, unter welcher Adresse Vercel ausliefert.
+Nach dem Aufschalten von `im-stah.ch` die Domain im Vercel-Projekt hinterlegen.
 
 ---
 
