@@ -1,5 +1,8 @@
 ---
+import { Image } from "astro:assets";
 import Base from "../layouts/Base.astro";
+import i_mood_messer from "../assets/img/mood-messer.jpg";
+import i_alain_lerjen from "../assets/img/alain-lerjen.jpg";
 ---
 <Base title="Kulinarik · z'Wallis im Stah" description="Sechs Gänge von Alain Lerjen und Maison 13, an offenen Stationen. Fleisch oder vegetarisch, Herkunft aus dem Wallis.">
 <!-- KOPF -->
@@ -34,14 +37,37 @@ import Base from "../layouts/Base.astro";
   </div>
 </section>
 
+<!-- BAND -->
+<section class="band mm">
+  <div class="px" data-px="0.18"><Image src={i_mood_messer}
+         alt="Kochmesser mit Holzgriff auf verwitterten Holzbrettern"
+         widths={[960, 1440, 2000]} sizes="100vw" quality={72} format="webp" loading="lazy" /></div>
+  <div class="q">
+    <h2 class="head fu">Angerichtet wird vor dir.</h2>
+    <span class="mono fu d2">Offene Stationen im Rebberg</span>
+  </div>
+</section>
+
 <!-- KOCH -->
 <section class="wrap s-c">
   <div class="grid">
     <div class="lab mono sec fu"><span class="stick">( Der Koch )</span></div>
     <div class="col-7">
       <h2 class="head fu" style="max-width:15ch;">Alain Lerjen kocht vor dir, nicht hinter einer Tür.</h2>
-      <p class="fu d2 sec" style="max-width:48ch;margin-top:4vh;">Koch aus Zermatt, heute bei Maison 13. Bei ihm heisst kochen auch servieren und mit den Gästen reden.</p>
-      <p class="fu d2 sec" style="max-width:48ch;margin-top:2.4vh;">Gault Millau schrieb 2021, er koche fürs Leben gerne und stehe ebenso gerne an der Front. Genau so arbeitet er am 19. September: an offenen Stationen, mitten unter den Gästen.</p>
+    </div>
+    <div class="duo" style="grid-template-columns:1fr;margin-top:6vh;">
+      <figure style="max-width:520px;">
+        <div class="ph mm"><div class="px" data-px="0.08"><Image src={i_alain_lerjen}
+               alt="Alain Lerjen im weissen Kochhemd im Profil, hinter ihm die Felswand"
+               widths={[480, 760, 1000]} sizes="(min-width: 900px) 520px, 100vw"
+               quality={80} format="webp" loading="lazy" /></div></div>
+        <h3 class="fu">Alain Lerjen</h3>
+        <span class="mono fu d1">Küche · Maison 13</span>
+        <p class="fu d2 sec" style="max-width:48ch;">Koch aus Zermatt, heute bei Maison 13. Bei ihm heisst kochen auch servieren und mit den Gästen reden.</p>
+        <p class="fu d2 sec" style="max-width:48ch;margin-top:2.4vh;">Gault Millau schrieb 2021, er koche fürs Leben gerne und stehe ebenso gerne an der Front. Genau so arbeitet er am 19. September: an offenen Stationen, mitten unter den Gästen.</p>
+      </figure>
+    </div>
+    <div class="col-7">
       <div class="weg fu d2">
         <div><span class="mono">Kein Buffet</span><p>Jeder Gang wird angerichtet und ausgegeben. Brot und Wasser stehen frei.</p></div>
         <div><span class="mono">In Wellen</span><p>Die Gänge kommen nacheinander, jeder wird angesagt.</p></div>

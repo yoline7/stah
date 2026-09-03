@@ -33,29 +33,103 @@ Kein Framework im Auslieferungsergebnis. Der Build erzeugt reines HTML, CSS und 
 
 ```
 im-stah/
+├── .github/workflows/deploy.yml  Build und Auslieferung auf GitHub Pages
+├── .gitignore
 ├── astro.config.mjs              Domain, Sitemap, Ausgabeformat
 ├── package.json
+├── package-lock.json
 ├── tsconfig.json
-├── public/                       robots.txt · favicon.svg · preview.jpg
+├── README.md
+├── public/                       favicon.svg · robots.txt · preview.jpg
 └── src/
     ├── data/anlass.ts            Eckdaten des Anlasses, einzige Quelle
     ├── layouts/
-    │   ├── Base.astro            Kopf, Metadaten, JSON-LD, Kopf- und Fussbereich
+    │   ├── Base.astro            Metadaten, JSON-LD, Kopf- und Fussbereich
     │   └── Legal.astro           Rahmen für die Rechtsseiten
     ├── components/
-    │   ├── Header.astro · Footer.astro · Partner.astro
-    │   └── logos/                Wortmarke · Maison13 · Yoline als Vektor
+    │   ├── Header.astro          Kopfzeile mit Navigation
+    │   ├── Footer.astro          Fusszeile
+    │   ├── Partner.astro         Partnerband
+    │   └── logos/
+    │       ├── Wortmarke.astro
+    │       ├── Maison13.astro
+    │       └── Yoline.astro
     ├── pages/
     │   ├── index.astro           Startseite: Was, Wer, Wie, Warum
     │   ├── kulinarik.astro       Menü, Koch, Herkunft
     │   ├── wein.astro            Weinbegleitung, Weingut, Winzerin
     │   ├── organisation.astro    Ablauf, Anfahrt, Fragen, Kontakt
     │   ├── anmeldung.astro       Formular, wird durch YoSuite ersetzt
-    │   └── agb · teilnahmebedingungen · impressum · datenschutz
-    ├── styles/                   site.css · anmeldung.css · legal.css
-    ├── scripts/                  site.js · anmeldung.js
-    └── assets/img/               Fotos, partner/ für Partnermarken
+    │   ├── agb.astro
+    │   ├── teilnahmebedingungen.astro
+    │   ├── impressum.astro
+    │   └── datenschutz.astro
+    ├── styles/
+    │   ├── site.css
+    │   ├── anmeldung.css
+    │   └── legal.css
+    ├── scripts/
+    │   ├── site.js
+    │   └── anmeldung.js
+    └── assets/img/
+        ├── clos-du-cornalin.jpg
+        ├── rhonetal.jpg
+        ├── rebberg.jpg
+        ├── team.jpg
+        ├── mood-messer.jpg
+        ├── alisha-cina.jpg
+        ├── alain-lerjen.jpg
+        └── partner/
+            ├── fernand-cina.png
+            └── bergbox.png
 ```
+
+Neun Seiten, neun Dateien in `src/pages/`. Der Build legt sie nach `dist/`,
+die Startseite als `index.html`, die acht Unterseiten je als Ordner mit `index.html`.
+
+---
+
+## Bilder
+
+Jedes Bild steht genau einmal, die beiden Porträts zweimal.
+
+| Bild | Seite | Stelle |
+|---|---|---|
+| `clos-du-cornalin.jpg` | `index.astro` | Titelbild |
+| `team.jpg` | `index.astro` | Bildband nach dem Abschnitt «Die zwei» |
+| `rebberg.jpg` | `index.astro` | Bildband vor dem Abschluss |
+| `mood-messer.jpg` | `kulinarik.astro` | Bildband nach dem Menü |
+| `rhonetal.jpg` | `organisation.astro` | Bildband bei der Anfahrt |
+| `alisha-cina.jpg` | `index.astro`, `wein.astro` | Porträt |
+| `alain-lerjen.jpg` | `index.astro`, `kulinarik.astro` | Porträt |
+
+Eine Ausnahme steht offen: Das Bildband auf `wein.astro` trägt weiterhin
+`clos-du-cornalin.jpg`. Der Bildplan weist diesem Band kein Bild zu, alle sieben
+Bilder sind vergeben. Das Band bleibt bestehen, damit sein Text nicht verloren geht.
+Siehe Offene Punkte.
+
+**Umrechnung.** Alles läuft über `astro:assets`. Astro erzeugt die Grössen beim Bauen
+und legt sie mit Prüfsumme nach `dist/_astro/`.
+
+| Bildart | Breiten | Qualität | Laden |
+|---|---|---|---|
+| Titelbild | 960, 1440, 2000 | 72 | `eager`, `fetchpriority="high"` |
+| Bildbänder | 960, 1440, 2000 | 72 | `lazy` |
+| Porträts | 480, 760, 1000 | 80 | `lazy` |
+| Partnermarken | keine Umrechnung | | `lazy` |
+
+Format ist `webp`. Astro rechnet nie hinauf. Liegt eine Vorlage unter der grössten
+angefragten Breite, fällt die Reihe entsprechend kürzer aus. `clos-du-cornalin.jpg`
+misst 820 mal 1100 Pixel und liefert deshalb nur eine Breite.
+
+Partnermarken bleiben PNG mit Alphakanal und behalten ihre Grösse. Sie tragen
+`densities={[1]}`, damit `srcset` gesetzt ist, ohne dass umgerechnet wird.
+
+**Neues Bild einsetzen.** Datei nach `src/assets/img/`, im Frontmatter importieren,
+im Rumpf über `<Image>` einsetzen. Bildbänder folgen der Bauweise aus `index.astro`:
+`<section class="band mm">` mit `<div class="px" data-px="0.18">` und der Unterschrift
+in `.q`. Das `<img>` bleibt im `<div class="px">`, sonst hält die Parallaxe nicht.
+Jedes Bild braucht ein `alt`, das den Inhalt beschreibt.
 
 ---
 
@@ -83,7 +157,10 @@ Build `npm run build`, Publish `dist`.
 
 **GitHub Pages**
 
-Über Actions mit `withastro/action`. In `astro.config.mjs` bleibt `site` auf der Zieldomain.
+`.github/workflows/deploy.yml` baut bei jedem Push auf `main` über `withastro/action@v3`
+mit Node 22 und liefert über `actions/deploy-pages@v4` aus. In `astro.config.mjs` bleibt
+`site` auf der Zieldomain. In den Repository-Einstellungen unter Pages muss die Quelle
+auf GitHub Actions stehen.
 
 **Klassischer Webserver**
 
@@ -117,7 +194,7 @@ Für den Produktivbetrieb gehören die Dateien lokal nach `assets/fonts/` und in
 
 ## Anmeldung
 
-`anmeldung.html` ist ein Entwurf. Die produktive Anmeldung läuft über YoSuite.
+`src/pages/anmeldung.astro` ist ein Entwurf. Die produktive Anmeldung läuft über YoSuite.
 
 **Felder**
 
@@ -164,12 +241,16 @@ Für den Produktivbetrieb gehören die Dateien lokal nach `assets/fonts/` und in
 6. **Französisch.** Salgesch liegt an der Sprachgrenze. Eine Fassung fehlt und ist ein offener Entscheid.
 7. **Wortmarke.** Die SVG-Datei ist nachgezeichnet. Die Konturen sind ab etwa 900 Pixel Breite sichtbar treppig. Für Druck ab A2 braucht es die Marke aus der Originalschrift.
 8. **Schriften.** Für den Produktivbetrieb nach `src/assets/fonts/` legen und über `@font-face` einbinden, statt vom fremden Server zu laden.
+9. **Bildband auf `wein.astro`.** Es trägt `clos-du-cornalin.jpg`, das Bild steht damit zweimal. Der Bildplan lässt dieses Band frei. Entweder das Band entfällt samt Text, oder es braucht ein achtes Bild. Entscheid offen.
+10. **Titelbild im Hochformat.** `clos-du-cornalin.jpg` misst 820 mal 1100 Pixel. Für ein Titelbild über die volle Breite ist die Vorlage zu klein und im falschen Format. Eine Aufnahme im Querformat ab 2000 Pixel Breite wäre der bessere Weg.
 
 ---
 
 ## Rechte
 
 Fotos, Wortmarke und Texte gehören der Fernand Cina SA. Die Partnermarken gehören den jeweiligen Inhaberinnen. Keine Nutzung ausserhalb dieses Anlasses ohne schriftliche Zustimmung.
+
+Porträts und Stimmungsbilder stammen aus dem Bestand der Fernand Cina SA.
 
 Cabinet Grotesk und Switzer stehen unter der Lizenz der Indian Type Foundry und dürfen kommerziell verwendet werden.
 

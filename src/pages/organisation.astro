@@ -1,5 +1,7 @@
 ---
+import { Image } from "astro:assets";
 import Base from "../layouts/Base.astro";
+import i_rhonetal from "../assets/img/rhonetal.jpg";
 ---
 <Base title="Organisation · z'Wallis im Stah" description="Ablauf, Anfahrt, Shuttle, häufige Fragen und Kontakt zum Anlass vom 19. September 2026.">
 <!-- KOPF -->
@@ -44,6 +46,17 @@ import Base from "../layouts/Base.astro";
           <p style="margin-top:14px;"><a class="lnk" href="https://www.google.com/maps/search/?api=1&amp;query=Fernand+Cina+Bahnhofstrasse+27+3970+Salgesch" target="_blank" rel="noopener">Route öffnen</a> &nbsp;·&nbsp; <a class="lnk" href="https://www.sbb.ch/de" target="_blank" rel="noopener">Fahrplan SBB</a></p></div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- BAND -->
+<section class="band mm">
+  <div class="px" data-px="0.18"><Image src={i_rhonetal}
+         alt="Drohnenblick auf das Rebhaus zwischen den Rebzeilen des Clos du Cornalin"
+         widths={[960, 1440, 2000]} sizes="100vw" quality={72} format="webp" loading="lazy" /></div>
+  <div class="q">
+    <h2 class="head fu">Zwei Minuten vom Bahnhof, dann hinauf.</h2>
+    <span class="mono fu d2">Shuttle oder zu Fuss durch die Reben</span>
   </div>
 </section>
 
