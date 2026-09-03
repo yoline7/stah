@@ -1,0 +1,27 @@
+---
+import Maison13 from "./logos/Maison13.astro";
+import Yoline from "./logos/Yoline.astro";
+import i_fernand_cina from "../assets/img/partner/fernand-cina.png";
+import i_bergbox from "../assets/img/partner/bergbox.png";
+---
+<!-- PARTNER -->
+<section class="wrap deep" style="padding-top:4vh;padding-bottom:12vh;">
+  <div class="grid">
+    <div class="col-full fu">
+      <div class="partners">
+        <span class="mono sec">Ein Anlass von</span>
+        <div class="row">
+          <figure><img src={i_fernand_cina.src} alt="Fernand Cina"><figcaption class="mono sec">Rebberg, Keller und Wein</figcaption></figure>
+          <figure><Maison13 class="pl" /><figcaption class="mono sec">Küche</figcaption></figure>
+          <figure><img src={i_bergbox.src} alt="BergBox"><figcaption class="mono sec">Idee und Erzeugnisse</figcaption></figure>
+        </div>
+        <div class="yorow">
+          <a class="yolink" href="https://yoline.ch" target="_blank" rel="noopener"><Yoline class="yo" /></a>
+          <span class="mono sec">Konzept, Produktentwicklung, Website und Anmeldung</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
