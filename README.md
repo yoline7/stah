@@ -72,6 +72,7 @@ im-stah/
     │   ├── site.js
     │   └── anmeldung.js
     └── assets/img/
+        ├── clos-morgenlicht.jpg
         ├── clos-du-cornalin.jpg
         ├── rhonetal.jpg
         ├── rebberg.jpg
@@ -95,18 +96,14 @@ Jedes Bild steht genau einmal, die beiden Porträts zweimal.
 
 | Bild | Seite | Stelle |
 |---|---|---|
-| `clos-du-cornalin.jpg` | `index.astro` | Titelbild |
+| `clos-morgenlicht.jpg` | `index.astro` | Titelbild |
 | `team.jpg` | `index.astro` | Bildband nach dem Abschnitt «Die zwei» |
 | `rebberg.jpg` | `index.astro` | Bildband vor dem Abschluss |
 | `mood-messer.jpg` | `kulinarik.astro` | Bildband nach dem Menü |
+| `clos-du-cornalin.jpg` | `wein.astro` | Bildband nach der Begleitung |
 | `rhonetal.jpg` | `organisation.astro` | Bildband bei der Anfahrt |
 | `alisha-cina.jpg` | `index.astro`, `wein.astro` | Porträt |
 | `alain-lerjen.jpg` | `index.astro`, `kulinarik.astro` | Porträt |
-
-Eine Ausnahme steht offen: Das Bildband auf `wein.astro` trägt weiterhin
-`clos-du-cornalin.jpg`. Der Bildplan weist diesem Band kein Bild zu, alle sieben
-Bilder sind vergeben. Das Band bleibt bestehen, damit sein Text nicht verloren geht.
-Siehe Offene Punkte.
 
 **Umrechnung.** Alles läuft über `astro:assets`. Astro erzeugt die Grössen beim Bauen
 und legt sie mit Prüfsumme nach `dist/_astro/`.
@@ -121,6 +118,10 @@ und legt sie mit Prüfsumme nach `dist/_astro/`.
 Format ist `webp`. Astro rechnet nie hinauf. Liegt eine Vorlage unter der grössten
 angefragten Breite, fällt die Reihe entsprechend kürzer aus. `clos-du-cornalin.jpg`
 misst 820 mal 1100 Pixel und liefert deshalb nur eine Breite.
+
+Das Titelbild braucht Querformat und Breite. `clos-morgenlicht.jpg` misst
+1782 mal 970 Pixel und liefert zwei Breiten. Für die volle Wirkung auf grossen
+Bildschirmen fehlt eine Vorlage ab 2000 Pixel.
 
 Partnermarken bleiben PNG mit Alphakanal und behalten ihre Grösse. Sie tragen
 `densities={[1]}`, damit `srcset` gesetzt ist, ohne dass umgerechnet wird.
@@ -241,8 +242,7 @@ Für den Produktivbetrieb gehören die Dateien lokal nach `assets/fonts/` und in
 6. **Französisch.** Salgesch liegt an der Sprachgrenze. Eine Fassung fehlt und ist ein offener Entscheid.
 7. **Wortmarke.** Die SVG-Datei ist nachgezeichnet. Die Konturen sind ab etwa 900 Pixel Breite sichtbar treppig. Für Druck ab A2 braucht es die Marke aus der Originalschrift.
 8. **Schriften.** Für den Produktivbetrieb nach `src/assets/fonts/` legen und über `@font-face` einbinden, statt vom fremden Server zu laden.
-9. **Bildband auf `wein.astro`.** Es trägt `clos-du-cornalin.jpg`, das Bild steht damit zweimal. Der Bildplan lässt dieses Band frei. Entweder das Band entfällt samt Text, oder es braucht ein achtes Bild. Entscheid offen.
-10. **Titelbild im Hochformat.** `clos-du-cornalin.jpg` misst 820 mal 1100 Pixel. Für ein Titelbild über die volle Breite ist die Vorlage zu klein und im falschen Format. Eine Aufnahme im Querformat ab 2000 Pixel Breite wäre der bessere Weg.
+9. **Titelbild.** `clos-morgenlicht.jpg` stammt aus einem Bildschirmfoto und misst 1782 mal 970 Pixel. Es liefert 960 und 1782 Pixel Breite, nicht die volle Reihe. Eine Aufnahme aus dem Original ab 2000 Pixel Breite wäre der bessere Weg.
 
 ---
 
