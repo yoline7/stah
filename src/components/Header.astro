@@ -9,7 +9,7 @@ const seiten = [
   { titel: "Anmeldung", weg: "/anmeldung" },
 ];
 ---
-<header id="hd">
+<header id="hd" transition:persist="kopf">
   <div class="mnu" id="menu">
     <nav>
       {seiten.map((s) => (
