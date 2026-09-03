@@ -212,7 +212,7 @@ Jedes Bild braucht ein `alt`, das den Inhalt beschreibt.
 
 ## Technik
 
-**Bewegung.** Parallaxe über `animation-timeline: view()` mit JavaScript-Rückfall. Zeilenenthüllung und Bildaufbau über `IntersectionObserver`. Alles schaltet bei `prefers-reduced-motion: reduce` ab.
+**Bewegung.** Parallaxe über `animation-timeline: view()` mit JavaScript-Rückfall. Zeilenenthüllung und Bildaufbau über `IntersectionObserver`. Alles schaltet bei `prefers-reduced-motion: reduce` ab. Lichtlauf, Zahlen, Knöpfe, Zeiger, Laufband und Seitenübergang stehen im Abschnitt «Bewegung».
 
 **Kopfzeile.** Drei Zonen: Wortmarke links, Knopf «Platz sichern» mittig, Burger rechts.
 Auf schmalen Schirmen verkürzt der Knopf auf «Anmelden», alle drei Zonen bleiben.
@@ -251,6 +251,97 @@ Die Bildbänder tragen keinen Schleier, nur den Filter auf `.band .px img`.
 **Auszeichnung.** Das Basis-Layout erzeugt Open Graph und Twitter Card für jede Seite. Die Startseite trägt zusätzlich einen `FoodEvent`-Block nach schema.org, gespeist aus `src/data/anlass.ts`.
 
 **Sitemap.** `@astrojs/sitemap` erzeugt beim Bauen `sitemap-index.xml`. Anmeldung und Rechtsseiten sind ausgenommen und tragen `noindex`.
+
+---
+
+## Bewegung
+
+### Bewusste Abweichung von der Gestaltungs-Doktrin
+
+**Gesetzt am 3. September 2026, auf Weisung des Auftraggebers. Gilt nur für dieses Projekt.**
+
+Die Gestaltungs-Doktrin von Yoline sperrt Verläufe und Schein. Für `im-stah.ch` ist die
+Sperre aufgehoben. Begründung: Der Anlass trägt elektronische Beats, die Seite ist dunkel
+gehalten und soll einen Hauch Luxus tragen, jung und heutig, ohne laut zu werden.
+
+Was die Aufhebung deckt, und nur das:
+
+- Ein `conic-gradient` als Lichtlauf auf der Kante von vier Elementen
+- Ein `linear-gradient` als waagrechter Lauf auf der unteren Hairline der Kopfleiste
+
+Was weiterhin gesperrt bleibt:
+
+- Verlauf auf einer Fläche
+- Schein nach aussen, Schlagschatten, Milchglas
+- Buntfarbe als Akzent. Der Lauf ist Licht, ein warmer Weisston, `rgba(255,240,222,.9)`
+- Radius über 8 Pixel
+
+Wer die Seite später anfasst, hält sich an diese Grenze. Ausserhalb dieses Projekts gilt
+die Doktrin unverändert.
+
+### Lichtlauf
+
+Der Lauf sitzt auf der Kante, nie auf der Fläche. Nach 1.6 Sekunden ist er weg und
+hinterlässt nichts.
+
+| Element | Führung |
+|---|---|
+| Kopfleiste, `#hd .bar` | entlang der unteren Hairline, von links nach rechts |
+| Faktenfeld auf `index` | Aussenkante, im Uhrzeigersinn |
+| Faktenfeld im Abschluss | Aussenkante, im Uhrzeigersinn |
+| Knöpfe «Platz sichern» und «Zur Anmeldung» | Aussenkante, im Uhrzeigersinn |
+
+Sonst nirgends. Keine Bildbänder, keine Register, keine Porträts, keine Menüüberlagerung.
+
+**Takt.** Ein Taktgeber in `src/scripts/site.js` verteilt die Läufe. Ein Element läuft alle
+9 bis 14 Sekunden, der Abstand wird je Durchgang neu gewürfelt. Nie zwei Läufe gleichzeitig,
+Mindestabstand 2.5 Sekunden nach dem Ende des letzten. Ein Element läuft nur im sichtbaren
+Bereich, gesteuert über `IntersectionObserver`. Beim Zeigen auf einen Knopf läuft er einmal
+sofort. Liegt der Reiter im Hintergrund, hält der Takt an.
+
+**Rückfall.** `site.js` prüft `CSS.registerProperty`, `mask-composite` und `conic-gradient`.
+Erst wenn alles trägt, setzt es `hat-lauf` auf das Wurzelelement. Alle Regeln hängen an
+dieser Klasse. Ohne Unterstützung, ohne JavaScript und bei reduzierter Bewegung entsteht
+kein Pseudoelement. Nichts geht dadurch kaputt.
+
+### Zahlen im Faktenfeld
+
+Sie zählen beim ersten Erscheinen von 0 auf den Endwert, 900 Millisekunden auf
+`cubic-bezier(.22,1,.36,1)`, genau einmal je Seitenaufruf. Der Zusatz `CHF` und `SEP` zählt
+nicht mit. `font-variant-numeric: tabular-nums` hält die Zeichenbreite fest, gemessen
+springt die Breite um 0.0 Pixel. Bei reduzierter Bewegung steht der Endwert sofort.
+
+### Knöpfe
+
+Beim Zeigen füllt sich der Knopf von unten nach oben, 0.42 Sekunden auf `var(--ease)`.
+Der Pfeil dreht gleichzeitig 45 Grad. Beim Loslassen läuft die Füllung zurück. Kein Anheben,
+keine Vergrösserung, kein Schlagschatten. Gemessen bleiben Grösse und Lage gleich.
+
+Der Knopf «Platz sichern» in der Kopfleiste ist bereits gefüllt. Er behält seinen bisherigen
+Wechsel über die Deckung, eine Füllung von unten hätte dort nichts zu füllen.
+
+### Zeiger
+
+Grundzustand 34 Pixel, Nachführung 0.12. Über Verweisen und Knöpfen wächst er auf 70 Pixel,
+die Nachführung geht auf 0.20. Über Bildbändern schrumpft er auf 8 Pixel und wird gefüllt.
+Auf Touch und bei reduzierter Bewegung bleibt er aus.
+
+### Laufband
+
+Beim Zeigen hält es mit Auslauf über 0.6 Sekunden, beim Verlassen läuft es über 0.9 Sekunden
+wieder an. Dafür führt `site.js` das Band, die CSS-Animation dient als Rückfall ohne
+JavaScript. Die Punkte zwischen den Wörtern stehen auf Deckung 0.45, damit die Wörter führen.
+
+### Seitenübergang
+
+Astro View Transitions über `<ClientRouter />` im Basis-Layout. Die neue Seite blendet über
+0.35 Sekunden auf, die alte über 0.25 ab. Kopfzeile und Fuss bleiben stehen, sie tragen
+`transition:persist`. Bei reduzierter Bewegung findet kein Übergang statt.
+
+Weil die Kopfzeile stehen bleibt, hängt `site.js` an `astro:page-load` statt an
+`DOMContentLoaded`. Die globalen Horcher und die Bildschleife laufen einmal, der Aufbau je
+Seite läuft neu. Beobachter auf bleibenden Elementen werden vor dem Neuaufbau abgeräumt,
+sonst sammeln sie sich an.
 
 ---
 
@@ -336,15 +427,16 @@ Jeder Punkt nennt die Ursache und den nächsten Schritt.
 3. **Verweis ohne Ziel.** `content/organisation.md` nennt «[Übernachtungsmöglichkeiten entdecken]» ohne Adresse. Ursache: kein Ziel bestimmt. Auf der Seite steht deshalb der Fliesstext ohne Verweis. Nächster Schritt: Adresse liefern, etwa Valais Wallis Promotion, dann wird die Zeile ein Verweis.
 4. **Schreibweise des Namens.** Die Quelltexte schreiben «Z Wallis im Stah», die Datendatei «z’Wallis im Stah» mit Apostroph. Ursache: zwei Schreibweisen im Umlauf. Auf der Seite gilt die Datendatei. Nächster Schritt: die Schreibweise in `content/` angleichen.
 5. **Wortmarke Fernand Cina mit Wappen.** Die Datei trägt das Wappen über dem Schriftzug. Der Kasten steht im Partnerband 1.62-mal so hoch wie Maison 13, die sichtbare Wortmarke liest sich dadurch kleiner als die anderen zwei. Ursache: Der Richtwert misst den Kasten, nicht die Schrift. Nächster Schritt: eine Fassung ohne Wappen beschaffen, dann trägt der Richtwert.
-6. **Maison 13 Catering.** Firmenname, Rechtsform und Adresse fehlen im Impressum. Ursache: Angaben liegen nicht vor. Nächster Schritt: bei Maison 13 einholen.
-7. **Eringer und Munder Safran.** Beide Herkünfte sind nicht schriftlich bestätigt, beide stehen mehrfach auf der Seite. Ursache: mündliche Zusage. Nächster Schritt: Bestätigung einholen, sonst die Nennung streichen.
-8. **Zahlungsdienstleister und Hosting.** Beide Namen fehlen in der Datenschutzerklärung. Ursache: Der Zahlungsdienstleister ist nicht gewählt, Hosting läuft über Vercel. Nächster Schritt: nach dem Entscheid unter Ziffer 4 eintragen.
-9. **Juristische Prüfung.** AGB, Teilnahmebedingungen, Impressum und Datenschutzerklärung sind nach bestem Wissen erstellt, jedoch nicht anwaltlich geprüft. Ursache: keine Prüfung beauftragt. Nächster Schritt: Prüfung vor dem Aufschalten der Anmeldung.
-10. **Französische Fassung der Website.** Auf der Seite steht jetzt, dass Alisha Cina und Alain Lerjen auf Deutsch und Französisch ansagen. Eine französische Fassung der Seite selbst fehlt. Ursache: offener Entscheid, nicht Teil des Auftrags. Nächster Schritt: entscheiden, danach `astro-i18n` prüfen.
-11. **Wortmarke des Anlasses.** Die SVG-Datei ist nachgezeichnet, die Konturen sind ab etwa 900 Pixel Breite sichtbar treppig. Ursache: kein Original aus der Schrift. Nächster Schritt: Für Druck ab A2 die Marke aus der Originalschrift setzen.
-12. **Schriftdateien in einem öffentlichen Repository.** Die `woff2` von Cabinet Grotesk liegen in einem öffentlichen Repository und sind damit für jeden herunterladbar. Ursache: Abschnitt 02 der ITF Free Font License nennt «repository» und «publicly accessible servers» unter den untersagten Wegen der Weitergabe. Der Schlusssatz desselben Abschnitts erlaubt das Selbsthosten für die eigene Website, was die Auslieferung über `im-stah.ch` deckt. Die Kopie im Repository ist davon nicht erfasst. Nächster Schritt: Bestätigung der Indian Type Foundry einholen, Repository auf privat stellen, oder die Dateien beim Bauen zuliefern.
-13. **Titelbild aus einem Bildschirmfoto.** `clos-morgenlicht.jpg` ist eine Bildschirmaufnahme, 1782 mal 970 Pixel. Ursache: Das Original liegt nicht vor, ein Bildschirmfoto trägt bereits eine Kompression. Nächster Schritt: Aufnahme aus dem Bestand ab 2000 Pixel Breite holen, danach den Schleier neu messen.
-14. **Mehrfach komprimierte Bänder.** `rebhaus-drohne.jpg` und `rebberg.jpg` wachsen beim Umrechnen auf WebP. Ursache: Die Vorlagen sind bereits stark komprimiert. Nächster Schritt: Originale aus dem Bestand holen. Die Qualität bleibt bei 72.
+6. **Zeiger, Wort und Zahl widersprechen sich.** Die Vorgabe nennt 0.12 «enger» und 0.20 «Widerstand». Bei `cx += (x - cx) * f` bedeutet ein kleineres `f` mehr Nachlauf, ein grösseres weniger. Gesetzt sind die genannten Zahlen, 0.12 im Grundzustand und 0.20 über Verweisen. Ursache: Die Zahlen passen zu «Trägheit», die Worte beschreiben das Gegenteil. Nächster Schritt: entscheiden, ob die Zahlen oder die Worte gelten.
+7. **Maison 13 Catering.** Firmenname, Rechtsform und Adresse fehlen im Impressum. Ursache: Angaben liegen nicht vor. Nächster Schritt: bei Maison 13 einholen.
+8. **Eringer und Munder Safran.** Beide Herkünfte sind nicht schriftlich bestätigt, beide stehen mehrfach auf der Seite. Ursache: mündliche Zusage. Nächster Schritt: Bestätigung einholen, sonst die Nennung streichen.
+9. **Zahlungsdienstleister und Hosting.** Beide Namen fehlen in der Datenschutzerklärung. Ursache: Der Zahlungsdienstleister ist nicht gewählt, Hosting läuft über Vercel. Nächster Schritt: nach dem Entscheid unter Ziffer 4 eintragen.
+10. **Juristische Prüfung.** AGB, Teilnahmebedingungen, Impressum und Datenschutzerklärung sind nach bestem Wissen erstellt, jedoch nicht anwaltlich geprüft. Ursache: keine Prüfung beauftragt. Nächster Schritt: Prüfung vor dem Aufschalten der Anmeldung.
+11. **Französische Fassung der Website.** Auf der Seite steht jetzt, dass Alisha Cina und Alain Lerjen auf Deutsch und Französisch ansagen. Eine französische Fassung der Seite selbst fehlt. Ursache: offener Entscheid, nicht Teil des Auftrags. Nächster Schritt: entscheiden, danach `astro-i18n` prüfen.
+12. **Wortmarke des Anlasses.** Die SVG-Datei ist nachgezeichnet, die Konturen sind ab etwa 900 Pixel Breite sichtbar treppig. Ursache: kein Original aus der Schrift. Nächster Schritt: Für Druck ab A2 die Marke aus der Originalschrift setzen.
+13. **Schriftdateien in einem öffentlichen Repository.** Die `woff2` von Cabinet Grotesk liegen in einem öffentlichen Repository und sind damit für jeden herunterladbar. Ursache: Abschnitt 02 der ITF Free Font License nennt «repository» und «publicly accessible servers» unter den untersagten Wegen der Weitergabe. Der Schlusssatz desselben Abschnitts erlaubt das Selbsthosten für die eigene Website, was die Auslieferung über `im-stah.ch` deckt. Die Kopie im Repository ist davon nicht erfasst. Nächster Schritt: Bestätigung der Indian Type Foundry einholen, Repository auf privat stellen, oder die Dateien beim Bauen zuliefern.
+14. **Titelbild aus einem Bildschirmfoto.** `clos-morgenlicht.jpg` ist eine Bildschirmaufnahme, 1782 mal 970 Pixel. Ursache: Das Original liegt nicht vor, ein Bildschirmfoto trägt bereits eine Kompression. Nächster Schritt: Aufnahme aus dem Bestand ab 2000 Pixel Breite holen, danach den Schleier neu messen.
+15. **Mehrfach komprimierte Bänder.** `rebhaus-drohne.jpg` und `rebberg.jpg` wachsen beim Umrechnen auf WebP. Ursache: Die Vorlagen sind bereits stark komprimiert. Nächster Schritt: Originale aus dem Bestand holen. Die Qualität bleibt bei 72.
 
 ---
 
