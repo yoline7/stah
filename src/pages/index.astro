@@ -13,7 +13,7 @@ const monate = ["JAN", "FEB", "MRZ", "APR", "MAI", "JUN", "JUL", "AUG", "SEP", "
 const [, schlussMonat, schlussTag] = anlass.anmeldeschlussIso.split("-");
 const schlussKurz = { tag: `${Number(schlussTag)}.`, monat: monate[Number(schlussMonat) - 1] };
 ---
-<Base title="z'Wallis im Stah · 19. September 2026" description="19. September 2026 im Clos du Cornalin über Salgesch. Sieben Weine, sechs Gänge, elektronische Musik bis in den Abend. CHF 145.00, 50 Plätze." jsonld>
+<Base title="z'Wallis im Stah · 19. September 2026" description="19. September 2026 im Clos du Cornalin über Salgesch. Sieben Weine, sechs Gänge, Musik den ganzen Tag. CHF 145.00, 50 Plätze." jsonld>
 <!-- HERO -->
 <section class="hero" id="top">
   <div class="px" data-px="0.16"><Image src={i_clos_morgenlicht}
@@ -25,7 +25,7 @@ const schlussKurz = { tag: `${Number(schlussTag)}.`, monat: monate[Number(schlus
     <h1 class="disp">
       <span class="rl"><span>Dein Tag im Wallis</span></span>
       <span class="rl"><span>mit Wein, Kulinarik</span></span>
-      <span class="rl"><span>und passenden Beats</span></span>
+      <span class="rl"><span>und Musik den ganzen Tag</span></span>
     </h1>
   </div>
   <span class="sc mono">Scrollen</span>
@@ -50,7 +50,7 @@ const schlussKurz = { tag: `${Number(schlussTag)}.`, monat: monate[Number(schlus
       </h2>
       <p class="bodyl fu d2" style="max-width:42ch;margin-top:9vh;">{anlass.name} entstand aus einer gemeinsamen Idee von Fernand Cina, Maison 13 und BergBox.</p>
       <p class="fu d3 sec" style="max-width:46ch;margin-top:4vh;">Fernand Cina öffnet den Rebberg und die Kellerei. Maison 13 bringt die Küche mitten unter die Gäste. BergBox hält den Faden zusammen und hat die Umsetzung lanciert.</p>
-      <p class="fu d3 sec" style="max-width:46ch;margin-top:3vh;">Ein ganzer Tag mitten in den Reben. Sechs Gänge. Sieben Weine. Elektronische Musik. Persönlich begleitet von Menschen aus dem Wallis.</p>
+      <p class="fu d3 sec" style="max-width:46ch;margin-top:3vh;">Sieben Weine. Sechs Gänge. Acht Stunden über dem Rhonetal, durchgehend begleitet von den DJs. Ein Datum, {anlass.plaetze} Plätze.</p>
     </div>
   </div>
 </section>
@@ -128,11 +128,12 @@ const schlussKurz = { tag: `${Number(schlussTag)}.`, monat: monate[Number(schlus
     <div class="lab mono sec fu"><span class="stick">( Der Tag )</span></div>
     <div class="col-8 fu">
       <div class="reg">
+        <div class="r"><div class="k mono sec">ab {anlass.beginn}</div><div class="v">Die DJs sind da, den ganzen Tag</div><div class="a mono">Musik</div></div>
         <div class="r"><div class="k mono sec">{anlass.beginn}</div><div class="v">Empfang in der Kellerei</div><div class="a mono">{anlass.dorf}</div></div>
         <div class="r"><div class="k mono sec">ab 10:30</div><div class="v">Hinauf zum {anlass.ort}</div><div class="a mono">Shuttle</div></div>
         <div class="r"><div class="k mono sec">11:15</div><div class="v">Erster Gang</div><div class="a mono">Küche</div></div>
         <div class="r"><div class="k mono sec">bis 14:00</div><div class="v">Sechs Gänge und sieben Weine</div><div class="a mono">Geführt</div></div>
-        <div class="r"><div class="k mono sec">ab 14:00</div><div class="v">Bar und Beats</div><div class="a mono">Ausklang</div></div>
+        <div class="r"><div class="k mono sec">ab 14:00</div><div class="v">Bar, die Musik wird lauter</div><div class="a mono">Ausklang</div></div>
         <div class="r"><div class="k mono sec">{anlass.ende}</div><div class="v">Ende und Rückfahrt</div><div class="a mono">Shuttle</div></div>
       </div>
     </div>
@@ -144,8 +145,8 @@ const schlussKurz = { tag: `${Number(schlussTag)}.`, monat: monate[Number(schlus
   <div class="grid">
     <div class="lab mono sec fu"><span class="stick">( Ab vierzehn Uhr )</span></div>
     <div class="col-7">
-      <h2 class="head fu" style="max-width:14ch;">Und dann kommen die Beats.</h2>
-      <p class="fu d2 sec" style="max-width:46ch;margin-top:4vh;">Ab 14 Uhr wird aus dem kulinarischen Tag ein langer Nachmittag. Bar. Elektronische Musik. Rebberg.</p>
+      <h2 class="head fu" style="max-width:16ch;">Ab vierzehn Uhr wird ausgebaut.</h2>
+      <p class="fu d2 sec" style="max-width:46ch;margin-top:4vh;">Die DJs sind ab dem ersten Glas dabei, ruhig zu den Gängen. Ab 14 Uhr wird aus dem kulinarischen Tag ein langer Nachmittag. Bar. Musik. Rebberg.</p>
       <p class="fu d2 sec" style="max-width:46ch;margin-top:2.4vh;">Bleib bei deinem Glas. Beweg dich zwischen den Reben. Triff die Menschen am Tisch.</p>
     </div>
   </div>

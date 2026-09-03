@@ -27,7 +27,7 @@ html,body{margin:0;padding:0;}
 html{scroll-behavior:smooth;}
 body{
   background:var(--paper);color:var(--ink);
-  font-family:"Schibsted Grotesk Variable","Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-family:"Switzer","Helvetica Neue",Helvetica,Arial,sans-serif;
   font-size:var(--body);line-height:1.5;
   -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
   overflow-x:clip;text-align:left;
@@ -45,7 +45,7 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 
 /* Anzeigeschnitt fuer alle Groessen ab 20px */
 h1,h2,h3,.disp,.head,.facts b,.mn .ti,.arw .t,.mnu .ln .t,.reg .v,.duo h3,.side b,.hero .lead,.top h1{
-  font-family:"Cabinet Grotesk","Schibsted Grotesk Variable","Helvetica Neue",Helvetica,Arial,sans-serif;font-feature-settings:"ss01";}
+  font-family:"Cabinet Grotesk","Switzer","Helvetica Neue",Helvetica,Arial,sans-serif;font-feature-settings:"ss01";}
 .disp{font-size:var(--disp);line-height:.98;letter-spacing:-.028em;font-weight:500;text-wrap:balance;}
 .head{font-size:var(--head);line-height:1.06;letter-spacing:-.025em;font-weight:500;text-wrap:balance;}
 .bodyl{font-size:var(--body-l);line-height:1.42;letter-spacing:-.01em;}
