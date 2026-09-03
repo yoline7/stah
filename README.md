@@ -153,10 +153,17 @@ Build `npm run build`, Ausgabeordner `dist`.
 | Was | Adresse |
 |---|---|
 | Produktion, Branch `main` | https://stah-yoline7s-projects.vercel.app |
-| Zieldomain | https://im-stah.ch |
+| Vorschau, dieser Branch | https://stah-git-claude-astro-repo-restructure-6pqpq1-yoline7s-projects.vercel.app |
+| Zieldomain, noch nicht aufgeschaltet | https://im-stah.ch |
 
 Vercel baut bei jedem Push. `main` geht in die Produktion, jeder andere Branch
 bekommt eine eigene Vorschauadresse. Ein Pull Request zeigt sie im Verlauf an.
+
+**Zugriff.** Im Projekt steht die Vercel-Authentifizierung auf «all except custom
+domains». Beide `vercel.app`-Adressen verlangen deshalb einen Login im Team
+`yoline7's projects`, die Produktionsadresse eingeschlossen. Offen erreichbar wird
+die Seite erst über die eigene Domain. Wer die Seite vorher extern zeigen will,
+stellt den Schutz im Vercel-Projekt auf «only preview deployments» um.
 
 Die Zieldomain steht in `astro.config.mjs` unter `site`. Sie steuert Canonical,
 Open Graph und Sitemap, unabhängig davon, unter welcher Adresse Vercel ausliefert.
