@@ -1,0 +1,22 @@
+export const anlass = {
+  name: "z\u2019Wallis im Stah",
+  datum: "19. September 2026",
+  datumIso: "2026-09-19",
+  beginn: "10:00",
+  ende: "18:00",
+  ort: "Clos du Cornalin",
+  dorf: "Salgesch",
+  treffpunkt: "Kellerei Fernand Cina, Bahnhofstrasse 27, 3970 Salgesch",
+  preis: 145,
+  preisText: "CHF 145.00",
+  plaetze: 50,
+  mindestalter: 18,
+  anmeldeschluss: "12. September",
+  anmeldeschlussIso: "2026-09-12",
+  weine: 7,
+  gaenge: 6,
+  mail: "administration@fernand-cina.ch",
+  telefon: "027 455 09 08",
+  telefonHref: "+41274550908",
+  domain: "im-stah.ch"
+} as const;

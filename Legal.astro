@@ -1,0 +1,53 @@
+---
+import "../styles/legal.css";
+import Wortmarke from "../components/logos/Wortmarke.astro";
+import Yoline from "../components/logos/Yoline.astro";
+import { anlass } from "../data/anlass";
+
+interface Props { title: string; kicker: string; h1: string; sub: string; }
+const { title, kicker, h1, sub } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="de-CH">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title} · {anlass.name}</title>
+  <meta name="robots" content="noindex" />
+  <meta name="theme-color" content="#F4F4F2" />
+  <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600&f[]=cabinet-grotesk@500,700,800&display=swap" />
+</head>
+<body>
+<header id="hd">
+  <a class="brand" href="/"><Wortmarke /></a>
+  <a class="back mono" href="/"><span class="n">&#8599;</span><span>Zurück zum Anlass</span></a>
+</header>
+
+<section class="wrap top">
+  <span class="mono" style="color:var(--sec);">( {kicker} )</span>
+  <h1 style="margin-top:26px;" set:html={h1}></h1>
+  <p class="sub">{sub}</p>
+  <p class="stand mono">Stand 3. September 2026 · Anlass vom {anlass.datum}</p>
+</section>
+
+<main class="wrap"><slot /></main>
+
+<footer class="wrap">
+  <div class="in mono">
+    <span><a href={`mailto:${anlass.mail}`}>{anlass.mail}</a></span>
+    <span>
+      <a href="/agb">AGB</a> ·
+      <a href="/teilnahmebedingungen">Teilnahme</a> ·
+      <a href="/impressum">Impressum</a> ·
+      <a href="/datenschutz">Datenschutz</a>
+    </span>
+  </div>
+  <div class="wrap" style="padding-bottom:60px;margin-top:-40px;padding-left:0;">
+    <a href="https://yoline.ch" target="_blank" rel="noopener" style="display:inline-block;line-height:0;">
+      <Yoline class="yo" />
+    </a>
+  </div>
+</footer>
+</body>
+</html>
