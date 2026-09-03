@@ -183,7 +183,7 @@ footer .logo{width:clamp(180px,22vw,380px);opacity:.85;}
 .hero{position:relative;height:100svh;min-height:640px;overflow:hidden;background:var(--deep);color:var(--paper);}
 .hero .px{position:absolute;inset:-14% 0;will-change:transform;}
 .hero .px img{filter:saturate(.92) contrast(1.02) brightness(.94);}
-.hero .veil{position:absolute;inset:0;background:rgba(8,9,10,.36);}
+.hero .veil{position:absolute;inset:0;background:rgba(26,18,12,.40);}
 .hero .in-b{position:absolute;inset:auto 0 0 0;padding:0 var(--padR) 9vh var(--padL);}
 .hero .eyebrow{display:flex;gap:14px;align-items:center;margin-bottom:3vh;opacity:.8;}
 .hero .eyebrow i{display:block;width:44px;height:1px;background:currentColor;}

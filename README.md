@@ -193,11 +193,25 @@ Der Burger öffnet eine vollflächige Überlagerung, die über `clip-path` von o
 erscheint die Überlagerung ohne Bewegung. Ohne JavaScript bleibt sie verborgen, die
 Unterseiten stehen im Fuss.
 
-**Kontrast auf dem Titelbild.** Der Schleier über dem Bild steht auf `rgba(8,9,10,.36)`.
-Gemessen am gerenderten Bild, gemittelt auf Strichbreite, trägt die weisse Schrift damit
-4.70 zu 1 gegen die hellste Stelle unter der obersten Zeile. Bei `.32` sind es 4.29 zu 1
-und damit zu wenig. Wer das Bild weiter aufhellt, muss den Schleier nachziehen und neu
-messen. Das Bild selbst abzudunkeln ist der falsche Weg, es war zuvor zu dunkel.
+**Kontrast auf dem Titelbild.** Der Schleier steht auf `rgba(26,18,12,.40)`, warm statt
+neutral. Das Bild trägt Morgenlicht, ein neutralschwarzer Schleier zieht die Wärme heraus.
+Der warme Ton ist heller als der neutrale und deckt bei gleicher Deckung deshalb weniger.
+Gemessen am gerenderten Bild, gemittelt auf Strichbreite, schlechteste der drei Zeilen:
+
+| Schleier | 1920 | 1440 | 1280 | 390 |
+|---|---|---|---|---|
+| `rgba(26,18,12,.32)` | 4.09 | 4.11 | 4.11 | 8.23 |
+| `rgba(26,18,12,.34)` | 4.27 | 4.29 | 4.29 | 8.46 |
+| `rgba(26,18,12,.36)` | 4.47 | 4.50 | 4.50 | 8.73 |
+| `rgba(26,18,12,.38)` | 4.63 | 4.65 | 4.65 | 8.85 |
+| `rgba(26,18,12,.40)` | 4.85 | 4.87 | 4.87 | 9.13 |
+
+Ab `.38` hält der Wert 4.5 zu 1. Gesetzt ist `.40`, weil die Messung ohne Cabinet Grotesk
+lief und die Reserve die Unsicherheit im Schriftbild deckt. Sobald die Schriften lokal
+liegen, neu messen und den Schleier senken. Das Bild selbst abzudunkeln ist der falsche
+Weg, es war zuvor zu dunkel.
+
+Die Bildbänder tragen keinen Schleier, nur den Filter auf `.band .px img`.
 
 **Karten.** Keine eingebettete Karte. Adresse und Verweise auf Google Maps und den SBB-Fahrplan öffnen extern. Daten fliessen erst beim Klick, so steht es in der Datenschutzerklärung.
 
@@ -255,7 +269,7 @@ messen. Das Bild selbst abzudunkeln ist der falsche Weg, es war zuvor zu dunkel.
 5. **Juristische Prüfung.** AGB, Teilnahmebedingungen, Impressum und Datenschutzerklärung sind nach bestem Wissen erstellt, jedoch nicht anwaltlich geprüft.
 6. **Französisch.** Salgesch liegt an der Sprachgrenze. Eine Fassung fehlt und ist ein offener Entscheid.
 7. **Wortmarke.** Die SVG-Datei ist nachgezeichnet. Die Konturen sind ab etwa 900 Pixel Breite sichtbar treppig. Für Druck ab A2 braucht es die Marke aus der Originalschrift.
-8. **Schriften.** Für den Produktivbetrieb nach `src/assets/fonts/` legen und über `@font-face` einbinden, statt vom fremden Server zu laden.
+8. **Schriften.** Cabinet Grotesk und Switzer laden weiter von `api.fontshare.com`. Für den Produktivbetrieb gehören sie nach `src/assets/fonts/` und über `@font-face` eingebunden. Ein Versuch scheiterte: Die Netzregel dieser Umgebung sperrt `api.fontshare.com`, und für Cabinet Grotesk existiert auf npm kein Paket. Beschaffung von einem Rechner mit freiem Zugang, danach Schleier auf dem Titelbild neu messen und senken.
 9. **Titelbild aus einem Bildschirmfoto.** `clos-morgenlicht.jpg` ist eine Bildschirmaufnahme, 1782 mal 970 Pixel. Sie liefert 960, 1440 und 1782 Pixel Breite, die angefragten 2000 fehlen. Ein Bildschirmfoto trägt bereits eine Kompression, die zweite kommt beim Umrechnen dazu. Es braucht die Aufnahme aus dem Original ab 2000 Pixel Breite.
 10. **Mehrfach komprimierte Bänder.** `rebhaus-drohne.jpg` und `rebberg.jpg` sind bereits stark komprimiert. Beim Umrechnen auf WebP wachsen sie deshalb: 262 gegen 185 kB und 140 gegen 106 kB, je bei 1280 Pixel Breite. Die Qualität bleibt bei 72, tiefer zu gehen deckt den Fehler nur zu. Es braucht die Originale aus dem Bestand.
 
