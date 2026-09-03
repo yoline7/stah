@@ -1,5 +1,7 @@
 ---
 import Legal from "../layouts/Legal.astro";
+import { anlass } from "../data/anlass";
+const schluss = `${anlass.anmeldeschluss} ${anlass.anmeldeschlussIso.slice(0, 4)}`;
 ---
 <Legal title="AGB" kicker="AGB" h1={`Allgemeine Geschäftsbedingungen`} sub="Bedingungen für Anmeldung, Ticket und Teilnahme am Anlass z’Wallis im Stah.">
 <section>
@@ -26,7 +28,7 @@ import Legal from "../layouts/Legal.astro";
 <p>Die Anmeldung erfolgt über das Formular auf im-stah.ch. Erforderlich sind Name, E-Mail-Adresse, Anzahl Personen und die Essenswahl je Person.</p>
 <p>Die Anmeldung ist ein verbindliches Angebot. Der Vertrag kommt mit der Bestätigung per E-Mail zustande.</p>
 <h3>3.2 Anmeldeschluss</h3>
-<p>Die Anmeldung schliesst am 12. September 2026 um 23:59 Uhr. Bei früherer Belegung aller Plätze schliesst sie vorher.</p>
+<p>Die Anmeldung schliesst am {schluss} um 23:59 Uhr. Bei früherer Belegung aller Plätze schliesst sie vorher.</p>
 <h3>3.3 Platzzahl</h3>
 <p>Der Anlass ist auf 50 Plätze begrenzt. Plätze werden in der Reihenfolge des Eingangs vergeben.</p>
 <h3>3.4 Essenswahl</h3>
@@ -57,7 +59,7 @@ import Legal from "../layouts/Legal.astro";
 <section>
 <h2>6 · Stornierung und Ersatzperson</h2>
 <h3>6.1 Rücktritt</h3>
-<p>Bis am 12. September 2026 ist ein Rücktritt kostenfrei möglich. Der Betrag wird vollständig zurückerstattet.</p>
+<p>Bis am {schluss} ist ein Rücktritt kostenfrei möglich. Der Betrag wird vollständig zurückerstattet.</p>
 <p>Ab dem 13. September 2026 wird der volle Betrag verrechnet. Grund ist der Einkauf der Küche, der zu diesem Zeitpunkt getätigt ist.</p>
 <h3>6.2 Verhinderung</h3>
 <p>Eine Weitergabe des Platzes an eine andere Person erfolgt nur nach vorgängiger Absprache. Bitte melde dich per E-Mail, wir prüfen den Fall und suchen eine Lösung.</p>

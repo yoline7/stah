@@ -1,7 +1,8 @@
 ---
 import { Image } from "astro:assets";
 import Base from "../layouts/Base.astro";
-import i_rebhaus_drohne from "../assets/img/rebhaus-drohne.jpg";
+import { anlass } from "../data/anlass";
+import i_team from "../assets/img/team.jpg";
 ---
 <Base title="Organisation · z'Wallis im Stah" description="Ablauf, Anfahrt, Shuttle, häufige Fragen und Kontakt zum Anlass vom 19. September 2026.">
 <!-- KOPF -->
@@ -32,6 +33,17 @@ import i_rebhaus_drohne from "../assets/img/rebhaus-drohne.jpg";
   </div>
 </section>
 
+<!-- BAND -->
+<section class="band mm">
+  <div class="px" data-px="0.18"><Image src={i_team}
+         alt="Alisha Cina und Alain Lerjen im Kochhemd, hinter ihnen die Berge über dem Rhonetal"
+         widths={[960, 1440, 2000]} sizes="100vw" quality={72} format="webp" loading="lazy" /></div>
+  <div class="q">
+    <h2 class="head fu">Alisha Cina und Alain Lerjen führen dich durch den Tag.</h2>
+    <span class="mono fu d2">Von zehn bis achtzehn Uhr</span>
+  </div>
+</section>
+
 <!-- WEG -->
 <section class="wrap s-c" id="weg">
   <div class="grid">
@@ -46,17 +58,6 @@ import i_rebhaus_drohne from "../assets/img/rebhaus-drohne.jpg";
           <p style="margin-top:14px;"><a class="lnk" href="https://www.google.com/maps/search/?api=1&amp;query=Fernand+Cina+Bahnhofstrasse+27+3970+Salgesch" target="_blank" rel="noopener">Route öffnen</a> &nbsp;·&nbsp; <a class="lnk" href="https://www.sbb.ch/de" target="_blank" rel="noopener">Fahrplan SBB</a></p></div>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- BAND -->
-<section class="band mm">
-  <div class="px" data-px="0.18"><Image src={i_rebhaus_drohne}
-         alt="Drohnenblick auf das Rebhaus zwischen den Rebzeilen des Clos du Cornalin"
-         widths={[960, 1440, 2000]} sizes="100vw" quality={72} format="webp" loading="lazy" /></div>
-  <div class="q">
-    <h2 class="head fu">Zwei Minuten vom Bahnhof, dann hinauf.</h2>
-    <span class="mono fu d2">Shuttle oder zu Fuss durch die Reben</span>
   </div>
 </section>
 
@@ -84,7 +85,7 @@ import i_rebhaus_drohne from "../assets/img/rebhaus-drohne.jpg";
         <details><summary>Muss ich den ganzen Tag stehen?</summary><p>Sitzplätze sind da, Stehtische auch. Du wechselst, wann du willst.</p></details>
         <details><summary>Welche Weine gibt es?</summary><p>Alisha Cina hat sieben ausgesucht, einen zu jedem Gang. Welche es sind, erfährst du vor Ort.</p></details>
         <details><summary>Was passiert bei Regen?</summary><p>Der Anlass findet statt. Nimm eine Jacke mit, wir sind auch draussen.</p></details>
-        <details><summary>Ich habe eine Allergie.</summary><p>Antworte auf die Bestätigungsmail. Alain Lerjen richtet sich danach.</p></details>
+        <details><summary>Ich habe eine Allergie.</summary><p>Antworte auf die Bestätigungsmail, bis {anlass.anmeldeschluss}. Alain Lerjen richtet sich danach.</p></details>
         <details><summary>Ich bin verhindert, was nun?</summary><p>Melde dich bei uns. Wir schauen uns den Fall an und suchen eine Lösung.</p></details>
         <details><summary>Kommen wir als Gruppe unter?</summary><p>Ab acht Personen melde dich direkt bei uns, dann reservieren wir einen Block.</p></details>
         <details><summary>Kann ich in der Nähe übernachten?</summary><p>Salgesch hat Zimmer im Dorf, Leukerbad und Siders liegen wenige Minuten entfernt. Mit dem Zug kommst du auch spät noch weg.</p></details>
@@ -118,7 +119,7 @@ import i_rebhaus_drohne from "../assets/img/rebhaus-drohne.jpg";
   <div class="grid">
     <div class="col-8">
       <h2 class="head fu" style="max-width:16ch;">50 Plätze. Einer davon ist deiner.</h2>
-      <p class="fu d2 sec" style="max-width:40ch;margin-top:3vh;">CHF 145.00 pro Person. Anmeldung bis 12. September.</p>
+      <p class="fu d2 sec" style="max-width:40ch;margin-top:3vh;">{anlass.preisText} pro Person. Anmeldung bis {anlass.anmeldeschluss}.</p>
       <a class="send fu d3" href="/anmeldung"><span>Zur Anmeldung</span><span class="n">&#8599;</span></a>
     </div>
   </div>

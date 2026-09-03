@@ -96,11 +96,11 @@ Jedes Bild steht genau einmal, die beiden Porträts zweimal.
 | Bild | Seite | Stelle |
 |---|---|---|
 | `clos-morgenlicht.jpg` | `index.astro` | Titelbild |
-| `team.jpg` | `index.astro` | Bildband nach dem Abschnitt «Die zwei» |
+| `mood-messer.jpg` | `index.astro` | Bildband nach dem Abschnitt «Die zwei» |
 | `rebberg.jpg` | `index.astro` | Bildband vor dem Abschluss |
-| `mood-messer.jpg` | `kulinarik.astro` | Bildband nach dem Menü |
-| `clos-du-cornalin.jpg` | `wein.astro` | Bildband nach der Begleitung |
-| `rebhaus-drohne.jpg` | `organisation.astro` | Bildband bei der Anfahrt |
+| `clos-du-cornalin.jpg` | `kulinarik.astro` | Bildband nach dem Menü |
+| `rebhaus-drohne.jpg` | `wein.astro` | Bildband nach der Begleitung |
+| `team.jpg` | `organisation.astro` | Bildband nach dem Ablauf |
 | `alisha-cina.jpg` | `index.astro`, `wein.astro` | Porträt |
 | `alain-lerjen.jpg` | `index.astro`, `kulinarik.astro` | Porträt |
 
@@ -185,6 +185,20 @@ Für den Produktivbetrieb gehören die Dateien lokal nach `assets/fonts/` und in
 
 **Bewegung.** Parallaxe über `animation-timeline: view()` mit JavaScript-Rückfall. Zeilenenthüllung und Bildaufbau über `IntersectionObserver`. Alles schaltet bei `prefers-reduced-motion: reduce` ab.
 
+**Kopfzeile.** Drei Zonen: Wortmarke links, Knopf «Platz sichern» mittig, Burger rechts.
+Auf schmalen Schirmen verkürzt der Knopf auf «Anmelden», alle drei Zonen bleiben.
+Der Burger öffnet eine vollflächige Überlagerung, die über `clip-path` von oben aufzieht.
+`Escape` schliesst, ein Klick auf eine Zeile ebenso. Beim Öffnen erhält `body` ein
+`overflow: hidden`, beim Schliessen fällt es weg. Bei `prefers-reduced-motion: reduce`
+erscheint die Überlagerung ohne Bewegung. Ohne JavaScript bleibt sie verborgen, die
+Unterseiten stehen im Fuss.
+
+**Kontrast auf dem Titelbild.** Der Schleier über dem Bild steht auf `rgba(8,9,10,.36)`.
+Gemessen am gerenderten Bild, gemittelt auf Strichbreite, trägt die weisse Schrift damit
+4.70 zu 1 gegen die hellste Stelle unter der obersten Zeile. Bei `.32` sind es 4.29 zu 1
+und damit zu wenig. Wer das Bild weiter aufhellt, muss den Schleier nachziehen und neu
+messen. Das Bild selbst abzudunkeln ist der falsche Weg, es war zuvor zu dunkel.
+
 **Karten.** Keine eingebettete Karte. Adresse und Verweise auf Google Maps und den SBB-Fahrplan öffnen extern. Daten fliessen erst beim Klick, so steht es in der Datenschutzerklärung.
 
 **Auszeichnung.** Das Basis-Layout erzeugt Open Graph und Twitter Card für jede Seite. Die Startseite trägt zusätzlich einen `FoodEvent`-Block nach schema.org, gespeist aus `src/data/anlass.ts`.
@@ -215,7 +229,7 @@ Für den Produktivbetrieb gehören die Dateien lokal nach `assets/fonts/` und in
 1. Die Werbeeinwilligung steht getrennt von der Zustimmung zu den Bedingungen und ist nie vorangekreuzt. Grundlage: Art. 3 Abs. 1 lit. o UWG.
 2. Zur Einwilligung gehören Status, Zeitstempel, Quelle und IP, filterbar und als CSV exportierbar.
 3. Bei 50 vergebenen Plätzen `#formular` und `.side` ausblenden, `#warteliste` einblenden.
-4. Anmeldeschluss 12. September 2026, 23:59. Danach schliesst das Formular.
+4. Anmeldeschluss 15. September 2026, 23:59. Danach schliesst das Formular. Der Wert steht in `src/data/anlass.ts`, die Seiten ziehen ihn von dort.
 5. Preis: Anzahl mal CHF 145.00. Anzeige mit Apostroph ab vier Stellen.
 6. Die Küche erhält nur die Zahlen je Schiene und die gemeldeten Allergien, ohne Kontaktdaten.
 

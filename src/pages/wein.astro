@@ -1,7 +1,8 @@
 ---
 import { Image } from "astro:assets";
 import Base from "../layouts/Base.astro";
-import i_clos_du_cornalin from "../assets/img/clos-du-cornalin.jpg";
+import { anlass } from "../data/anlass";
+import i_rebhaus_drohne from "../assets/img/rebhaus-drohne.jpg";
 import i_alisha_cina from "../assets/img/alisha-cina.jpg";
 ---
 <Base title="Wein · z'Wallis im Stah" description="Sieben Weine, ausgesucht von Alisha Cina. Aus 20 Hektaren eigenem Rebland rund um Salgesch.">
@@ -37,12 +38,12 @@ import i_alisha_cina from "../assets/img/alisha-cina.jpg";
 
 <!-- BAND 2 -->
 <section class="band mm">
-  <div class="px" data-px="0.18"><Image src={i_clos_du_cornalin}
-         alt="Rebhaus im Clos du Cornalin über Salgesch, dahinter das Rhonetal im Morgenlicht"
+  <div class="px" data-px="0.18"><Image src={i_rebhaus_drohne}
+         alt="Drohnenblick auf das Rebhaus zwischen den Rebzeilen des Clos du Cornalin"
          widths={[960, 1440, 2000]} sizes="100vw" quality={72} format="webp" loading="lazy" /></div>
   <div class="q">
-    <h2 class="head fu">Der Rest steht am 19. September oben in den Reben.</h2>
-    <span class="mono fu d2">Samstag, 19. September 2026 · Clos du Cornalin</span>
+    <h2 class="head fu">Sieben Weine aus eigenem Rebland.</h2>
+    <span class="mono fu d2">20 Hektaren rund um Salgesch</span>
   </div>
 </section>
 
@@ -83,7 +84,7 @@ import i_alisha_cina from "../assets/img/alisha-cina.jpg";
   <div class="grid">
     <div class="col-8">
       <h2 class="head fu" style="max-width:16ch;">50 Plätze. Einer davon ist deiner.</h2>
-      <p class="fu d2 sec" style="max-width:40ch;margin-top:3vh;">CHF 145.00 pro Person. Anmeldung bis 12. September.</p>
+      <p class="fu d2 sec" style="max-width:40ch;margin-top:3vh;">{anlass.preisText} pro Person. Anmeldung bis {anlass.anmeldeschluss}.</p>
       <a class="send fu d3" href="/anmeldung"><span>Zur Anmeldung</span><span class="n">&#8599;</span></a>
     </div>
   </div>
