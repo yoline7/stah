@@ -43,7 +43,7 @@ const preview = new URL("/preview.jpg", Astro.site);
   <meta name="twitter:image" content={preview} />
 
   {jsonld && (
-    <script type="application/ld+json" set:html={JSON.stringify({
+    <script is:inline type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": "FoodEvent",
       name: anlass.name,

@@ -74,7 +74,7 @@ im-stah/
     └── assets/img/
         ├── clos-morgenlicht.jpg
         ├── clos-du-cornalin.jpg
-        ├── rhonetal.jpg
+        ├── rebhaus-drohne.jpg
         ├── rebberg.jpg
         ├── team.jpg
         ├── mood-messer.jpg
@@ -101,7 +101,7 @@ Jedes Bild steht genau einmal, die beiden Porträts zweimal.
 | `rebberg.jpg` | `index.astro` | Bildband vor dem Abschluss |
 | `mood-messer.jpg` | `kulinarik.astro` | Bildband nach dem Menü |
 | `clos-du-cornalin.jpg` | `wein.astro` | Bildband nach der Begleitung |
-| `rhonetal.jpg` | `organisation.astro` | Bildband bei der Anfahrt |
+| `rebhaus-drohne.jpg` | `organisation.astro` | Bildband bei der Anfahrt |
 | `alisha-cina.jpg` | `index.astro`, `wein.astro` | Porträt |
 | `alain-lerjen.jpg` | `index.astro`, `kulinarik.astro` | Porträt |
 
@@ -120,8 +120,8 @@ angefragten Breite, fällt die Reihe entsprechend kürzer aus. `clos-du-cornalin
 misst 820 mal 1100 Pixel und liefert deshalb nur eine Breite.
 
 Das Titelbild braucht Querformat und Breite. `clos-morgenlicht.jpg` misst
-1782 mal 970 Pixel und liefert zwei Breiten. Für die volle Wirkung auf grossen
-Bildschirmen fehlt eine Vorlage ab 2000 Pixel.
+1782 mal 970 Pixel und liefert drei Breiten, die angefragten 2000 fehlen.
+Zur Herkunft der Vorlagen siehe Offene Punkte 9 und 10.
 
 Partnermarken bleiben PNG mit Alphakanal und behalten ihre Grösse. Sie tragen
 `densities={[1]}`, damit `srcset` gesetzt ist, ohne dass umgerechnet wird.
@@ -242,7 +242,8 @@ Für den Produktivbetrieb gehören die Dateien lokal nach `assets/fonts/` und in
 6. **Französisch.** Salgesch liegt an der Sprachgrenze. Eine Fassung fehlt und ist ein offener Entscheid.
 7. **Wortmarke.** Die SVG-Datei ist nachgezeichnet. Die Konturen sind ab etwa 900 Pixel Breite sichtbar treppig. Für Druck ab A2 braucht es die Marke aus der Originalschrift.
 8. **Schriften.** Für den Produktivbetrieb nach `src/assets/fonts/` legen und über `@font-face` einbinden, statt vom fremden Server zu laden.
-9. **Titelbild.** `clos-morgenlicht.jpg` stammt aus einem Bildschirmfoto und misst 1782 mal 970 Pixel. Es liefert 960 und 1782 Pixel Breite, nicht die volle Reihe. Eine Aufnahme aus dem Original ab 2000 Pixel Breite wäre der bessere Weg.
+9. **Titelbild aus einem Bildschirmfoto.** `clos-morgenlicht.jpg` ist eine Bildschirmaufnahme, 1782 mal 970 Pixel. Sie liefert 960, 1440 und 1782 Pixel Breite, die angefragten 2000 fehlen. Ein Bildschirmfoto trägt bereits eine Kompression, die zweite kommt beim Umrechnen dazu. Es braucht die Aufnahme aus dem Original ab 2000 Pixel Breite.
+10. **Mehrfach komprimierte Bänder.** `rebhaus-drohne.jpg` und `rebberg.jpg` sind bereits stark komprimiert. Beim Umrechnen auf WebP wachsen sie deshalb: 262 gegen 185 kB und 140 gegen 106 kB, je bei 1280 Pixel Breite. Die Qualität bleibt bei 72, tiefer zu gehen deckt den Fehler nur zu. Es braucht die Originale aus dem Bestand.
 
 ---
 
