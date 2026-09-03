@@ -39,6 +39,12 @@ im-stah/
 ├── package-lock.json
 ├── tsconfig.json
 ├── README.md
+├── content/                      Quelltexte der Seiten, nicht gebaut
+│   ├── README.md
+│   ├── index.md
+│   ├── kulinarik.md
+│   ├── wein.md
+│   └── organisation.md
 ├── public/                       favicon.svg · robots.txt · preview.jpg
 └── src/
     ├── data/anlass.ts            Eckdaten des Anlasses, einzige Quelle
@@ -112,6 +118,30 @@ npm run check     # Typen und Vorlagen prüfen
 
 ---
 
+## Texte
+
+Die Texte der vier Inhaltsseiten liegen als Quelle in `content/`. Der Astro-Quelltext
+ist die Umsetzung, nicht die Quelle. Wer einen Text ändert, ändert ihn zuerst dort.
+
+| Datei | Speist | Deckt |
+|---|---|---|
+| `content/index.md` | `src/pages/index.astro` | Titel, Der Anlass, Der Auftakt, Die zwei, Der Tag, Ab vierzehn Uhr, Der Ort, Abschluss |
+| `content/kulinarik.md` | `src/pages/kulinarik.astro` | Kopf, Sechs Gänge, Die Wahl, Der Koch, Aus dem Wallis, Aufruf |
+| `content/wein.md` | `src/pages/wein.astro` | Kopf, Die Begleitung, Das Weingut, Die Weinbegleitung, Aufruf |
+| `content/organisation.md` | `src/pages/organisation.astro` | Kopf, Der Tag, Durch den Tag, Anfahrt, Gut zu wissen, Fragen, Kontakt, Aufruf |
+
+`content/` wird nicht gebaut. Astro liest ausschliesslich `src/`.
+
+**Was nicht aus den Quelltexten kommt.** Die Bildunterschriften der Bänder, die drei
+Pfeilzeilen unter «Mehr dazu», das Laufband, die Anmeldung und die vier Rechtsseiten.
+Für sie liegt kein Quelltext vor, sie stehen unverändert im Astro-Quelltext.
+
+**Zahlen führen aus der Datendatei.** Steht in einem Quelltext eine Zahl, ein Datum
+oder ein Preis, gilt trotzdem `src/data/anlass.ts`. Die bekannten Abweichungen stehen
+unter «Offene Punkte».
+
+---
+
 ## Schriften
 
 Beide Schriften liegen im Repository. Die Seite lädt keine Schrift von einem fremden Server.
@@ -120,6 +150,9 @@ Beide Schriften liegen im Repository. Die Seite lädt keine Schrift von einem fr
 |---|---|---|
 | Anzeige, alle Grade ab 20 Pixel | Cabinet Grotesk | `src/assets/fonts/cabinet-grotesk/`, sieben Schnitte als `woff2` mit `woff` als Rückfall |
 | Fliesstext und Mikro-Marken | Schibsted Grotesk Variable | `@fontsource-variable/schibsted-grotesk`, Achse `wght` von 400 bis 900 |
+
+Switzer liegt seit dem 3. September 2026 als Datei in der Wurzel, ist aber **nicht
+eingebaut**. Es fehlt die Lizenz, siehe «Offene Punkte».
 
 **Cabinet Grotesk.** Von der Indian Type Foundry, bezogen über Fontshare. Lizenz ITF Free Font License 2.0, Wortlaut unverändert unter `src/assets/fonts/cabinet-grotesk/LICENSE`. Die sieben `@font-face`-Regeln stehen in `src/styles/fonts.css`, alle unter der Familie `"Cabinet Grotesk"` mit den Gewichten 100 bis 800. Die Seite selbst nutzt 400 und 500, die übrigen Schnitte lädt der Browser nie, weil kein Element sie anfragt.
 
@@ -238,6 +271,7 @@ Preis, Datum, Platzzahl oder Anmeldeschluss stehen ausschliesslich in `src/data/
 | Name | Text | ja |
 | E-Mail | E-Mail | ja |
 | Telefon | Telefon | nein |
+| Sprache | Deutsch oder Französisch | nein |
 | Anzahl Personen | 1 bis 6 | ja |
 | Name je Person | Text | nein |
 | Essen je Person | Fleisch oder vegetarisch | ja |
@@ -252,6 +286,7 @@ Preis, Datum, Platzzahl oder Anmeldeschluss stehen ausschliesslich in `src/data/
 4. Anmeldeschluss 15. September 2026, 23:59. Danach schliesst das Formular. Der Wert steht in `src/data/anlass.ts`, die Seiten ziehen ihn von dort.
 5. Preis: Anzahl mal CHF 145.00. Anzeige mit Apostroph ab vier Stellen.
 6. Die Küche erhält nur die Zahlen je Schiene und die gemeldeten Allergien, ohne Kontaktdaten.
+7. Die Sprachwahl ist freiwillig, Vorgabe Deutsch. Sie geht an Alisha Cina und Alain Lerjen, damit sie wissen, wie viele Gäste sie auf Französisch begleiten.
 
 ---
 
@@ -296,16 +331,20 @@ Nach dem Aufschalten von `im-stah.ch` die Domain im Vercel-Projekt hinterlegen.
 
 Jeder Punkt nennt die Ursache und den nächsten Schritt.
 
-1. **Maison 13 Catering.** Firmenname, Rechtsform und Adresse fehlen im Impressum. Ursache: Angaben liegen nicht vor. Nächster Schritt: bei Maison 13 einholen und im Impressum ergänzen.
-2. **Eringer.** Die Herkunft des Fleisches ist nicht schriftlich bestätigt, der Name steht mehrfach auf der Seite. Ursache: mündliche Zusage. Nächster Schritt: schriftliche Bestätigung einholen, sonst die Nennung streichen.
-3. **Munder Safran.** Die Bezugsquelle ist nicht bestätigt. Ursache: wie oben. Nächster Schritt: Bestätigung einholen.
-4. **Zahlungsdienstleister und Hosting.** Beide Namen fehlen in der Datenschutzerklärung. Ursache: Der Zahlungsdienstleister ist noch nicht gewählt, Hosting läuft über Vercel. Nächster Schritt: nach dem Entscheid beide Namen unter Ziffer 4 eintragen.
-5. **Juristische Prüfung.** AGB, Teilnahmebedingungen, Impressum und Datenschutzerklärung sind nach bestem Wissen erstellt, jedoch nicht anwaltlich geprüft. Ursache: keine Prüfung beauftragt. Nächster Schritt: Prüfung vor dem Aufschalten der Anmeldung.
-6. **Französisch.** Salgesch liegt an der Sprachgrenze, eine französische Fassung fehlt. Ursache: offener Entscheid. Nächster Schritt: entscheiden, ob eine Fassung nötig ist, danach `astro-i18n` prüfen.
-7. **Wortmarke.** Die SVG-Datei ist nachgezeichnet, die Konturen sind ab etwa 900 Pixel Breite sichtbar treppig. Ursache: kein Original aus der Schrift. Nächster Schritt: Für Druck ab A2 die Marke aus der Originalschrift setzen.
-8. **Schriftdateien in einem öffentlichen Repository.** Die `woff2`-Dateien liegen in einem öffentlichen Repository und sind damit für jeden herunterladbar. Ursache: Abschnitt 02 der ITF Free Font License nennt «repository» und «publicly accessible servers» unter den untersagten Wegen der Weitergabe. Derselbe Abschnitt erlaubt im Schlusssatz das Selbsthosten für die eigene Website, was die Auslieferung über `im-stah.ch` deckt. Die Kopie im Repository ist davon nicht erfasst. Nächster Schritt: entweder eine schriftliche Bestätigung der Indian Type Foundry einholen, oder das Repository auf privat stellen, oder die Schriftdateien aus der Versionsverwaltung nehmen und beim Bauen zuliefern.
-9. **Titelbild aus einem Bildschirmfoto.** `clos-morgenlicht.jpg` ist eine Bildschirmaufnahme, 1782 mal 970 Pixel. Sie liefert 960, 1440 und 1782 Pixel Breite, die angefragten 2000 fehlen. Ursache: Das Original liegt nicht vor, ein Bildschirmfoto trägt bereits eine Kompression, die zweite kommt beim Umrechnen dazu. Nächster Schritt: Aufnahme aus dem Bestand der Fernand Cina SA ab 2000 Pixel Breite holen, danach den Schleier neu messen.
-10. **Mehrfach komprimierte Bänder.** `rebhaus-drohne.jpg` und `rebberg.jpg` wachsen beim Umrechnen auf WebP: 262 gegen 185 kB und 140 gegen 106 kB, je bei 1280 Pixel Breite. Ursache: Die Vorlagen sind bereits stark komprimiert. Nächster Schritt: Originale aus dem Bestand holen. Die Qualität bleibt bei 72, tiefer zu gehen deckt die Ursache nur zu.
+1. **Switzer ohne Lizenz.** 98 Switzer-Dateien liegen in der Wurzel, darunter die variable Fassung. Ursache: Dem Upload liegt kein Lizenzdokument bei, und die vorhandene `src/assets/fonts/cabinet-grotesk/LICENSE` nennt Switzer nicht. Ohne Text lässt sich nicht belegen, dass Webeinbettung und Selbsthosten erlaubt sind. Nächster Schritt: die `FFL.txt` aus dem Switzer-Download nachliefern oder bestätigen, dass Switzer unter derselben ITF Free Font License 2.0 bezogen wurde. Danach Einbau nach `src/assets/fonts/switzer/`, nur die variable `woff2`, und `@fontsource-variable/schibsted-grotesk` entfernen.
+2. **Zwei Antworten fehlen im Quelltext.** `content/organisation.md` trägt bei «Was passiert bei Regen?» und «Ich kann doch nicht teilnehmen?» nur Platzhalter. Ursache: Die Regelung ist noch nicht gesetzt. Auf der Seite stehen bis dahin die bisherigen Antworten, bei der Annullation ergänzt um den Verweis auf Ziffer 6 der AGB. Nächster Schritt: beide Antworten im Wortlaut liefern.
+3. **Verweis ohne Ziel.** `content/organisation.md` nennt «[Übernachtungsmöglichkeiten entdecken]» ohne Adresse. Ursache: kein Ziel bestimmt. Auf der Seite steht deshalb der Fliesstext ohne Verweis. Nächster Schritt: Adresse liefern, etwa Valais Wallis Promotion, dann wird die Zeile ein Verweis.
+4. **Schreibweise des Namens.** Die Quelltexte schreiben «Z Wallis im Stah», die Datendatei «z’Wallis im Stah» mit Apostroph. Ursache: zwei Schreibweisen im Umlauf. Auf der Seite gilt die Datendatei. Nächster Schritt: die Schreibweise in `content/` angleichen.
+5. **Wortmarke Fernand Cina mit Wappen.** Die Datei trägt das Wappen über dem Schriftzug. Der Kasten steht im Partnerband 1.62-mal so hoch wie Maison 13, die sichtbare Wortmarke liest sich dadurch kleiner als die anderen zwei. Ursache: Der Richtwert misst den Kasten, nicht die Schrift. Nächster Schritt: eine Fassung ohne Wappen beschaffen, dann trägt der Richtwert.
+6. **Maison 13 Catering.** Firmenname, Rechtsform und Adresse fehlen im Impressum. Ursache: Angaben liegen nicht vor. Nächster Schritt: bei Maison 13 einholen.
+7. **Eringer und Munder Safran.** Beide Herkünfte sind nicht schriftlich bestätigt, beide stehen mehrfach auf der Seite. Ursache: mündliche Zusage. Nächster Schritt: Bestätigung einholen, sonst die Nennung streichen.
+8. **Zahlungsdienstleister und Hosting.** Beide Namen fehlen in der Datenschutzerklärung. Ursache: Der Zahlungsdienstleister ist nicht gewählt, Hosting läuft über Vercel. Nächster Schritt: nach dem Entscheid unter Ziffer 4 eintragen.
+9. **Juristische Prüfung.** AGB, Teilnahmebedingungen, Impressum und Datenschutzerklärung sind nach bestem Wissen erstellt, jedoch nicht anwaltlich geprüft. Ursache: keine Prüfung beauftragt. Nächster Schritt: Prüfung vor dem Aufschalten der Anmeldung.
+10. **Französische Fassung der Website.** Auf der Seite steht jetzt, dass Alisha Cina und Alain Lerjen auf Deutsch und Französisch ansagen. Eine französische Fassung der Seite selbst fehlt. Ursache: offener Entscheid, nicht Teil des Auftrags. Nächster Schritt: entscheiden, danach `astro-i18n` prüfen.
+11. **Wortmarke des Anlasses.** Die SVG-Datei ist nachgezeichnet, die Konturen sind ab etwa 900 Pixel Breite sichtbar treppig. Ursache: kein Original aus der Schrift. Nächster Schritt: Für Druck ab A2 die Marke aus der Originalschrift setzen.
+12. **Schriftdateien in einem öffentlichen Repository.** Die `woff2` von Cabinet Grotesk liegen in einem öffentlichen Repository und sind damit für jeden herunterladbar. Ursache: Abschnitt 02 der ITF Free Font License nennt «repository» und «publicly accessible servers» unter den untersagten Wegen der Weitergabe. Der Schlusssatz desselben Abschnitts erlaubt das Selbsthosten für die eigene Website, was die Auslieferung über `im-stah.ch` deckt. Die Kopie im Repository ist davon nicht erfasst. Nächster Schritt: Bestätigung der Indian Type Foundry einholen, Repository auf privat stellen, oder die Dateien beim Bauen zuliefern.
+13. **Titelbild aus einem Bildschirmfoto.** `clos-morgenlicht.jpg` ist eine Bildschirmaufnahme, 1782 mal 970 Pixel. Ursache: Das Original liegt nicht vor, ein Bildschirmfoto trägt bereits eine Kompression. Nächster Schritt: Aufnahme aus dem Bestand ab 2000 Pixel Breite holen, danach den Schleier neu messen.
+14. **Mehrfach komprimierte Bänder.** `rebhaus-drohne.jpg` und `rebberg.jpg` wachsen beim Umrechnen auf WebP. Ursache: Die Vorlagen sind bereits stark komprimiert. Nächster Schritt: Originale aus dem Bestand holen. Die Qualität bleibt bei 72.
 
 ---
 
@@ -319,7 +358,7 @@ Porträts und Stimmungsbilder stammen aus dem Bestand der Fernand Cina SA.
 
 **Schibsted Grotesk.** Copyright 2023 The Schibsted-Grotesk Project Authors. Lizenz: SIL Open Font License, Version 1.1. Kommerzielle Nutzung und Weitergabe sind erlaubt. Bezogen über `@fontsource-variable/schibsted-grotesk`, der Wortlaut liegt im Paket unter `node_modules/@fontsource-variable/schibsted-grotesk/LICENSE`.
 
-**Switzer wird nicht mehr verwendet.** Für den Fliesstext steht Schibsted Grotesk. Eine Lizenz für Switzer liegt nicht vor.
+**Switzer.** Nicht in Gebrauch. 98 Dateien liegen in der Wurzel, dazu liegt kein Lizenzdokument vor. Ohne Lizenztext lässt sich zu Rechteinhaber, Fassung und erlaubter Nutzung nichts belegen, deshalb steht hier keine Aussage. Solange das so bleibt, wird Switzer nicht eingebaut.
 
 ---
 

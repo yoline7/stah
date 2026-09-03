@@ -45,12 +45,12 @@ const schlussKurz = { tag: `${Number(schlussTag)}.`, monat: monate[Number(schlus
     <div class="lab mono sec fu"><span class="stick">( Der Anlass )</span></div>
     <div class="col-7">
       <h2 class="disp" style="max-width:11ch;">
-        <span class="rl"><span>Drei Marken.</span></span>
-        <span class="rl"><span>Ein Rebberg.</span></span>
+        <span class="rl"><span>Drei Partner.</span></span>
+        <span class="rl"><span>Ein Tag.</span></span>
       </h2>
-      <p class="bodyl fu d2" style="max-width:42ch;margin-top:9vh;">Nah. Echt. Logisch. Nach diesen Prinzipien handelt BergBox.</p>
-      <p class="fu d3 sec" style="max-width:46ch;margin-top:4vh;">Kein Zufall, dass die Marke für regionale Wertschöpfung hinter diesem Tag steht. Fernand Cina öffnet Rebberg und Keller. Maison 13 baut die Küche mitten unter die Gäste.</p>
-      <p class="fu d3 sec" style="max-width:46ch;margin-top:3vh;">Sieben Weine. Sechs Gänge. Acht Stunden über dem Rhonetal. Ein Datum, 50 Plätze.</p>
+      <p class="bodyl fu d2" style="max-width:42ch;margin-top:9vh;">{anlass.name} entstand aus einer gemeinsamen Idee von Fernand Cina, Maison 13 und BergBox.</p>
+      <p class="fu d3 sec" style="max-width:46ch;margin-top:4vh;">Fernand Cina öffnet den Rebberg und die Kellerei. Maison 13 bringt die Küche mitten unter die Gäste. BergBox hält den Faden zusammen und hat die Umsetzung lanciert.</p>
+      <p class="fu d3 sec" style="max-width:46ch;margin-top:3vh;">Ein ganzer Tag mitten in den Reben. Sechs Gänge. Sieben Weine. Elektronische Musik. Persönlich begleitet von Menschen aus dem Wallis.</p>
     </div>
   </div>
 </section>
@@ -69,6 +69,19 @@ const schlussKurz = { tag: `${Number(schlussTag)}.`, monat: monate[Number(schlus
   </div>
 </section>
 
+<!-- AUFTAKT -->
+<section class="wrap s-c">
+  <div class="grid">
+    <div class="lab mono sec fu"><span class="stick">( Der Auftakt )</span></div>
+    <div class="col-7">
+      <h2 class="head fu" style="max-width:15ch;">Dein Tag beginnt in der Kellerei.</h2>
+      <p class="bodyl fu d2" style="max-width:44ch;margin-top:5vh;">Um {anlass.beginn} Uhr startet der Tag bei Fernand Cina in {anlass.dorf}.</p>
+      <p class="fu d2 sec" style="max-width:46ch;margin-top:3vh;">Der erste Wein steht bereit. Danach geht es mit dem Shuttle hinauf zum {anlass.ort}.</p>
+      <p class="fu d2 sec" style="max-width:46ch;margin-top:2.4vh;">Dort wird gekocht, gegessen und eingeschenkt. Die Küche bleibt offen, die Weine werden persönlich begleitet. Du bist mittendrin.</p>
+    </div>
+  </div>
+</section>
+
 <!-- ZWEI -->
 <section class="wrap s-c" id="zwei" style="padding-top:4vh;">
   <div class="grid">
@@ -80,8 +93,9 @@ const schlussKurz = { tag: `${Number(schlussTag)}.`, monat: monate[Number(schlus
                widths={[480, 760, 1000]} sizes="(min-width: 900px) 34vw, 100vw"
                quality={80} format="webp" loading="lazy" /></div></div>
         <h3 class="fu">Alisha Cina</h3>
-        <span class="mono fu d1">Weinbegleitung · Fernand Cina</span>
-        <p class="fu d2">Dritte Generation im Familienbetrieb. Sie hat die sieben Weine ausgesucht und sagt jeden Gang an.</p>
+        <span class="mono fu d1">Wein · Fernand Cina</span>
+        <span class="mono fu d1">Deutsch und Französisch</span>
+        <p class="fu d2">Dritte Generation im Familienbetrieb. Alisha hat gemeinsam mit ihrem Vater Manfred die sieben Weine für den Tag ausgewählt und begleitet die Weinfolge persönlich.</p>
       </figure>
       <figure>
         <div class="ph mm"><div class="px" data-px="0.08"><Image src={i_alain_lerjen}
@@ -90,7 +104,8 @@ const schlussKurz = { tag: `${Number(schlussTag)}.`, monat: monate[Number(schlus
                quality={80} format="webp" loading="lazy" /></div></div>
         <h3 class="fu">Alain Lerjen</h3>
         <span class="mono fu d1">Küche · Maison 13</span>
-        <p class="fu d2">Koch aus Zermatt, heute bei Maison 13. Bei ihm heisst kochen auch servieren und mit den Gästen reden.</p>
+        <span class="mono fu d1">Deutsch und Französisch</span>
+        <p class="fu d2">Koch aus Zermatt. Alain bringt die Küche von Maison 13 in den Rebberg und kocht direkt vor den Gästen.</p>
       </figure>
     </div>
   </div>
@@ -113,12 +128,41 @@ const schlussKurz = { tag: `${Number(schlussTag)}.`, monat: monate[Number(schlus
     <div class="lab mono sec fu"><span class="stick">( Der Tag )</span></div>
     <div class="col-8 fu">
       <div class="reg">
-        <div class="r"><div class="k mono sec">10:00</div><div class="v">Erster Wein in der Kellerei</div><div class="a mono">Salgesch</div></div>
-        <div class="r"><div class="k mono sec">ab 10:30</div><div class="v">Hinauf zum Clos du Cornalin</div><div class="a mono">Shuttle</div></div>
+        <div class="r"><div class="k mono sec">{anlass.beginn}</div><div class="v">Empfang in der Kellerei</div><div class="a mono">{anlass.dorf}</div></div>
+        <div class="r"><div class="k mono sec">ab 10:30</div><div class="v">Hinauf zum {anlass.ort}</div><div class="a mono">Shuttle</div></div>
         <div class="r"><div class="k mono sec">11:15</div><div class="v">Erster Gang</div><div class="a mono">Küche</div></div>
-        <div class="r"><div class="k mono sec">bis 14:00</div><div class="v">Sechs Gänge, sechs Weine</div><div class="a mono">Geführt</div></div>
-        <div class="r"><div class="k mono sec">ab 14:00</div><div class="v">Bar und elektronische Sounds bis sechs</div><div class="a mono">Ausklang</div></div>
-        <div class="r"><div class="k mono sec">18:00</div><div class="v">Ende</div><div class="a mono">Rückfahrt</div></div>
+        <div class="r"><div class="k mono sec">bis 14:00</div><div class="v">Sechs Gänge und sieben Weine</div><div class="a mono">Geführt</div></div>
+        <div class="r"><div class="k mono sec">ab 14:00</div><div class="v">Bar und Beats</div><div class="a mono">Ausklang</div></div>
+        <div class="r"><div class="k mono sec">{anlass.ende}</div><div class="v">Ende und Rückfahrt</div><div class="a mono">Shuttle</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BEATS -->
+<section class="wrap s-e on-dark">
+  <div class="grid">
+    <div class="lab mono sec fu"><span class="stick">( Ab vierzehn Uhr )</span></div>
+    <div class="col-7">
+      <h2 class="head fu" style="max-width:14ch;">Und dann kommen die Beats.</h2>
+      <p class="fu d2 sec" style="max-width:46ch;margin-top:4vh;">Ab 14 Uhr wird aus dem kulinarischen Tag ein langer Nachmittag. Bar. Elektronische Musik. Rebberg.</p>
+      <p class="fu d2 sec" style="max-width:46ch;margin-top:2.4vh;">Bleib bei deinem Glas. Beweg dich zwischen den Reben. Triff die Menschen am Tisch.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ORT -->
+<section class="wrap s-c">
+  <div class="grid">
+    <div class="lab mono sec fu"><span class="stick">( Der Ort )</span></div>
+    <div class="col-7">
+      <h2 class="head fu" style="max-width:14ch;">{anlass.ort}</h2>
+      <p class="bodyl fu d2" style="max-width:44ch;margin-top:5vh;">Oberhalb von {anlass.dorf}. Zwischen den Reben. Mit Blick über das Rhonetal.</p>
+      <p class="fu d2 sec" style="max-width:46ch;margin-top:3vh;">Der {anlass.ort} gehört zu Fernand Cina und gibt dem Tag seinen Rahmen.</p>
+      <div class="weg fu d2">
+        <div><span class="mono">Hier wächst der Wein</span><p>20 Hektaren eigenes Rebland rund um {anlass.dorf}.</p></div>
+        <div><span class="mono">Hier wird gekocht</span><p>Die Küche von Maison 13 steht mitten im Rebberg.</p></div>
+        <div><span class="mono">Hier ist der Tag</span><p>{anlass.plaetze} Menschen verbringen ihn gemeinsam.</p></div>
       </div>
     </div>
   </div>
@@ -170,7 +214,7 @@ const schlussKurz = { tag: `${Number(schlussTag)}.`, monat: monate[Number(schlus
         <div><b>{schlussKurz.tag}<i>{schlussKurz.monat}</i></b><span class="mono">Anmeldeschluss, danach kauft die Küche ein</span></div>
       </div>
       <a class="send fu d3" style="margin-top:7vh;" href="/anmeldung"><span>Zur Anmeldung</span><span class="n">&#8599;</span></a>
-      <p class="fu d3 sec" style="margin-top:4vh;max-width:40ch;">Sind alle Plätze vergeben, führt derselbe Weg auf die Warteliste.</p>
+      <p class="fu d3 sec" style="margin-top:4vh;max-width:40ch;">Ein kleiner Rahmen gehört zu diesem Tag dazu. Sind alle Plätze vergeben, führt derselbe Weg auf die Warteliste.</p>
     </div>
   </div>
 </section>
