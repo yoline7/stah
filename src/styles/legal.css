@@ -9,7 +9,7 @@
 *,*::before,*::after{box-sizing:border-box;}
 html,body{margin:0;padding:0;}
 body{background:var(--deep);color:var(--paper);
- font-family:"Schibsted Grotesk Variable","Helvetica Neue",Helvetica,Arial,sans-serif;font-size:var(--body);line-height:1.62;
+ font-family:"Switzer","Helvetica Neue",Helvetica,Arial,sans-serif;font-size:var(--body);line-height:1.62;
  -webkit-font-smoothing:antialiased;text-align:left;}
 a{color:inherit;}
 h1,h2,h3,p,ul{margin:0;font-weight:400;}
@@ -19,7 +19,7 @@ h1,h2,h3,p,ul{margin:0;font-weight:400;}
 
 /* Anzeigeschnitt fuer alle Groessen ab 20px */
 h1,h2,h3,.disp,.head,.facts b,.mn .ti,.arw .t,.reg .v,.duo h3,.side b,.hero .lead,.top h1{
-  font-family:"Cabinet Grotesk","Schibsted Grotesk Variable","Helvetica Neue",Helvetica,Arial,sans-serif;font-feature-settings:"ss01";}
+  font-family:"Cabinet Grotesk","Switzer","Helvetica Neue",Helvetica,Arial,sans-serif;font-feature-settings:"ss01";}
 .wrap{padding-left:var(--padL);padding-right:var(--padR);}
 #hd{position:sticky;top:0;z-index:20;background:var(--deep);display:flex;align-items:center;
  justify-content:space-between;gap:2vw;padding:22px var(--padR) 22px var(--padL);
@@ -55,4 +55,18 @@ footer a:hover{color:var(--paper);}
 @media(max-width:820px){
  :root{--padL:6vw;--padR:5vw;}
  .def div{grid-template-columns:1fr;row-gap:4px;}
+}
+
+/* ---------- Sprachumschalter und Vorrangvermerk ---------- */
+#hd .rechts{display:flex;align-items:center;gap:clamp(14px,2vw,26px);}
+.spr{display:inline-flex;align-items:center;gap:7px;color:var(--sec);white-space:nowrap;}
+.spr .it{display:inline-flex;align-items:center;gap:7px;}
+.spr b{font-weight:inherit;opacity:.5;}
+.spr a{text-decoration:none;transition:color .24s var(--ease);}
+.spr a:hover,.spr a.an{color:var(--paper);}
+.vorrang{margin-top:4vh;padding:14px 16px;border:1px solid var(--hair);border-radius:6px;
+ color:var(--sec);max-width:56ch;line-height:1.7;letter-spacing:.12em;}
+.vorrang a{color:var(--paper);}
+@media(max-width:560px){
+  #hd .rechts .back span:last-child{display:none;}
 }

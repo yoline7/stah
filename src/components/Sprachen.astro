@@ -1,0 +1,17 @@
+---
+/** Sprachumschalter. Zeigt alle drei Fassungen derselben Seite. */
+import { fassungen, type Sprache, type Seite } from "../i18n/ui";
+
+interface Props { lang: Sprache; seite: Seite; class?: string }
+const { lang, seite, class: klasse = "" } = Astro.props;
+const liste = fassungen(seite);
+---
+<div class:list={["spr", "mono", klasse]}>
+  {liste.map((f, i) => (
+    <span class="it">
+      {i > 0 && <b aria-hidden="true">·</b>}<a href={f.weg} hreflang={f.html} lang={f.html}
+        class:list={{ an: f.lang === lang }}
+        aria-current={f.lang === lang ? "true" : undefined}>{f.lang.toUpperCase()}</a>
+    </span>
+  ))}
+</div>

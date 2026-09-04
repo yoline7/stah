@@ -2,13 +2,13 @@
 
 ## Dein Tag im Wallis
 
-### Mit Wein, Kulinarik und passenden Beats.
+### Mit Wein, Kulinarik und Musik den ganzen Tag.
 
 **Samstag, 19. September 2026**  
 **Clos du Cornalin · Salgesch**
 
 Ein ganzer Tag mitten in den Reben.  
-Sechs Gänge. Sieben Weine. Elektronische Musik.
+Sechs Gänge. Sieben Weine. Musik den ganzen Tag.
 
 Persönlich begleitet von Menschen aus dem Wallis.
 
@@ -74,11 +74,11 @@ Die Gänge entstehen vor dir. Serviert wird direkt dort, wo gekocht wird.
 
 ---
 
-## Und dann kommen die Beats.
+## Ab vierzehn Uhr wird ausgebaut.
 
-Ab 14 Uhr wird aus dem kulinarischen Tag ein langer Nachmittag.
+Die DJs sind ab dem ersten Glas dabei, ruhig zu den Gängen. Ab 14 Uhr wird aus dem kulinarischen Tag ein langer Nachmittag.
 
-Bar. Elektronische Musik. Rebberg.
+Bar. Musik. Rebberg.
 
 Bleib bei deinem Glas. Beweg dich zwischen den Reben. Triff die Menschen am Tisch.
 
@@ -139,9 +139,10 @@ Anmeldung bis 15. September.
 
 **Ein Tag, den du nicht nur am Tisch verbringst.**
 
+ab 10:00 · Die DJs sind da, den ganzen Tag  
 10:00 · Kellerei  
 10:30 · Shuttle zum Clos du Cornalin  
 11:15 · Erster Gang  
 bis 14:00 · Sechs Gänge und sieben Weine  
-ab 14:00 · Bar und Beats  
+ab 14:00 · Bar, die Musik wird lauter  
 18:00 · Ende und Rückfahrt

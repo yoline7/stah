@@ -1,33 +1,60 @@
 ---
-import "@fontsource-variable/schibsted-grotesk";
 import "../styles/legal.css";
 import Wortmarke from "../components/logos/Wortmarke.astro";
 import Yoline from "../components/logos/Yoline.astro";
+import Sprachen from "../components/Sprachen.astro";
 import { anlass } from "../data/anlass";
+import { t, pfad, kuerzel, standard, fassungen, type Sprache, type Seite } from "../i18n/ui";
 
-interface Props { title: string; kicker: string; h1: string; sub: string; }
-const { title, kicker, h1, sub } = Astro.props;
+interface Props { lang: Sprache; seite: Seite; title: string; kicker: string; h1: string; sub: string }
+const { lang, seite, title, kicker, h1, sub } = Astro.props;
+const w = t(lang);
+const alternativen = fassungen(seite).map((f) => ({ ...f, url: new URL(f.weg, Astro.site).href }));
+
+/* Deutsch bleibt verbindlich. Uebersetzungen tragen den Vorrangvermerk. */
+const vorrang: Record<Sprache, string> = {
+  de: "",
+  fr: "Seule la version allemande fait foi. Cette traduction est fournie à titre informatif.",
+  en: "Only the German version is legally binding. This translation is provided for information.",
+};
+const vorrangLink: Record<Sprache, string> = {
+  de: "", fr: "Lire la version allemande", en: "Read the German version",
+};
+const stand: Record<Sprache, string> = {
+  de: `Stand 3. September 2026 · Anlass vom ${w.datum}`,
+  fr: `État au 3 septembre 2026 · journée du ${w.datum}`,
+  en: `As of 3 September 2026 · event on ${w.datum}`,
+};
 ---
 <!DOCTYPE html>
-<html lang="de-CH">
+<html lang={kuerzel[lang].html}>
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{title} · {anlass.name}</title>
   <meta name="robots" content="noindex" />
   <meta name="theme-color" content="#F4F4F2" />
+  <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+  {alternativen.map((f) => <link rel="alternate" hreflang={f.html} href={f.url} />)}
+  <link rel="alternate" hreflang="x-default" href={alternativen.find((f) => f.lang === standard)!.url} />
 </head>
 <body>
 <header id="hd">
-  <a class="brand" href="/"><Wortmarke /></a>
-  <a class="back mono" href="/"><span class="n">&#8599;</span><span>Zurück zum Anlass</span></a>
+  <a class="brand" href={pfad(lang, "start")}><Wortmarke /></a>
+  <div class="rechts">
+    <Sprachen lang={lang} seite={seite} />
+    <a class="back mono" href={pfad(lang, "start")}><span class="n">&#8599;</span><span>{w.kopf.zurueck}</span></a>
+  </div>
 </header>
 
 <section class="wrap top">
   <span class="mono" style="color:var(--sec);">( {kicker} )</span>
   <h1 style="margin-top:26px;" set:html={h1}></h1>
   <p class="sub">{sub}</p>
-  <p class="stand mono">Stand 3. September 2026 · Anlass vom {anlass.datum}</p>
+  {lang !== standard && (
+    <p class="vorrang mono">{vorrang[lang]} <a class="lnk" href={pfad(standard, seite)}>{vorrangLink[lang]}</a></p>
+  )}
+  <p class="stand mono">{stand[lang]}</p>
 </section>
 
 <main class="wrap"><slot /></main>
@@ -36,10 +63,10 @@ const { title, kicker, h1, sub } = Astro.props;
   <div class="in mono">
     <span><a href={`mailto:${anlass.mail}`}>{anlass.mail}</a></span>
     <span>
-      <a href="/agb">AGB</a> ·
-      <a href="/teilnahmebedingungen">Teilnahme</a> ·
-      <a href="/impressum">Impressum</a> ·
-      <a href="/datenschutz">Datenschutz</a>
+      <a href={pfad(lang, "agb")}>{w.recht.agb}</a> ·
+      <a href={pfad(lang, "teilnahme")}>{w.recht.teilnahme}</a> ·
+      <a href={pfad(lang, "impressum")}>{w.recht.impressum}</a> ·
+      <a href={pfad(lang, "datenschutz")}>{w.recht.datenschutz}</a>
     </span>
   </div>
   <div class="wrap" style="padding-bottom:60px;margin-top:-40px;padding-left:0;">

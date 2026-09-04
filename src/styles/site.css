@@ -21,13 +21,23 @@
 
   --ease:cubic-bezier(.76,0,.24,1);
   --soft:cubic-bezier(.22,1,.36,1);
+
+  /* Farbpuls. Drei Gruene und ein Orange als Ausreisser.
+     --puls traegt die Farbe des laufenden Pulses, gesetzt von site.js.
+     Farbe erscheint an fuenf Stellen: Kantenlauf, Zahlenwelle, Laufbandspur,
+     Knopffuellung, Zeiger ueber den Knoepfen. Sonst nirgends. */
+  --puls-1:#C2D9A6;
+  --puls-2:#96C9A8;
+  --puls-3:#7FB6B0;
+  --puls-4:#F0A868;
+  --puls:var(--puls-2);
 }
 *,*::before,*::after{box-sizing:border-box;}
 html,body{margin:0;padding:0;}
 html{scroll-behavior:smooth;}
 body{
   background:var(--paper);color:var(--ink);
-  font-family:"Schibsted Grotesk Variable","Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-family:"Switzer","Helvetica Neue",Helvetica,Arial,sans-serif;
   font-size:var(--body);line-height:1.5;
   -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
   overflow-x:clip;text-align:left;
@@ -45,7 +55,7 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 
 /* Anzeigeschnitt fuer alle Groessen ab 20px */
 h1,h2,h3,.disp,.head,.facts b,.mn .ti,.arw .t,.mnu .ln .t,.reg .v,.duo h3,.side b,.hero .lead,.top h1{
-  font-family:"Cabinet Grotesk","Schibsted Grotesk Variable","Helvetica Neue",Helvetica,Arial,sans-serif;font-feature-settings:"ss01";}
+  font-family:"Cabinet Grotesk","Switzer","Helvetica Neue",Helvetica,Arial,sans-serif;font-feature-settings:"ss01";}
 .disp{font-size:var(--disp);line-height:.98;letter-spacing:-.028em;font-weight:500;text-wrap:balance;}
 .head{font-size:var(--head);line-height:1.06;letter-spacing:-.025em;font-weight:500;text-wrap:balance;}
 .bodyl{font-size:var(--body-l);line-height:1.42;letter-spacing:-.01em;}
@@ -72,8 +82,19 @@ h1,h2,h3,.disp,.head,.facts b,.mn .ti,.arw .t,.mnu .ln .t,.reg .v,.duo h3,.side 
 #hd .cta:hover .n,#hd .cta:focus-visible .n{transform:rotate(45deg);}
 #hd .cta .kurz{display:none;}
 
+/* Sprachumschalter, rechts neben dem Burger */
+#hd .rechts{justify-self:end;display:flex;align-items:center;gap:12px;}
+.spr{display:inline-flex;align-items:center;gap:7px;color:var(--sec-dark);white-space:nowrap;}
+.spr .it{display:inline-flex;align-items:center;gap:7px;}
+.spr b{font-weight:inherit;opacity:.5;}
+.spr a{text-decoration:none;transition:color .24s var(--soft);}
+.spr a:hover{color:var(--paper);}
+.spr a.an{color:var(--paper);}
+.spr.im-menu{display:none;}
+.mnu .spr{color:var(--sec-dark);}
+
 /* Burger, geschlossen zwei Striche, offen ein Kreuz */
-#hd .bg{justify-self:end;display:grid;place-content:center;gap:7px;
+#hd .bg{display:grid;place-content:center;gap:7px;
   width:44px;height:44px;border-radius:6px;}
 #hd .bg span{display:block;width:22px;height:1.5px;background:currentColor;
   transition:transform .4s var(--ease);}
@@ -118,10 +139,13 @@ h1,h2,h3,.disp,.head,.facts b,.mn .ti,.arw .t,.mnu .ln .t,.reg .v,.duo h3,.side 
   #hd .cta .kurz{display:inline;}
   .mnu .fuss{align-items:flex-start;}
   .mnu .fuss .eck{align-items:flex-start;text-align:left;}
+  /* Auf schmalen Schirmen wandert der Umschalter in die Ueberlagerung */
+  .spr.in-bar{display:none;}
+  .spr.im-menu{display:inline-flex;}
 }
 
 /* ---------- Lichtlauf ----------
-   Licht auf der Kante, nie auf der Flaeche. Nach 1.6 Sekunden ist es weg.
+   Licht auf der Kante, nie auf der Flaeche. Nach 1.4 Sekunden ist es weg.
    Die Regeln greifen nur, wenn site.js .hat-lauf setzt. Ohne Unterstuetzung
    fuer @property und mask-composite und bei reduzierter Bewegung entsteht
    kein Pseudoelement. */
@@ -133,13 +157,13 @@ h1,h2,h3,.disp,.head,.facts b,.mn .ti,.arw .t,.mnu .ln .t,.reg .v,.duo h3,.side 
   padding:1px;pointer-events:none;opacity:0;z-index:2;
   background:conic-gradient(from var(--lauf),
     transparent 0turn, transparent .78turn,
-    rgba(255,240,222,.9) .90turn, transparent 1turn);
+    var(--puls) .90turn, transparent 1turn);
   mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   mask-composite:exclude;
   -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite:xor;
 }
-.hat-lauf .lauf.aktiv::after{animation:lauf 1.6s cubic-bezier(.22,1,.36,1) 1;}
+.hat-lauf .lauf.aktiv::after{animation:lauf 1.4s cubic-bezier(.22,1,.36,1) 1;}
 
 @keyframes lauf{
   0%  {opacity:0;--lauf:0deg;}
@@ -153,10 +177,10 @@ h1,h2,h3,.disp,.head,.facts b,.mn .ti,.arw .t,.mnu .ln .t,.reg .v,.duo h3,.side 
   content:"";position:absolute;left:0;right:0;bottom:-1px;height:1px;
   pointer-events:none;opacity:0;z-index:2;
   background:linear-gradient(90deg,transparent 0 38%,
-    rgba(255,240,222,.9) 50%, transparent 62% 100%);
+    var(--puls) 50%, transparent 62% 100%);
   background-size:260% 100%;background-position:-80% 0;
 }
-.hat-lauf #hd .bar.lauf-kante.aktiv::after{animation:laufKante 1.6s cubic-bezier(.22,1,.36,1) 1;}
+.hat-lauf #hd .bar.lauf-kante.aktiv::after{animation:laufKante 1.4s cubic-bezier(.22,1,.36,1) 1;}
 
 @keyframes laufKante{
   0%  {opacity:0;background-position:-80% 0;}
@@ -166,11 +190,45 @@ h1,h2,h3,.disp,.head,.facts b,.mn .ti,.arw .t,.mnu .ln .t,.reg .v,.duo h3,.side 
 }
 
 /* ---------- Zahlen im Faktenfeld ---------- */
-.facts b{font-variant-numeric:tabular-nums;}
+/* Der Kasten der Zahl endet an der Zahl, sonst laeuft die Welle ins Leere */
+.facts b{font-variant-numeric:tabular-nums;width:fit-content;}
+
+/* Farbwelle ueber die Zahlen. Sie laeuft durch die Buchstaben, nicht dahinter.
+   Der Versatz von 140 ms je Zahl macht aus vier Zahlen eine Welle.
+   Ohne background-clip:text setzt site.js .hat-welle nicht, dann bleibt alles ruhig. */
+.hat-welle .facts b.welle{
+  background-image:linear-gradient(100deg,
+    currentColor 0 40%, var(--puls) 50%, currentColor 60% 100%);
+  background-size:300% 100%;
+  -webkit-background-clip:text; background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:welle 1.4s cubic-bezier(.22,1,.36,1) both;
+  animation-delay:var(--verzug,0ms);
+}
+/* Bei 300 Prozent Breite steht der Farbkern bei -20% rechts und bei -80% links vom Kasten */
+@keyframes welle{ from{background-position:-20% 0;} to{background-position:-80% 0;} }
+
+/* Farbspur durch das Laufband, 1.8 Sekunden.
+   Die Spur laeuft ueber die Trennpunkte, von links nach rechts. site.js setzt
+   je Punkt den Versatz aus seiner Lage im Schirm, daraus wird die Spur.
+   Der Text bleibt unangetastet, siehe Vermerk im README. */
+.hat-lauf .tick.spur .track i.punkt{
+  animation:spur .9s cubic-bezier(.22,1,.36,1) both;
+  animation-delay:var(--verzug,0ms);
+}
+@keyframes spur{
+  0%  {background:currentColor;opacity:.45;transform:scale(1);}
+  40% {background:var(--puls);opacity:1;transform:scale(1.7);}
+  100%{background:currentColor;opacity:.45;transform:scale(1);}
+}
 
 /* ---------- Zeiger, zusaetzlicher Zustand ueber Bildbaendern ---------- */
 #cur.klein .ring{width:8px;height:8px;background:#fff;}
 #cur.klein .dot{opacity:0;}
+/* Ueber den beiden Knoepfen nimmt der Ring die Farbe des Pulses an */
+#cur.knopf{mix-blend-mode:normal;}
+#cur.knopf .ring{border-color:var(--puls);}
+#cur.knopf .dot{background:var(--puls);}
 
 /* ---------- Seitenuebergang ----------
    Die neue Seite blendet ueber 0.35 Sekunden auf, die alte ueber 0.25 ab.
@@ -206,8 +264,9 @@ h1,h2,h3,.disp,.head,.facts b,.mn .ti,.arw .t,.mnu .ln .t,.reg .v,.duo h3,.side 
 #cur{position:fixed;top:0;left:0;z-index:99;pointer-events:none;mix-blend-mode:difference;}
 #cur .ring{position:absolute;width:34px;height:34px;border:1px solid #fff;border-radius:50%;
   transform:translate(-50%,-50%);display:grid;place-items:center;
-  transition:width .24s var(--soft),height .24s var(--soft);}
-#cur .dot{position:absolute;width:3px;height:3px;background:#fff;border-radius:50%;transform:translate(-50%,-50%);}
+  transition:width .24s var(--soft),height .24s var(--soft),border-color .24s var(--soft);}
+#cur .dot{position:absolute;width:3px;height:3px;background:#fff;border-radius:50%;transform:translate(-50%,-50%);
+  transition:background-color .24s var(--soft);}
 #cur.on .ring{width:70px;height:70px;}
 #cur.on .dot{opacity:0;}
 @media(hover:none),(pointer:coarse){#cur{display:none;}}
@@ -250,7 +309,7 @@ footer .logo{width:clamp(180px,22vw,380px);opacity:.85;}
 .hero{position:relative;height:100svh;min-height:640px;overflow:hidden;background:var(--deep);color:var(--paper);}
 .hero .px{position:absolute;inset:-14% 0;will-change:transform;}
 .hero .px img{filter:saturate(.92) contrast(1.02) brightness(.94);}
-.hero .veil{position:absolute;inset:0;background:rgba(26,18,12,.32);}
+.hero .veil{position:absolute;inset:0;background:rgba(26,18,12,.36);}
 .hero .in-b{position:absolute;inset:auto 0 0 0;padding:0 var(--padR) 9vh var(--padL);}
 .hero .eyebrow{display:flex;gap:14px;align-items:center;margin-bottom:3vh;opacity:.8;}
 .hero .eyebrow i{display:block;width:44px;height:1px;background:currentColor;}
@@ -258,6 +317,7 @@ footer .logo{width:clamp(180px,22vw,380px);opacity:.85;}
 
 .hero .supp{margin-top:1.8vh;max-width:34ch;opacity:.72;}
 .hero .meta{display:flex;gap:2.6vw;flex-wrap:wrap;margin-top:5vh;padding-top:16px;border-top:1px solid var(--hair-dark);opacity:.8;}
+.hero .bruecke{display:block;color:rgba(244,244,242,.72);margin-bottom:clamp(14px,2vh,22px);}
 .hero .sc{display:none;}
 
 /* ---------- Abschnitte ---------- */
@@ -367,12 +427,13 @@ section{position:relative;}
   display:inline-flex;align-items:baseline;gap:18px;border:1px solid var(--paper);border-radius:2px;
   padding:18px 30px;margin-top:5vh;transition:color .42s var(--ease);}
 /* Die Fuellung steigt von unten nach oben, der Knopf bleibt an Ort und Groesse */
-.send::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;background:var(--paper);
+.send::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;background:var(--puls);
   transform:scaleY(0);transform-origin:50% 100%;transition:transform .42s var(--ease);}
 .send:hover::before,.send:focus-visible::before{transform:scaleY(1);}
 .send:hover,.send:focus-visible{color:var(--deep);}
+.alt .send:hover,.alt .send:focus-visible{color:var(--deep);}
 .alt .send,.s-d.alt .send{background:var(--ink);color:var(--paper);border-color:var(--ink);}
-.alt .send::before{background:var(--paper-2);}
+.alt .send::before{background:var(--puls);}
 .alt .send:hover,.alt .send:focus-visible{color:var(--ink);}
 .s-d.alt .facts{background:var(--deep);color:var(--paper);}
 .s-d.alt .facts div{border-right-color:rgba(244,244,242,.16);}
@@ -424,6 +485,9 @@ footer a:hover{color:var(--paper);}
   .send{transition:background-color .01ms,color .01ms;}
   .send:hover{background:var(--paper);color:var(--deep);}
   .alt .send:hover{background:transparent;color:var(--ink);}
+  /* Kein Farbpuls bei reduzierter Bewegung, weder Welle noch Spur */
+  .facts b.welle{background-image:none;-webkit-text-fill-color:currentColor;animation:none;}
+  .tick.spur .track i.punkt{animation:none;}
 }
 
 @media(max-width:960px){

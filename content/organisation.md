@@ -25,7 +25,7 @@ Die Küche beginnt
 Persönlich begleitet
 
 **ab 14:00**  
-**Bar und elektronische Musik**  
+**Bar, die Musik wird lauter**  
 Der kulinarische Teil geht in den Nachmittag über
 
 **18:00**  
@@ -89,7 +89,11 @@ Ein Teil des Tages findet draussen statt. Am Abend kann es im Rebberg kühler we
 
 Es gibt Sitzmöglichkeiten und Stehtische. Einen festen Sitzplatz gibt es nicht.
 
-### Ab 14:00
+### Die Musik
+
+Die DJs sind ab dem ersten Glas dabei, ruhig zu den Gängen. Ab 14 Uhr wird ausgebaut, bis um sechs.
+
+### Getränke ab 14:00
 
 Die Bar bleibt bis 18:00 geöffnet.
 

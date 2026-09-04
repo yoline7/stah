@@ -1,21 +1,36 @@
 /**
- * Anzeigeschrift, selbst gehostet. Nichts lädt von einem fremden Server.
+ * Beide Schriften liegen im Repository. Nichts lädt von einem fremden Server.
  *
- * Font Family: Cabinet Grotesk
- * Designed by: ITF
- * URL: https://www.fontshare.com/fonts/cabinet-grotesk
+ * Cabinet Grotesk · Anzeige, alle Grade ab 20 Pixel
+ * Switzer · Fliesstext und Mikro-Marken
+ * Designed by: ITF · https://www.fontshare.com
  * © 2026 Indian Type Foundry
  *
  * Lizenz: ITF Free Font License (FFL) Version 2.0 vom 17. August 2026.
- * Der Wortlaut liegt unverändert unter src/assets/fonts/cabinet-grotesk/LICENSE.
- * Abschnitt 01 erlaubt das Selbsthosten ausdrücklich. Abschnitt 02 verbietet
- * jede Änderung an den Dateien, also kein Teilsatz und keine Formatwandlung.
- * Die Dateien stammen unverändert aus dem Paket von Fontshare.
- *
- * Der Fliesstext läuft über Schibsted Grotesk Variable, eingebunden im
- * Frontmatter von Base.astro, Legal.astro und anmeldung.astro.
+ * Der Wortlaut liegt unverändert bei jeder Schrift als LICENSE.
+ * Abschnitt 01 erlaubt Selbsthosten und kommerzielle Nutzung ausdrücklich.
+ * Abschnitt 02 verbietet jede Änderung an den Dateien, auch Teilsatz und
+ * Formatwandlung. Die Dateien stammen unverändert aus den Paketen.
+ * Ein Urhebervermerk ist nicht verlangt, er steht hier trotzdem.
  */
 
+/* Fliesstext, variable Fassung, Achse wght */
+@font-face{
+  font-family:"Switzer";
+  src:url("../assets/fonts/switzer/Switzer-Variable.woff2") format("woff2-variations");
+  font-weight:100 900;
+  font-display:swap;
+  font-style:normal;
+}
+@font-face{
+  font-family:"Switzer";
+  src:url("../assets/fonts/switzer/Switzer-VariableItalic.woff2") format("woff2-variations");
+  font-weight:100 900;
+  font-display:swap;
+  font-style:italic;
+}
+
+/* Anzeige, Einzelschnitte, keine variable Fassung im Paket */
 @font-face{
   font-family:"Cabinet Grotesk";
   src:url("../assets/fonts/cabinet-grotesk/CabinetGrotesk-Thin.woff2") format("woff2"),
