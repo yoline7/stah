@@ -1,0 +1,20 @@
+---
+/**
+ * Neonwolken. Grosse, weiche Farbfelder, die dauerhaft und sehr langsam
+ * ueber eine dunkle Flaeche ziehen. Sie leuchten die Flaeche aus.
+ *
+ * Der Lauf ist ein Puls, die Wolke ist Licht. Deshalb reine CSS-Animation,
+ * kein Taktgeber. Lage, Ton, Dauer und Richtung je Wolke stehen in site.css
+ * unter der jeweiligen Flaeche.
+ *
+ * Nur auf dunklem Grund, nur auf den fuenf gesetzten Flaechen.
+ */
+import { flaechen, type Flaeche } from "../data/wolken";
+
+interface Props { flaeche: Flaeche }
+const { flaeche } = Astro.props;
+const anzahl = flaechen[flaeche];
+---
+<div class="wolken" data-flaeche={flaeche} aria-hidden="true">
+  {Array.from({ length: anzahl }, (_, i) => <span class:list={["wolke", `w${i + 1}`]}></span>)}
+</div>

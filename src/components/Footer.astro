@@ -2,12 +2,14 @@
 import Wortmarke from "./logos/Wortmarke.astro";
 import { anlass } from "../data/anlass";
 import { t, pfad, type Sprache } from "../i18n/ui";
+import Wolken from "./Wolken.astro";
 
 interface Props { lang: Sprache }
 const { lang } = Astro.props;
 const w = t(lang);
 ---
 <footer class="wrap" transition:persist="fuss">
+  <Wolken flaeche="fuss" />
   <div style="padding-top:9vh;"><Wortmarke /></div>
   <div class="in-f mono" style="margin-top:7vh;">
     <span><a class="lnk" href={`mailto:${anlass.mail}`}>{anlass.mail}</a></span>

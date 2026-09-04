@@ -278,6 +278,17 @@
       });
     }
 
+    /* Wolken ruhen ausserhalb des Sichtfelds. Reine Leistungsbremse,
+       die Bewegung selbst laeuft ohne JavaScript. */
+    var wolken = document.querySelectorAll('.wolken');
+    if (wolken.length && 'IntersectionObserver' in window){
+      var wio = new IntersectionObserver(function(es){
+        es.forEach(function(e){ e.target.classList.toggle('ruht', !e.isIntersecting); });
+      }, { rootMargin:'10% 0px' });
+      wolken.forEach(function(el){ wio.observe(el); });
+      beobachter.push(wio);
+    }
+
     /* Zahlen */
     var zahlen = document.querySelectorAll('.facts b');
     if (zahlen.length){

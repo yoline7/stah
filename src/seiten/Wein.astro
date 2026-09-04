@@ -4,6 +4,7 @@ import Base from "../layouts/Base.astro";
 import { t, pfad, type Sprache } from "../i18n/ui";
 import i_rebhaus_drohne from "../assets/img/rebhaus-drohne.jpg";
 import i_alisha_cina from "../assets/img/alisha-cina.jpg";
+import Wolken from "../components/Wolken.astro";
 
 interface Props { lang: Sprache }
 const { lang } = Astro.props;
@@ -52,6 +53,7 @@ const v = w.wein;
 
 <!-- HAUS -->
 <section class="wrap s-d on-dark">
+  <Wolken flaeche="dunkel" />
   <div class="grid">
     <div class="lab mono sec fu"><span class="stick">( {v.haus.lab} )</span></div>
     <div class="col-7">

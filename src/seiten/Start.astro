@@ -7,6 +7,7 @@ import i_mood_messer from "../assets/img/mood-messer.jpg";
 import i_rebberg from "../assets/img/rebberg.jpg";
 import i_alisha_cina from "../assets/img/alisha-cina.jpg";
 import i_alain_lerjen from "../assets/img/alain-lerjen.jpg";
+import Wolken from "../components/Wolken.astro";
 
 interface Props { lang: Sprache }
 const { lang } = Astro.props;
@@ -21,6 +22,7 @@ const laufband = [...w.laufband, ...w.laufband];
          alt={w.bilder.closMorgenlicht}
          widths={[960, 1440, 2000]} sizes="100vw" quality={72} format="webp"
          loading="eager" fetchpriority="high" /></div>
+  <Wolken flaeche="hero" />
   <div class="veil"></div>
   <div class="in-b">
     {w.bruecke && <span class="bruecke mono">{w.bruecke}</span>}
@@ -60,6 +62,7 @@ const laufband = [...w.laufband, ...w.laufband];
     <div class="col-full">
       <div class="facts fu">
         {s.fakten.map((f) => <div><b>{f.zahl}</b><span class="mono">{f.text}</span></div>)}
+        <Wolken flaeche="fakten" />
       </div>
     </div>
   </div>
@@ -134,6 +137,7 @@ const laufband = [...w.laufband, ...w.laufband];
 
 <!-- NACHMITTAG -->
 <section class="wrap s-e on-dark">
+  <Wolken flaeche="dunkel" />
   <div class="grid">
     <div class="lab mono sec fu"><span class="stick">( {s.nachmittag.lab} )</span></div>
     <div class="col-7">
@@ -197,6 +201,7 @@ const laufband = [...w.laufband, ...w.laufband];
         {s.abschluss.fakten.map((f) => (
           <div><b>{f.zahl}{f.zusatz && <i>{f.zusatz}</i>}</b><span class="mono">{f.text}</span></div>
         ))}
+        <Wolken flaeche="fakten" />
       </div>
       <a class="send fu d3" style="margin-top:7vh;" href={pfad(lang, "anmeldung")}><span>{w.zurAnmeldung}</span><span class="n">&#8599;</span></a>
       <p class="fu d3 sec" style="margin-top:4vh;max-width:40ch;">{s.abschluss.nach}</p>
