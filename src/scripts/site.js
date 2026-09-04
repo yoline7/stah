@@ -29,10 +29,40 @@
     && CSS.supports('background', 'conic-gradient(from 0deg, #000, #fff)');
   if (kannLauf) document.documentElement.classList.add('hat-lauf');
 
+  /* Welle und Spur laufen durch die Buchstaben. Ohne background-clip:text bleiben sie weg. */
+  var kannWelle = kannLauf && typeof CSS !== 'undefined' && typeof CSS.supports === 'function'
+    && (CSS.supports('-webkit-background-clip', 'text') || CSS.supports('background-clip', 'text'));
+  if (kannWelle) document.documentElement.classList.add('hat-welle');
+
   /* ---------- Zustand, wird bei jedem Seitenaufbau neu gefasst ---------- */
   var pg = null, pxs = [], cur = null, hd = null, bg = null, mnu = null;
   var offen = false;
-  var laeufer = [], laeuft = false, letzterStart = -1e9, beobachter = [];
+  var laeufer = [], laeuft = false, laufEnde = -1e9, beobachter = [];
+
+  /* Farbpuls. Drei Gruene, ein Orange. Orange hoechstens jeder fuenfte Lauf
+     und nie zweimal hintereinander, darum die Zaehlung seitOrange. */
+  var farben = ['--puls-1', '--puls-2', '--puls-3', '--puls-4'];
+  var seitOrange = 9, letzteFarbe = -1;
+  function naechsteFarbe(){
+    var i;
+    if (seitOrange >= 4 && Math.random() < .55){ i = 3; seitOrange = 0; }
+    else {
+      do { i = Math.floor(Math.random() * 3); } while (i === letzteFarbe);
+      seitOrange++;
+    }
+    letzteFarbe = i;
+    document.documentElement.style.setProperty('--puls', 'var(' + farben[i] + ')');
+    return i;
+  }
+
+  /* Takt je Art. Kante haeufig, Zahlen seltener, Laufband am seltensten. */
+  var takte = {
+    kante:  { von:  6000, bis: 10000, dauer: 1400 },
+    zahlen: { von: 12000, bis: 18000, dauer: 1400 },
+    band:   { von: 18000, bis: 26000, dauer: 1800 }
+  };
+  var VERSATZ = 140;   /* Versatz je Zahl, daraus wird die Welle */
+  var ABSTAND = 2000;  /* Mindestruhe zwischen zwei Bewegungen */
   var band = null, bandX = 0, bandBreite = 0, bandTempo = 0, bandZiel = 0, bandTau = .3;
   var zeigerTempo = .12;
 
@@ -55,24 +85,68 @@
     }
   }
 
-  /* ---------- Lichtlauf, ein Taktgeber fuer alle ---------- */
+  /* ---------- Ein Taktgeber fuer alle Bewegungen ----------
+     Nie laufen zwei Bewegungen gleichzeitig. Zwischen zwei Bewegungen liegen
+     mindestens zwei Sekunden Ruhe. Jede Bewegung setzt vorher ihre Farbe. */
+  function neuFaellig(e){
+    var t = takte[e.art];
+    e.faellig = performance.now() + wuerfel(t.von, t.bis);
+  }
+
   function starteLauf(e){
     if (!kannLauf || laeuft || document.hidden) return false;
-    laeuft = true; letzterStart = performance.now();
-    e.el.classList.add('aktiv');
+    laeuft = true;
+    naechsteFarbe();
+    var dauer = takte[e.art].dauer, aufraeumen;
+
+    if (e.art === 'zahlen'){
+      if (!kannWelle){ laeuft = false; neuFaellig(e); return false; }
+      var zahlen = [].slice.call(e.el.querySelectorAll('b'));
+      zahlen.forEach(function(b, i){
+        b.style.setProperty('--verzug', (i * VERSATZ) + 'ms');
+        b.classList.add('welle');
+      });
+      dauer += Math.max(0, zahlen.length - 1) * VERSATZ;
+      aufraeumen = function(){
+        zahlen.forEach(function(b){ b.classList.remove('welle'); b.style.removeProperty('--verzug'); });
+      };
+    } else if (e.art === 'band'){
+      /* Die Spur laeuft ueber die sichtbaren Trennpunkte. Der Versatz kommt aus
+         der Lage im Schirm, darum wandert sie von links nach rechts. */
+      var breite = innerWidth || 1;
+      var punkte = [].slice.call(e.el.querySelectorAll('.track i')).filter(function(k){
+        var r = k.getBoundingClientRect();
+        return r.right > -40 && r.left < breite + 40;
+      });
+      if (!punkte.length){ laeuft = false; neuFaellig(e); return false; }
+      punkte.forEach(function(k){
+        var x = k.getBoundingClientRect().left;
+        k.style.setProperty('--verzug', Math.round(Math.max(0, Math.min(1, x / breite)) * 900) + 'ms');
+        k.classList.add('punkt');
+      });
+      e.el.classList.add('spur');
+      aufraeumen = function(){
+        e.el.classList.remove('spur');
+        punkte.forEach(function(k){ k.classList.remove('punkt'); k.style.removeProperty('--verzug'); });
+      };
+    } else {
+      e.el.classList.add('aktiv');
+      aufraeumen = function(){ e.el.classList.remove('aktiv'); };
+    }
+
     setTimeout(function(){
-      e.el.classList.remove('aktiv');
+      aufraeumen();
+      laufEnde = performance.now();
       laeuft = false;
-    }, 1650);
-    e.faellig = performance.now() + wuerfel(9000, 14000);
+    }, dauer + 60);
+    neuFaellig(e);
     return true;
   }
 
   function takt(){
     if (!kannLauf || laeuft || document.hidden) return;
     var t = performance.now();
-    /* Mindestabstand 2.5 Sekunden nach dem Ende des letzten Laufs */
-    if (t - letzterStart < 1600 + 2500) return;
+    if (t - laufEnde < ABSTAND) return;
     var dran = [];
     for (var i = 0; i < laeufer.length; i++){
       if (laeufer[i].sichtbar && laeufer[i].faellig <= t) dran.push(laeufer[i]);
@@ -147,7 +221,7 @@
         offen = z;
         hd.classList.toggle('open', z);
         bg.setAttribute('aria-expanded', z ? 'true' : 'false');
-        bg.setAttribute('aria-label', z ? 'Menü schliessen' : 'Menü öffnen');
+        bg.setAttribute('aria-label', z ? (bg.dataset.zu || '') : (bg.dataset.auf || ''));
         document.body.style.overflow = z ? 'hidden' : '';
       };
       bg.addEventListener('click', function(){ setze(!offen); });
@@ -169,18 +243,27 @@
     if (kannLauf){
       var stellen = [];
       var bar = document.querySelector('#hd .bar');
-      if (bar){ bar.classList.add('lauf-kante'); stellen.push(bar); }
-      document.querySelectorAll('.facts').forEach(function(el){ el.classList.add('lauf'); stellen.push(el); });
-      document.querySelectorAll('#hd .cta, .send').forEach(function(el){ el.classList.add('lauf'); stellen.push(el); });
+      if (bar){ bar.classList.add('lauf-kante'); stellen.push({ el: bar, art: 'kante' }); }
+      document.querySelectorAll('.facts').forEach(function(el){
+        el.classList.add('lauf');
+        stellen.push({ el: el, art: 'kante' });
+        stellen.push({ el: el, art: 'zahlen' });
+      });
+      document.querySelectorAll('#hd .cta, .send').forEach(function(el){
+        el.classList.add('lauf'); stellen.push({ el: el, art: 'kante' });
+      });
+      document.querySelectorAll('.tick').forEach(function(el){
+        stellen.push({ el: el, art: 'band' });
+      });
 
-      var jetzt = performance.now();
-      stellen.forEach(function(el){
-        var e = { el: el, sichtbar: false, faellig: jetzt + wuerfel(9000, 14000) };
+      stellen.forEach(function(st){
+        var e = { el: st.el, art: st.art, sichtbar: false, faellig: 0 };
+        neuFaellig(e);
         laeufer.push(e);
         if ('IntersectionObserver' in window){
           var o = new IntersectionObserver(function(es){ e.sichtbar = es[0].isIntersecting; },
             { threshold:.15 });
-          o.observe(el); beobachter.push(o);
+          o.observe(st.el); beobachter.push(o);
         } else { e.sichtbar = true; }
       });
       /* Beim Zeigen auf einen Knopf laeuft er sofort, danach greift der Takt */
@@ -188,7 +271,9 @@
         if (el.dataset.laufBereit) return;
         el.dataset.laufBereit = '1';
         el.addEventListener('mouseenter', function(){
-          for (var i = 0; i < laeufer.length; i++) if (laeufer[i].el === el) starteLauf(laeufer[i]);
+          for (var i = 0; i < laeufer.length; i++){
+            if (laeufer[i].el === el && laeufer[i].art === 'kante') starteLauf(laeufer[i]);
+          }
         });
       });
     }
@@ -228,6 +313,12 @@
         el.addEventListener('mouseenter', function(){ cur.classList.add('on'); zeigerTempo = .20; });
         el.addEventListener('mouseleave', function(){ cur.classList.remove('on'); zeigerTempo = .12; });
       });
+      document.querySelectorAll('#hd .cta, .send').forEach(function(el){
+        if (el.dataset.zeigerKnopf) return;
+        el.dataset.zeigerKnopf = '1';
+        el.addEventListener('mouseenter', function(){ cur.classList.add('knopf'); });
+        el.addEventListener('mouseleave', function(){ cur.classList.remove('knopf'); });
+      });
       document.querySelectorAll('.band').forEach(function(el){
         if (el.dataset.zeiger) return;
         el.dataset.zeiger = '1';
@@ -253,9 +344,8 @@
   addEventListener('mousemove', function(e){ zx = e.clientX; zy = e.clientY; });
   document.addEventListener('visibilitychange', function(){
     if (!document.hidden){
-      var t = performance.now();
-      letzterStart = t;
-      for (var i = 0; i < laeufer.length; i++) laeufer[i].faellig = t + wuerfel(9000, 14000);
+      laufEnde = performance.now();
+      for (var i = 0; i < laeufer.length; i++) neuFaellig(laeufer[i]);
     }
   });
 
