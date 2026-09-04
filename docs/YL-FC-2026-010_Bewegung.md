@@ -3,7 +3,7 @@
 Referenz YL-FC-2026-010 · Projekt z’Wallis im Stah · Yoline AG
 Stand 4. September 2026
 
-Farbpuls, Neonwolken, Takt, Kantenlauf, Zahlenwelle, Laufbandspur, Knoepfe, Zeiger, Seitenuebergang. Mit allen gemessenen Werten.
+Farbpuls, Neonwolken, Takt, Kantenlauf, Zahlenwelle, Laufbandspur, Knoepfe, Seitenuebergang. Mit allen gemessenen Werten.
 
 Ausgelagert aus dem README. Wer hier etwas ändert, prüft den Verweis im README.
 
@@ -28,13 +28,12 @@ Vier Töne, drei Grüne und ein Orange als Ausreisser. Sie stehen in `site.css` 
 **Orange ist selten.** Höchstens jeder fünfte Lauf, nie zweimal hintereinander. Gemessen
 über 45 Läufe: 8-mal Orange, kleinster Abstand fünf Läufe, kein Ton zweimal hintereinander.
 
-**Farbe erscheint an fünf Stellen, sonst nirgends.**
+**Farbe erscheint an vier Stellen, sonst nirgends.**
 
 1. Kantenlauf, `conic-gradient` und waagrechter Lauf
 2. Zahlenwelle im Faktenfeld
 3. Spur durch das Laufband
 4. Füllung des Knopfes «Zur Anmeldung»
-5. Zeigerring über den beiden Knöpfen
 
 Gemessen auf sechs Seiten in Ruhe, in drei Sprachen: jede Seite wird zweimal aufgenommen,
 einmal mit der Palette und einmal mit vier ausgegrauten Pulsfarben. Der Unterschied beträgt
@@ -169,12 +168,12 @@ Kontrast 8.75 bis 13.07 : 1 je nach Ton.
 Der Knopf «Platz sichern» in der Kopfleiste ist bereits weiss gefüllt und behält das.
 Eine Füllung von unten hätte dort nichts zu füllen.
 
-### Zeiger
+### Zeiger, entfernt am 4. September 2026
 
-Grundzustand 34 Pixel, Nachführung 0.12. Über Verweisen und Knöpfen wächst er auf 70 Pixel,
-die Nachführung geht auf 0.20. Über den beiden Knöpfen nimmt der Ring über 0.24 Sekunden die
-Farbe des Pulses an, die Mischung schaltet dafür von `difference` auf `normal`. Über
-Bildbändern schrumpft er auf 8 Pixel. Auf Touch und bei reduzierter Bewegung bleibt er aus.
+Ein eigener Zeigerring lief dem Mauszeiger nach, 34 Pixel im Grundzustand, 70 über Verweisen
+und Knöpfen, Mischung `difference`. Der Auftraggeber hat den Effekt am 4. September 2026
+abgelehnt. Markup, Stil und Steuerung sind entfernt, der Systemzeiger gilt wieder. Damit
+entfällt auch der frühere offene Punkt zum Widerspruch zwischen 0.12 und 0.20.
 
 ### Laufband, Führung
 

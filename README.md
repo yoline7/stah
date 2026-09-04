@@ -347,7 +347,7 @@ Im Build tragen alle drei Sprachen je 18 `alt`, zusammen 54.
 ## Bewegung
 
 Ein Taktgeber führt alle Bewegungen: Farbpuls, Neonwolken, Kantenlauf, Zahlenwelle,
-Laufbandspur, Knöpfe, Zeiger, Seitenübergang. Nie laufen zwei gleichzeitig.
+Laufbandspur, Knöpfe, Seitenübergang. Nie laufen zwei gleichzeitig.
 
 **Der ganze Abschnitt mit allen gemessenen Werten liegt in
 [`docs/YL-FC-2026-010_Bewegung.md`](docs/YL-FC-2026-010_Bewegung.md).**
@@ -590,16 +590,15 @@ Jeder Punkt nennt die Ursache und den nächsten Schritt.
 6. **Verweis ohne Ziel.** `content/archiv-2026-09/organisation.md` nennt «[Übernachtungsmöglichkeiten entdecken]» ohne Adresse. Nächster Schritt: Adresse liefern, etwa Valais Wallis Promotion.
 7. **Schreibweise des Namens.** Die Quelltexte schreiben «Z Wallis im Stah», die Datendatei «z'Wallis im Stah» mit Apostroph. Auf der Seite gilt die Datendatei. Nächster Schritt: nur die Datendatei zählt, das Archiv bleibt wie es ist.
 8. **Wortmarke Fernand Cina mit Wappen.** Die Datei trägt das Wappen über dem Schriftzug. Der Kasten steht im Partnerband höher als Maison 13, die sichtbare Wortmarke liest sich dadurch kleiner. Nächster Schritt: eine Fassung ohne Wappen beschaffen.
-9. **Zeiger, Wort und Zahl widersprechen sich.** Die Vorgabe nennt 0.12 «enger» und 0.20 «Widerstand». Bei `cx += (x - cx) * f` bedeutet ein kleineres `f` mehr Nachlauf. Gesetzt sind die genannten Zahlen. Nächster Schritt: entscheiden, ob die Zahlen oder die Worte gelten.
-10. **Maison 13 Catering.** Firmenname, Rechtsform und Adresse fehlen im Impressum, in allen drei Sprachen. Nächster Schritt: bei Maison 13 einholen.
-11. **Eringer und Munder Safran.** Beide Herkünfte sind nicht schriftlich bestätigt, beide stehen mehrfach auf der Seite. Nächster Schritt: Bestätigung einholen, sonst die Nennung streichen.
-12. **Zahlungsdienstleister und Hosting.** Beide Namen fehlen in der Datenschutzerklärung. Nächster Schritt: nach dem Entscheid eintragen, in allen drei Sprachen.
-13. **Titelbild aus einem Bildschirmfoto.** `clos-morgenlicht.jpg` ist eine Bildschirmaufnahme, 1782 mal 970 Pixel. Nächster Schritt: Aufnahme aus dem Bestand ab 2000 Pixel Breite holen, danach den Schleier neu messen.
-14. **Mehrfach komprimierte Bänder.** `rebhaus-drohne.jpg` und `rebberg.jpg` wachsen beim Umrechnen auf WebP. Nächster Schritt: Originale aus dem Bestand holen. Die Qualität bleibt bei 72.
-15. **Wortmarke des Anlasses.** Die SVG-Datei ist nachgezeichnet, die Konturen sind ab etwa 900 Pixel Breite sichtbar treppig. Nächster Schritt: Für Druck ab A2 die Marke aus der Originalschrift setzen.
-16. **Fernbranch lässt sich aus dieser Sitzung nicht löschen.** `git push origin --delete` endet mit HTTP 403. Ursache: Die Zugangsdaten dieser Sitzung dürfen keine Referenzen löschen. Zuletzt am 4. September 2026 versucht, wieder HTTP 403. Nächster Schritt: Branch nach dem Merge über die GitHub-Oberfläche löschen.
-17. **Geokoordinaten fehlen.** Die zwei `Place` der Auszeichnung, `#kellerei` und `#clos-du-cornalin`, tragen nur eine Postadresse. Ursache: Es liegen keine Koordinaten vor. Der Block `geo` liegt in `src/data/schema.ts` vorbereitet und ausgeklammert. Ohne Koordinaten fehlt beiden Orten der Ortsbezug, der für örtliche Antworten zählt. Nächster Schritt: Breite und Länge beider Orte auf sechs Stellen liefern, danach den Block einsetzen.
-18. **Rebfläche widerspricht sich in drei Quellen.** `fernand-cina.ch` nennt 20 Hektaren, `sierretourisme.ch` und `vinum-montis.ch` nennen 18, `valais.ch` nennt 16. Ursache: Die Fremdverzeichnisse sind nicht nachgeführt. Auf dieser Seite gilt die eigene Website, also 20 Hektaren, in allen drei Sprachen. In der Auszeichnung steht die Zahl nicht, der Schema-Plan führt sie nicht im Graphen. Zwei Zahlen zur gleichen Firma schwächen die Autorität der Entität. Nächster Schritt: Zahl beim Mandanten bestätigen, danach die drei Fremdverzeichnisse nachführen lassen.
+9. **Maison 13 Catering.** Firmenname, Rechtsform und Adresse fehlen im Impressum, in allen drei Sprachen. Nächster Schritt: bei Maison 13 einholen.
+10. **Eringer und Munder Safran.** Beide Herkünfte sind nicht schriftlich bestätigt, beide stehen mehrfach auf der Seite. Nächster Schritt: Bestätigung einholen, sonst die Nennung streichen.
+11. **Zahlungsdienstleister und Hosting.** Beide Namen fehlen in der Datenschutzerklärung. Nächster Schritt: nach dem Entscheid eintragen, in allen drei Sprachen.
+12. **Titelbild aus einem Bildschirmfoto.** `clos-morgenlicht.jpg` ist eine Bildschirmaufnahme, 1782 mal 970 Pixel. Nächster Schritt: Aufnahme aus dem Bestand ab 2000 Pixel Breite holen, danach den Schleier neu messen.
+13. **Mehrfach komprimierte Bänder.** `rebhaus-drohne.jpg` und `rebberg.jpg` wachsen beim Umrechnen auf WebP. Nächster Schritt: Originale aus dem Bestand holen. Die Qualität bleibt bei 72.
+14. **Wortmarke des Anlasses.** Die SVG-Datei ist nachgezeichnet, die Konturen sind ab etwa 900 Pixel Breite sichtbar treppig. Nächster Schritt: Für Druck ab A2 die Marke aus der Originalschrift setzen.
+15. **Fernbranch lässt sich aus dieser Sitzung nicht löschen.** `git push origin --delete` endet mit HTTP 403. Ursache: Die Zugangsdaten dieser Sitzung dürfen keine Referenzen löschen. Zuletzt am 4. September 2026 versucht, wieder HTTP 403. Nächster Schritt: Branch nach dem Merge über die GitHub-Oberfläche löschen.
+16. **Geokoordinaten fehlen.** Die zwei `Place` der Auszeichnung, `#kellerei` und `#clos-du-cornalin`, tragen nur eine Postadresse. Ursache: Es liegen keine Koordinaten vor. Der Block `geo` liegt in `src/data/schema.ts` vorbereitet und ausgeklammert. Ohne Koordinaten fehlt beiden Orten der Ortsbezug, der für örtliche Antworten zählt. Nächster Schritt: Breite und Länge beider Orte auf sechs Stellen liefern, danach den Block einsetzen.
+17. **Rebfläche widerspricht sich in drei Quellen.** `fernand-cina.ch` nennt 20 Hektaren, `sierretourisme.ch` und `vinum-montis.ch` nennen 18, `valais.ch` nennt 16. Ursache: Die Fremdverzeichnisse sind nicht nachgeführt. Auf dieser Seite gilt die eigene Website, also 20 Hektaren, in allen drei Sprachen. In der Auszeichnung steht die Zahl nicht, der Schema-Plan führt sie nicht im Graphen. Zwei Zahlen zur gleichen Firma schwächen die Autorität der Entität. Nächster Schritt: Zahl beim Mandanten bestätigen, danach die drei Fremdverzeichnisse nachführen lassen.
 
 ---
 

@@ -75,14 +75,4 @@ const spurGesehen = await p2.evaluate(() => new Promise((f) => {
 console.log('Spur vom Taktgeber ausgeloest:', spurGesehen);
 
 // 4. Zeigerfarbe ueber dem Knopf
-const p3 = await b.newPage({ viewport: { width: 1440, height: 900 } });
-await p3.goto(B + '/', { waitUntil: 'networkidle' });
-await p3.hover('#hd .cta');
-await p3.waitForTimeout(600);
-const zeiger = await p3.evaluate(() => {
-  const c = document.getElementById('cur');
-  return { klasse: c.className, rand: getComputedStyle(c.querySelector('.ring')).borderColor,
-           mischung: getComputedStyle(c).mixBlendMode };
-});
-console.log('Zeiger ueber dem Knopf:', zeiger);
 await b.close();
