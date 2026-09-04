@@ -68,7 +68,7 @@ i18n: { defaultLocale: 'de', locales: ['de','fr','en'],
 ```
 
 **Wörterbücher.** `src/i18n/de.ts`, `fr.ts` und `en.ts` tragen alle Texte der fünf
-Inhaltsseiten, dazu Kopf, Fuss, Metadaten und das Anmeldeformular. `de.ts` ist die
+Inhaltsseiten, dazu Kopf, Fuss, Metadaten, Bildbeschreibungen und das Anmeldeformular. `de.ts` ist die
 Vorlage, `Texte = typeof de` erzwingt beim Prüflauf, dass keine Fassung einen Eintrag
 verliert.
 
@@ -292,9 +292,15 @@ legt sie mit Prüfsumme nach `dist/_astro/`.
 Format ist `webp`. Astro rechnet nie hinauf. Partnermarken bleiben PNG mit Alphakanal und
 tragen `densities={[1]}`, damit `srcset` gesetzt ist, ohne dass umgerechnet wird.
 
+**Bildbeschreibungen.** Jedes `alt` steht in den drei Wörterbüchern unter `bilder`, je Bild
+ein Schlüssel. Im Quelltext steht kein festes `alt` mehr, nur `alt={w.bilder.<schluessel>}`.
+Die Beschreibung nennt, was zu sehen ist, und wiederholt weder Titel noch Bildunterschrift.
+Im Build tragen alle drei Sprachen je 18 `alt`, zusammen 54.
+
 **Neues Bild einsetzen.** Datei nach `src/assets/img/`, im Frontmatter des Bausteins unter
 `src/seiten/` importieren, im Rumpf über `<Image>` einsetzen. Das `<img>` bleibt im
-`<div class="px">`, sonst hält die Parallaxe nicht. Jedes Bild braucht ein `alt`.
+`<div class="px">`, sonst hält die Parallaxe nicht. Jedes Bild braucht einen Schlüssel unter
+`bilder` in allen drei Wörterbüchern, sonst hält der Prüflauf an.
 
 ---
 
@@ -555,13 +561,30 @@ Offen erreichbar wird die Seite erst über die eigene Domain.
 Die Zieldomain steht in `astro.config.mjs` unter `site`. Sie steuert Canonical, Open Graph,
 `hreflang` und Sitemap, unabhängig davon, unter welcher Adresse Vercel ausliefert.
 
+### Beim Aufschalten von im-stah.ch prüfen
+
+Vercel setzt auf jeder `.vercel.app`-Adresse den Kopf `x-robots-tag: noindex`. Auf einer
+eigenen Domain setzt Vercel ihn nicht. Solange die Zieldomain fehlt, ist die Seite
+deshalb für Suchmaschinen unsichtbar, und das ist richtig so.
+
+Beim Aufschalten der Domain der Reihe nach prüfen:
+
+1. **Domain hinterlegen.** Im Vercel-Projekt `stah` unter Settings, Domains.
+2. **Kopf abfragen.** `curl -I https://im-stah.ch/` darf kein `x-robots-tag` mehr tragen. Dasselbe für `/fr/` und `/en/`.
+3. **Zugriffsschutz.** Die Vercel-Authentifizierung steht auf «all except custom domains», die eigene Domain ist damit offen. Prüfen, dass `https://im-stah.ch/` ohne Login antwortet.
+4. **Indexierbar bleiben zwölf Seiten.** Start, Kulinarik, Wein und Organisation, je in drei Sprachen. Sie tragen kein `noindex`.
+5. **Auf `noindex` bleiben 15 Seiten.** Anmeldung und die vier Rechtstexte, je in drei Sprachen. Das `noindex` steht in `src/layouts/Legal.astro` und `src/seiten/Anmeldung.astro`.
+6. **`robots.txt` trägt kein `Disallow`.** Eine gesperrte Seite wird nicht gelesen, also wird ihr `noindex` nie gesehen. Die Sperre gehört auf die Seite, nicht in `robots.txt`.
+7. **Sitemap abrufen.** `https://im-stah.ch/sitemap-index.xml` muss zwölf Adressen führen, jede mit drei `hreflang`-Alternativen.
+8. **Search Console.** Domain aufnehmen, Sitemap einreichen, danach die Abdeckung prüfen.
+
 ---
 
 ## Offene Punkte
 
 Jeder Punkt nennt die Ursache und den nächsten Schritt.
 
-1. **Schriftdateien in einem öffentlichen Repository.** Die `woff2` von Switzer und Cabinet Grotesk liegen in einem öffentlichen Repository und sind damit für jeden herunterladbar. Ursache: Abschnitt 02 der ITF Free Font License nennt «repository» und «publicly accessible servers» unter den untersagten Wegen der Weitergabe. Der Schlusssatz desselben Abschnitts erlaubt das Selbsthosten für die eigene Website, was die Auslieferung über `im-stah.ch` deckt. Die Kopie im Repository ist davon nicht erfasst. Nächster Schritt: Repository auf privat stellen. Das ist der einzige Schritt, der ohne Zutun Dritter wirkt.
+1. **Schriftdateien im Repository.** Die `woff2` von Switzer und Cabinet Grotesk liegen im Repository. Ursache: Abschnitt 02 der ITF Free Font License nennt «repository» und «publicly accessible servers» unter den untersagten Wegen der Weitergabe. Der Schlusssatz desselben Abschnitts erlaubt das Selbsthosten für die eigene Website, was die Auslieferung über `im-stah.ch` deckt. Nächster Schritt: Das Repository wird privat gestellt, das erledigt der Auftraggeber. Damit ist die Weitergabe beendet. Wer vorher geklont hat, trägt die Dateien weiterhin bei sich, siehe «Rechte».
 2. **Übersetzung nicht muttersprachlich geprüft.** Die französische und die englische Fassung sind sorgfältig erstellt, aber von keiner muttersprachlichen Person gegengelesen. Ursache: kein Lektorat beauftragt. Nächster Schritt: Gegenlesen beauftragen, insbesondere für die zwölf Rechtsseiten.
 3. **Rechtstexte nur auf Deutsch verbindlich.** Die französischen und englischen Rechtstexte tragen den Vorrangvermerk, und AGB Ziffer 13 hält die deutsche Fassung fest. Ursache: Übersetzungen sind nicht anwaltlich geprüft. Nächster Schritt: Prüfung der deutschen Fassung beauftragen, danach die Übersetzungen abgleichen.
 4. **Juristische Prüfung.** AGB, Teilnahmebedingungen, Impressum und Datenschutzerklärung sind nach bestem Wissen erstellt, jedoch nicht anwaltlich geprüft. Nächster Schritt: Prüfung vor dem Aufschalten der Anmeldung.
@@ -604,8 +627,15 @@ Was die Lizenz deckt:
 | 02 | Jede Änderung an den Dateien untersagt, ausdrücklich auch Teilsätze und Formatwandlung |
 | 02 | Weitergabe über «repository» und «publicly accessible servers» untersagt |
 
-Der letzte Punkt steht im Spannungsverhältnis zur Ablage im Repository, siehe Offene
-Punkte 1.
+Das Repository ist privat. Die Schriftdateien dürfen nach der ITF Free Font License
+nicht über ein öffentliches Repository weitergegeben werden. Wird das Repository je
+öffentlich gestellt, müssen die Schriftdateien vorher entfernt werden, auch aus der
+Git-Geschichte.
+
+Das Entfernen aus der Git-Geschichte trifft jeden Commit, der eine Datei unter
+`src/assets/fonts/` anfasst. Es schreibt die Geschichte neu, alle offenen Branches müssen
+danach neu aufgesetzt werden. Wer das Repository vorher geklont hat, trägt die Dateien
+weiterhin bei sich.
 
 ---
 

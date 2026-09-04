@@ -32,9 +32,24 @@ export const de = {
 
   laufband: ["Salgesch", "19. September 2026", "Clos du Cornalin", "Sieben Weine", "Sechs Gänge", "50 Plätze"],
 
+  /* Bildbeschreibungen. Sie nennen, was zu sehen ist, und wiederholen
+     weder Titel noch Bildunterschrift. Je Bild ein Schluessel. */
+  bilder: {
+    closMorgenlicht: "Rebhaus im Clos du Cornalin über den Rebzeilen, dahinter das Rhonetal im Morgenlicht",
+    closDuCornalin: "Rebhaus im Clos du Cornalin über Salgesch, dahinter das Rhonetal im Morgenlicht",
+    rebhausDrohne: "Drohnenblick auf das Rebhaus zwischen den Rebzeilen des Clos du Cornalin",
+    rebberg: "Rebberge über Salgesch, dahinter das Rhonetal und die Hänge des Pfynwaldes",
+    moodMesser: "Kochmesser mit Holzgriff auf verwitterten Holzbrettern",
+    alishaCina: "Alisha Cina im schwarzen Shirt, lächelnd vor dem Rhonetal",
+    alainLerjen: "Alain Lerjen im weissen Kochhemd im Profil, hinter ihm die Felswand",
+    team: "Alisha Cina und Alain Lerjen im Kochhemd, hinter ihnen die Berge über dem Rhonetal",
+    markeFernandCina: "Wortmarke Fernand Cina",
+    markeBergbox: "Wortmarke BergBox",
+  },
+
   start: {
     h1: ["Dein Tag im Wallis", "mit Wein, Kulinarik", "und Musik den ganzen Tag"],
-    anlass: { lab: "Der Anlass", h2: ["Drei Partner.", "Ein Tag."],
+    anlass: { lab: "Der Anlass", h2: ["Drei Marken.", "Ein Rebberg."],
       p1: "z’Wallis im Stah entstand aus einer gemeinsamen Idee von Fernand Cina, Maison 13 und BergBox.",
       p2: "Fernand Cina öffnet den Rebberg und die Kellerei. Maison 13 bringt die Küche mitten unter die Gäste. BergBox hält den Faden zusammen und hat die Umsetzung lanciert.",
       p3: "Sieben Weine. Sechs Gänge. Acht Stunden über dem Rhonetal, durchgehend begleitet von den DJs. Ein Datum, 50 Plätze." },

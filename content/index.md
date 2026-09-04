@@ -28,7 +28,7 @@ Maison 13 bringt die Küche mitten unter die Gäste.
 
 BergBox hält den Faden zusammen und hat die Umsetzung lanciert.
 
-Drei Partner. Ein Tag. Mitten im Wallis.
+Drei Marken. Ein Rebberg. Mitten im Wallis.
 
 ---
 
