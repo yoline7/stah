@@ -4,6 +4,7 @@ import Base from "../layouts/Base.astro";
 import { anlass } from "../data/anlass";
 import { t, pfad, type Sprache } from "../i18n/ui";
 import i_team from "../assets/img/team.jpg";
+import Wolken from "../components/Wolken.astro";
 
 interface Props { lang: Sprache }
 const { lang } = Astro.props;
@@ -78,6 +79,7 @@ const karte = "https://www.google.com/maps/search/?api=1&query=Fernand+Cina+Bahn
 
 <!-- GUT ZU WISSEN -->
 <section class="wrap s-e on-dark">
+  <Wolken flaeche="dunkel" />
   <div class="grid">
     <div class="lab mono sec fu"><span class="stick">( {o.wissen.lab} )</span></div>
     <div class="col-7">

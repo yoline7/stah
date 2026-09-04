@@ -3,6 +3,7 @@ import Wortmarke from "./logos/Wortmarke.astro";
 import Sprachen from "./Sprachen.astro";
 import { anlass } from "../data/anlass";
 import { t, pfad, type Sprache, type Seite } from "../i18n/ui";
+import Wolken from "./Wolken.astro";
 
 interface Props { lang: Sprache; seite: Seite }
 const { lang, seite } = Astro.props;
@@ -17,6 +18,7 @@ const seitenliste = [
 ---
 <header id="hd" transition:persist="kopf">
   <div class="mnu" id="menu">
+    <Wolken flaeche="menue" />
     <nav>
       {seitenliste.map((s) => (
         <span class="ln">

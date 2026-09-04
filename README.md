@@ -127,7 +127,9 @@ im-stah/
 │   └── organisation.md
 ├── public/                       favicon.svg · robots.txt · preview.jpg
 └── src/
-    ├── data/anlass.ts            Eckdaten des Anlasses, einzige Quelle
+    ├── data/
+    │   ├── anlass.ts             Eckdaten des Anlasses, einzige Quelle
+    │   └── wolken.ts             die fuenf bewolkten Flaechen und ihre Anzahl
     ├── i18n/
     │   ├── ui.ts                 Sprachen, Wegtabelle, Kürzel, Nachschlag
     │   ├── de.ts                 Wörterbuch Deutsch, zugleich die Vorlage
@@ -141,6 +143,7 @@ im-stah/
     │   ├── Footer.astro          Fusszeile
     │   ├── Partner.astro         Partnerband
     │   ├── Sprachen.astro        Umschalter DE · FR · EN
+    │   ├── Wolken.astro          Wolkenschicht einer Flaeche
     │   └── logos/                Wortmarke · Maison13 · Yoline
     ├── seiten/                   die fünf Inhaltsseiten, je einmal
     │   ├── Start.astro
@@ -338,6 +341,81 @@ einmal mit der Palette und einmal mit vier ausgegrauten Pulsfarben. Der Untersch
 auf allen sechs Seiten 0.0000 Prozent. Was an farbigen Bildpunkten übrig bleibt, steht in
 beiden Aufnahmen gleich und ist Subpixel-Kantenglättung der Schrift, kein Gestaltungsmittel.
 
+### Neonwolken
+
+Der Kantenlauf ist ein Puls von 1.4 Sekunden. Die Wolke ist Licht und bleibt. Grosse,
+weiche Farbfelder ziehen dauerhaft und sehr langsam über die dunklen Flächen und leuchten
+sie aus, statt sie zu bemalen. Reine CSS-Animation, kein Taktgeber.
+
+**Fünf Flächen, sonst keine.**
+
+| Fläche | Wolken | Grunddeckkraft | Töne |
+|---|---|---|---|
+| Titelbild, über dem Foto und unter dem Schleier | 2 | 0.28 | Petrolgrün, Salbei |
+| Menü und Ausklang, die dunkle Passage | 3 | 0.40 | Petrolgrün, Salbei, Orange |
+| Faktenfeld | 2 | 0.34 | Petrolgrün, Salbei |
+| Menüüberlagerung, wenn offen | 2 | 0.46 | Petrolgrün, Orange |
+| Partnerband und Fuss | je 1 | 0.22 | Salbei |
+
+Die Töne sind dieselben wie beim Kantenlauf, `--wolke-1` bis `--wolke-3` zeigen auf
+`--puls-3`, `--puls-2` und `--puls-4`. Ein Farbsystem, nicht zwei.
+
+Kein Orange auf dem Titelbild und keines im Faktenfeld. Beide Flächen tragen Text, der
+den Kontrast hält, und die Zahlen bleiben kühl. Auf keiner Fläche stehen zwei Orange.
+
+**Bewegung.** Zwei Kreisläufe je Wolke, mit eigener Dauer. Der Weg läuft über 78 bis
+128 Sekunden, die Deckkraft schwingt über 61 bis 97 Sekunden zwischen 0.55 und 1.0 der
+Grunddeckkraft. Beide `alternate`, endlos, auf `cubic-bezier(.45,.05,.55,.95)`. Jede Wolke
+startet mit eigenem Vorlauf, zwei Wolken derselben Fläche laufen nie in dieselbe Richtung.
+Der Weg beträgt höchstens 9vw waagrecht und 7vh senkrecht.
+
+**Lage.** Jede Wolke hängt zu einem guten Teil ausserhalb ihrer Fläche. So liest sich die
+Wolke als Licht von aussen, nicht als Fleck in der Mitte.
+
+**Korn.** Ein feines Korn liegt still auf denselben Flächen, `feTurbulence` mit
+`baseFrequency` 0.9 und `numOctaves` 3, in Graustufen, Kachel 180 mal 180 Pixel, als
+Data-URI eingebettet. Keine zusätzliche Anfrage, keine Animation. Es liegt in der
+Wolkenschicht und damit unter dem Text.
+
+**Grenzen.**
+
+- Ohne `color-mix` entsteht keine Wolke. Die Regeln hängen an einem `@supports`-Block, ohne Unterstützung bleibt `.wolke` auf `display:none`.
+- Bei reduzierter Bewegung stehen die Wolken still und bleiben sichtbar. Der halbe Vorlauf hält sie in mittlerer Stellung und Deckkraft.
+- Ohne JavaScript erscheinen sie unverändert, alle 13 stehen im Markup.
+- Ausserhalb des Sichtfelds ruhen sie, gesetzt über `IntersectionObserver`. Das ist eine Leistungsbremse, keine Führung.
+- Unter 700 Pixel Breite trägt jede Fläche höchstens zwei Wolken.
+- Kein Element ändert durch die Wolken Grösse oder Lage.
+
+**Gemessener Textkontrast auf den bewolkten Flächen,** im ungünstigsten Bild aus sechs
+Phasen, 1440 mal 900:
+
+| Stelle | Kontrast |
+|---|---|
+| Menüzeile in der Überlagerung | 16.60 : 1 |
+| Menüzeile im Menü, Kulinarik | 16.41 : 1 |
+| Register, Organisation | 14.62 : 1 |
+| Zahl im Faktenfeld | 14.92 : 1 |
+| Kopf der dunklen Passage | 13.48 : 1 |
+| Fussverweise | 7.89 : 1 |
+| Partnermarke | 7.69 : 1 |
+| Fliesstext der dunklen Passage | 7.34 : 1 |
+| Weinspalte im Menü | 7.02 : 1 |
+| Mikro-Marke im Posten | 6.70 : 1 |
+| Fuss in der Überlagerung | 6.66 : 1 |
+| Beschriftung im Faktenfeld | 6.61 : 1 |
+
+Kleinster Wert 6.61 : 1. Grundlinie ohne Wolken 7.67 : 1, der Verlust beträgt also
+höchstens 1.06.
+
+**Gemessene Bildrate** beim Rollen über die dunkle Passage, vier Sekunden:
+
+| Breite | Bilder je Sekunde |
+|---|---|
+| 1920 mal 1080 | 59.7 |
+| 1440 mal 900 | 60.3 |
+| 1280 mal 800 | 60.3 |
+| 390 mal 844 | 60.3 |
+
 ### Takt
 
 | Bewegung | Abstand | Dauer |
@@ -418,7 +496,8 @@ Seite läuft neu. Beobachter auf bleibenden Elementen werden vor dem Neuaufbau a
 
 `site.js` prüft `CSS.registerProperty`, `mask-composite` und `conic-gradient` und setzt erst
 dann `hat-lauf` auf das Wurzelelement. Für Welle und Spur prüft es zusätzlich
-`background-clip: text` und setzt `hat-welle`. Alle Regeln hängen an diesen Klassen. Ohne
+`background-clip: text` und setzt `hat-welle`. Die Wolken hängen nicht an JavaScript,
+sie hängen an einem `@supports`-Block mit `color-mix`. Alle Regeln hängen an diesen Klassen. Ohne
 Unterstützung, ohne JavaScript und bei reduzierter Bewegung entsteht kein Pseudoelement und
 keine Klasse. Nichts geht dadurch kaputt.
 
@@ -450,6 +529,18 @@ Gesetzt ist .36, die niedrigste Stufe, die trägt. Der kritische Fall ist die en
 die französische Titelzeile bei 1920 Pixel Breite. Deutsch allein trüge schon .28. Wer die
 Titelzeile ändert, misst neu.
 
+**Nach dem Einbau der Wolken neu gemessen,** im ungünstigsten Bild der Wolkenbewegung,
+also bei voller Deckkraft und über sechs Stellungen des Weges:
+
+| Stufe | kleinster Kontrast | trägt 4.5 : 1 |
+|---|---|---|
+| **.36** | **4.53 : 1** | **ja** |
+| .38 | 4.67 : 1 | ja |
+
+Der Schleier bleibt auf .36. Die Wolken über dem Titelbild tragen nur 0.28 Grunddeckkraft
+und hängen über die Kanten hinaus, unter der Titelzeile ändern sie den Grund kaum. Der
+kleinste Wert liegt bei 4.53 gegen 4.53 ohne Wolken.
+
 ---
 
 ## Bewusste Abweichungen
@@ -477,11 +568,47 @@ auf `.tick` schneidet den Verlauf nicht auf die Schrift der Nachfahren zu, weil 
 eigene Zeichenebene führt. Die Spur läuft deshalb über die Trennpunkte. Dauer und Richtung
 sind unverändert.
 
-**5 · Sitemap ohne die eingebaute i18n-Option.** `@astrojs/sitemap` verknüpft Sprachfassungen
+**5 · Wolken kleiner und ohne Mischmodus, gemessen erzwungen.** Vorgesehen waren
+`clamp(420px, 78vw, 1100px)`, `mix-blend-mode: screen` auf der Wolke und
+`mix-blend-mode: overlay` mit Deckung 0.04 auf dem Korn. Mit diesen Werten hält die
+Bildrate beim Rollen über die dunkle Passage nur 33.7 Bilder je Sekunde bei 1440 und
+23.3 bei 1920. Gesetzt sind deshalb `clamp(320px, 52vw, 640px)`, Mischmodus `normal`
+auf der Wolke und `normal` mit Deckung 0.05 auf dem Korn. Damit hält die Bildrate 60.3
+bei 1440 und 59.7 bei 1920.
+
+Die Messreihe, 1440 mal 900, drei Sekunden, je eine Änderung gegenüber der Vorgabe:
+
+| Zustand | Bilder je Sekunde |
+|---|---|
+| ohne Wolken | 60.3 |
+| Vorgabe, drei Wolken, 78vw, Korn overlay | 33.7 |
+| Korn auf normal | 38.2 |
+| ohne Korn | 42.7 |
+| 52vw und Korn normal | 44.2 |
+| 52vw, Korn normal, Wolke normal | 60.4 |
+
+Der Verlust an Wirkung ist gering: auf nahezu schwarzem Grund liegt `screen` ohnehin
+fast auf `normal`, und die kleinere Wolke hängt jetzt über die Kante hinaus, damit sie
+weiter als Licht von aussen liest. Anzahl, Dauer, Töne und Deckkraft bleiben wie gesetzt.
+Die Reihenfolge der Vorgabe, zuerst Anzahl, dann Grösse, zuletzt Deckkraft, wurde
+geprüft: die Anzahl zu senken bringt nur 36.8, die Grösse dagegen den Sprung.
+
+**6 · Korn liegt unter dem Text, nicht darüber.** Vorgesehen war `z-index:1` auf einer
+eigenen Klasse. Gesetzt ist `.wolken::after`, also innerhalb der Wolkenschicht. Bei
+Deckung 0.05 ist der Unterschied im Bild nicht zu sehen, der Text kann so aber unter
+keinen Umständen bedeckt werden.
+
+**7 · Mikro-Marken auf dunklem Grund aufgehellt.** Beim Messen der bewolkten Flächen
+fielen zwei Stellen auf, die schon vorher zu schwach waren: `.weg .mono` und `.mono.sec`
+im Partnerband standen auf `--sec-light` und hielten auf dunklem Grund nur 3.66 und
+3.90 zu 1. Sie tragen jetzt `--sec-dark` und halten 7.67 zu 1. Das ist eine Korrektur,
+keine Abweichung.
+
+**8 · Sitemap ohne die eingebaute i18n-Option.** `@astrojs/sitemap` verknüpft Sprachfassungen
 über gleiche Seitennamen. Die Seitennamen sind hier übersetzt, deshalb baut eine eigene
 `serialize`-Funktion die Alternativen aus der Wegtabelle.
 
-**6 · Ein Anmeldeschluss, zwei Wirkungen.** AGB Ziffer 6.1 nannte fest den 13. September.
+**9 · Ein Anmeldeschluss, zwei Wirkungen.** AGB Ziffer 6.1 nannte fest den 13. September.
 Der Anmeldeschluss steht seit dem 3. September auf dem 15. September. Die Ziffer rechnet den
 Tag danach jetzt aus `src/data/anlass.ts` aus.
 

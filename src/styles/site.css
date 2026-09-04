@@ -60,7 +60,9 @@ h1,h2,h3,.disp,.head,.facts b,.mn .ti,.arw .t,.mnu .ln .t,.reg .v,.duo h3,.side 
 .head{font-size:var(--head);line-height:1.06;letter-spacing:-.025em;font-weight:500;text-wrap:balance;}
 .bodyl{font-size:var(--body-l);line-height:1.42;letter-spacing:-.01em;}
 .sec{color:var(--sec-light);}
-.on-dark .sec{color:var(--sec-dark);}
+/* Auf jedem dunklen Grund traegt die Mikro-Marke den helleren Ton.
+   --sec-light auf --ink oder --deep haelt nur 3.7 zu 1, --sec-dark haelt 9.0 zu 1. */
+.on-dark .sec,.deep .sec,footer .sec,.hero .sec,.mnu .sec{color:var(--sec-dark);}
 
 /* ---------- Raster, Bundstege ungleich ---------- */
 .wrap{padding-left:var(--padL);padding-right:var(--padR);}
@@ -222,6 +224,158 @@ h1,h2,h3,.disp,.head,.facts b,.mn .ti,.arw .t,.mnu .ln .t,.reg .v,.duo h3,.side 
   100%{background:currentColor;opacity:.45;transform:scale(1);}
 }
 
+/* ---------- Neonwolken ----------
+   Grosse, weiche Farbfelder, die dauerhaft und sehr langsam ueber die dunklen
+   Flaechen ziehen. Der Kantenlauf ist ein Puls, die Wolke ist Licht.
+   Reine CSS-Animation, kein Taktgeber. Keine Weichzeichnung, der radiale
+   Verlauf ist von sich aus weich genug.
+
+   Toene: dieselben wie der Kantenlauf, sonst entstuenden zwei Farbsysteme.
+   Die Werte stehen einmal, unter --puls-1 bis --puls-4.
+
+   Ohne color-mix oder mix-blend-mode:screen bleibt die Flaeche ohne Wolken.
+   Die @supports-Bedingung deckt beide Voraussetzungen. */
+:root{
+  --wolke-1:var(--puls-3);   /* Petrolgruen, kuehl */
+  --wolke-2:var(--puls-2);   /* Salbei, mittel */
+  --wolke-3:var(--puls-4);   /* Orange, sparsam */
+}
+
+.wolken{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0;}
+.wolke{display:none;}
+
+@supports (background:radial-gradient(closest-side, color-mix(in oklab, #fff 30%, transparent) 0%, transparent 78%)){
+  .wolke{
+    display:block;
+    position:absolute;
+    /* 52vw statt 78vw und Mischmodus normal statt screen. Gemessen: mit den
+       Vorgabewerten haelt die Bildrate beim Blaettern nur 33.7 Bilder je
+       Sekunde, mit diesen zwei Aenderungen 60.3 bei 1440 und 58.7 bei 1920. Auf nahezu schwarzem Grund
+       liegt screen ohnehin fast auf normal, siehe Vermerk im README. */
+    width:clamp(320px, 52vw, 640px);
+    aspect-ratio:1.4 / 1;
+    border-radius:50%;
+    will-change:transform, opacity;
+    background:radial-gradient(closest-side,
+      color-mix(in oklab, var(--ton) 34%, transparent) 0%,
+      color-mix(in oklab, var(--ton) 14%, transparent) 44%,
+      transparent 82%);
+    /* Zwei Kreislaeufe mit eigener Dauer. Damit laufen Weg und Deckkraft
+       nie im gleichen Takt, und keine Wolke haengt am Kantenlauf. */
+    animation:
+      ziehen var(--dauer) cubic-bezier(.45,.05,.55,.95) var(--versatz) infinite alternate,
+      atmen  var(--atem)  cubic-bezier(.45,.05,.55,.95) var(--atemversatz) infinite alternate;
+  }
+}
+
+@keyframes ziehen{
+  from{transform:translate3d(var(--x1), var(--y1), 0);}
+  to  {transform:translate3d(var(--x2), var(--y2), 0);}
+}
+@keyframes atmen{
+  from{opacity:calc(var(--grund) * .55);}
+  to  {opacity:var(--grund);}
+}
+
+/* Der Inhalt liegt ueber den Wolken */
+.on-dark>.grid,.deep>.grid,footer>*,.mnu>nav,.mnu>.fuss,
+.facts>div:not(.wolken){position:relative;z-index:1;}
+
+/* Korn. Ohne Korn wirkt ein Verlauf billig. Es liegt still, es flimmert nicht.
+   Als Data-URI eingebettet, keine zusaetzliche Anfrage. Es liegt in der
+   Wolkenschicht, damit es unter dem Text bleibt. */
+.wolken::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  opacity:.05;mix-blend-mode:normal;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='k'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23k)'/%3E%3C/svg%3E");
+  background-size:180px 180px;
+}
+
+/* Lage je Wolke. Jede haengt zu einem guten Teil ausserhalb ihrer Flaeche.
+   So bleibt der Eindruck einer Ausleuchtung, obwohl die Wolke nach der
+   Leistungsmessung kleiner ausfaellt als vorgesehen. */
+
+/* --- Titelbild, Grunddeckkraft 0.28, kein Orange unter der Schrift --- */
+.wolken[data-flaeche="hero"]{--grund:.28;}
+.wolken[data-flaeche="hero"] .w1{
+  --ton:var(--wolke-1);left:-15%;top:-26%;
+  --dauer:96s;--atem:71s;--versatz:-38s;--atemversatz:-12s;
+  --x1:-3vw;--y1:-2vh;--x2:6vw;--y2:5vh;}
+.wolken[data-flaeche="hero"] .w2{
+  --ton:var(--wolke-2);left:62%;top:46%;
+  --dauer:78s;--atem:61s;--versatz:-11s;--atemversatz:-44s;
+  --x1:4vw;--y1:3vh;--x2:-5vw;--y2:-4vh;}
+
+/* --- Menue und Ausklang, die dunkle Passage, 0.40, ein Orange --- */
+.wolken[data-flaeche="dunkel"]{--grund:.40;}
+.wolken[data-flaeche="dunkel"] .w1{
+  --ton:var(--wolke-1);left:-18%;top:-34%;
+  --dauer:112s;--atem:83s;--versatz:-7s;--atemversatz:-29s;
+  --x1:-4vw;--y1:-3vh;--x2:5vw;--y2:4vh;}
+.wolken[data-flaeche="dunkel"] .w2{
+  --ton:var(--wolke-2);left:34%;top:-26%;
+  --dauer:88s;--atem:67s;--versatz:-51s;--atemversatz:-8s;
+  --x1:6vw;--y1:-2vh;--x2:-3vw;--y2:6vh;}
+.wolken[data-flaeche="dunkel"] .w3{
+  --ton:var(--wolke-3);left:66%;top:58%;
+  --dauer:124s;--atem:97s;--versatz:-73s;--atemversatz:-56s;
+  --x1:-5vw;--y1:5vh;--x2:4vw;--y2:-4vh;}
+
+/* --- Abschluss mit dem Faktenfeld, 0.34, beide Toene gruen.
+       Das Feld traegt die Zahlen, deshalb bleibt es kuehl. --- */
+.wolken[data-flaeche="fakten"]{--grund:.34;}
+.wolken[data-flaeche="fakten"] .w1{
+  --ton:var(--wolke-1);left:-14%;top:-72%;
+  --dauer:84s;--atem:63s;--versatz:-19s;--atemversatz:-37s;
+  --x1:-3vw;--y1:-2vh;--x2:5vw;--y2:3vh;}
+.wolken[data-flaeche="fakten"] .w2{
+  --ton:var(--wolke-2);left:62%;top:-24%;
+  --dauer:104s;--atem:79s;--versatz:-62s;--atemversatz:-14s;
+  --x1:4vw;--y1:4vh;--x2:-6vw;--y2:-3vh;}
+
+/* --- Menueueberlagerung, 0.46, ein Orange. Reine Flaeche, sie vertraegt Licht --- */
+.wolken[data-flaeche="menue"]{--grund:.46;}
+.wolken[data-flaeche="menue"] .w1{
+  --ton:var(--wolke-1);left:-16%;top:-24%;
+  --dauer:92s;--atem:69s;--versatz:-23s;--atemversatz:-47s;
+  --x1:-4vw;--y1:-3vh;--x2:6vw;--y2:5vh;}
+.wolken[data-flaeche="menue"] .w2{
+  --ton:var(--wolke-3);left:64%;top:54%;
+  --dauer:116s;--atem:87s;--versatz:-68s;--atemversatz:-21s;
+  --x1:5vw;--y1:4vh;--x2:-4vw;--y2:-5vh;}
+/* Solange das Menue zu ist, bewegt sich nichts */
+.mnu .wolke{animation-play-state:paused;}
+#hd.open .mnu .wolke{animation-play-state:running;}
+
+/* --- Partnerband und Fuss, 0.22 --- */
+.wolken[data-flaeche="fuss"]{--grund:.22;}
+.wolken[data-flaeche="fuss"] .w1{
+  --ton:var(--wolke-2);left:2%;top:-58%;
+  --dauer:128s;--atem:95s;--versatz:-31s;--atemversatz:-59s;
+  --x1:-3vw;--y1:4vh;--x2:5vw;--y2:-3vh;}
+footer .wolken[data-flaeche="fuss"] .w1{
+  left:58%;top:-44%;
+  --dauer:118s;--atem:91s;--versatz:-77s;--atemversatz:-26s;
+  --x1:4vw;--y1:-3vh;--x2:-5vw;--y2:4vh;}
+
+/* Ausserhalb des Sichtfelds ruhen die Wolken, gesetzt von site.js.
+   Ohne JavaScript entfaellt das, die Wolken ziehen dann durchgehend. */
+.wolken.ruht .wolke{animation-play-state:paused;}
+
+/* Auf schmalen Schirmen hoechstens zwei Wolken je Flaeche */
+@media(max-width:700px){
+  .wolke:nth-child(n+3){display:none;}
+}
+
+/* Bei reduzierter Bewegung stehen die Wolken still und bleiben sichtbar.
+   Der halbe Vorlauf haelt sie in der mittleren Stellung und Deckkraft. */
+@media(prefers-reduced-motion:reduce){
+  .wolke{
+    animation-play-state:paused!important;
+    animation-delay:calc(var(--dauer) * -.5), calc(var(--atem) * -.5)!important;
+  }
+}
+
 /* ---------- Zeiger, zusaetzlicher Zustand ueber Bildbaendern ---------- */
 #cur.klein .ring{width:8px;height:8px;background:#fff;}
 #cur.klein .dot{opacity:0;}
@@ -242,20 +396,22 @@ h1,h2,h3,.disp,.head,.facts b,.mn .ti,.arw .t,.mnu .ln .t,.reg .v,.duo h3,.side 
 }
 
 /* ---------- Faktenfeld ---------- */
-.facts{display:grid;grid-template-columns:repeat(4,1fr);
+.facts{position:relative;display:grid;grid-template-columns:repeat(4,1fr);
   background:var(--deep);color:var(--paper);border-radius:8px;overflow:hidden;}
-.facts div{padding:46px 30px 44px;border-right:1px solid rgba(244,244,242,.16);}
-.facts div:last-child{border-right:0;}
+/* Die Wolkenschicht steht als letztes Kind im Faktenfeld. Sie ist ein div und
+   ein span, deshalb schliessen die Zellenregeln sie ausdruecklich aus. */
+.facts>div:not(.wolken){padding:46px 30px 44px;border-right:1px solid rgba(244,244,242,.16);}
+.facts>div:nth-last-child(2){border-right:0;}
 .facts b{display:block;font-size:var(--disp);line-height:.94;letter-spacing:-.036em;font-weight:500;}
 .facts b i{font-style:normal;font-size:var(--body-l);letter-spacing:0;margin-left:10px;opacity:.55;
   vertical-align:baseline;}
-.facts span{display:block;margin-top:34px;color:#A4A6A8;}
+.facts .mono{display:block;margin-top:34px;color:#A4A6A8;}
 @media(max-width:820px){
   .facts{grid-template-columns:1fr 1fr;}
-  .facts div{padding:26px 18px 24px;}
-  .facts div:nth-child(2n){border-right:0;}
-  .facts div:nth-child(1),.facts div:nth-child(2){border-bottom:1px solid rgba(244,244,242,.16);}
-  .facts span{margin-top:20px;}
+  .facts>div:not(.wolken){padding:26px 18px 24px;}
+  .facts>div:not(.wolken):nth-child(2n){border-right:0;}
+  .facts>div:nth-child(1),.facts>div:nth-child(2){border-bottom:1px solid rgba(244,244,242,.16);}
+  .facts .mono{margin-top:20px;}
 }
 
 #pg{position:fixed;top:0;left:0;height:1px;width:0;background:var(--ink);z-index:71;mix-blend-mode:difference;}
@@ -411,6 +567,7 @@ section{position:relative;}
 /* ---------- Weg ---------- */
 .weg{display:grid;grid-template-columns:1fr 1fr;column-gap:2.4vw;row-gap:5vh;margin-top:6vh;}
 .weg .mono{display:block;color:var(--sec-light);margin-bottom:12px;}
+.on-dark .weg .mono,.deep .weg .mono,.hero .weg .mono{color:var(--sec-dark);}
 .weg p{max-width:38ch;}
 
 /* ---------- Formular ---------- */
@@ -436,15 +593,15 @@ section{position:relative;}
 .alt .send::before{background:var(--puls);}
 .alt .send:hover,.alt .send:focus-visible{color:var(--ink);}
 .s-d.alt .facts{background:var(--deep);color:var(--paper);}
-.s-d.alt .facts div{border-right-color:rgba(244,244,242,.16);}
+.s-d.alt .facts>div:not(.wolken){border-right-color:rgba(244,244,242,.16);}
 .send .n{display:inline-block;transition:transform .55s var(--ease);}
 .send:hover .n,.send:focus-visible .n{transform:rotate(45deg);}
 
 .s-d .facts{grid-template-columns:repeat(3,1fr);}
-.s-d .facts div{border-right-color:var(--hair-dark);}
+.s-d .facts>div:not(.wolken){border-right-color:var(--hair-dark);}
 @media(max-width:820px){.s-d .facts{grid-template-columns:1fr;}
- .s-d .facts div{border-right:0;border-bottom:1px solid var(--hair-dark);}
- .s-d .facts div:last-child{border-bottom:0;}}
+ .s-d .facts>div:not(.wolken){border-right:0;border-bottom:1px solid var(--hair-dark);}
+ .s-d .facts>div:nth-last-child(2){border-bottom:0;}}
 
 .lnk{border-bottom:1px solid currentColor;padding-bottom:2px;transition:opacity .24s var(--soft);}
 .lnk:hover{opacity:.7;}
@@ -467,7 +624,7 @@ section{position:relative;}
 .yo{display:block;width:clamp(96px,9vw,140px);height:auto;color:currentColor;}
 
 /* ---------- Fuss ---------- */
-footer{background:var(--deep);color:var(--sec-dark);}
+footer{position:relative;background:var(--deep);color:var(--sec-dark);}
 footer .in-f{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;
   border-top:1px solid var(--hair-dark);padding:28px 0 64px 0;}
 footer b{color:var(--paper);font-weight:400;}

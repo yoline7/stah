@@ -5,6 +5,7 @@ import Yoline from "./logos/Yoline.astro";
 import i_fernand_cina from "../assets/img/partner/fernand-cina.png";
 import i_bergbox from "../assets/img/partner/bergbox.png";
 import { t, type Sprache } from "../i18n/ui";
+import Wolken from "./Wolken.astro";
 
 interface Props { lang: Sprache }
 const { lang } = Astro.props;
@@ -12,6 +13,7 @@ const w = t(lang);
 ---
 <!-- PARTNER -->
 <section class="wrap deep" style="padding-top:4vh;padding-bottom:12vh;">
+  <Wolken flaeche="fuss" />
   <div class="grid">
     <div class="col-full fu">
       <div class="partners">
