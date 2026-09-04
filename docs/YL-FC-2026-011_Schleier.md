@@ -1,6 +1,6 @@
 # Schleier über dem Titelbild
 
-Referenz YL-STAH-2026-002 · Projekt z’Wallis im Stah · Yoline AG
+Referenz YL-FC-2026-011 · Projekt z’Wallis im Stah · Yoline AG
 Stand 4. September 2026
 
 Verfahren der Tintenmaske und die Messreihe je Deckungsstufe, drei Sprachen, vier Breiten.

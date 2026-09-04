@@ -14,8 +14,9 @@ Wer Text ändert, ändert das Wörterbuch, nicht diese Dateien.
 | `wein.md` | Wein |
 | `organisation.md` | Organisation |
 
-Für Französisch und Englisch hat hier nie ein Quelltext existiert. Beide entstanden
-in der Sprachrunde direkt in den Wörterbüchern.
+Französisch und Englisch entstanden direkt in den Wörterbüchern und haben deshalb
+keinen Quelltext in diesem Archiv. Das ist beabsichtigt, sie sind Übersetzungen,
+keine Quellen.
 
 Bekannte Abweichungen zwischen diesen Dateien und dem heutigen Stand stehen im
 README unter «Offene Punkte».
