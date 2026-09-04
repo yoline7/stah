@@ -1,12 +1,18 @@
 ---
 import Wortmarke from "./logos/Wortmarke.astro";
+import { anlass } from "../data/anlass";
+import { t, pfad, type Sprache } from "../i18n/ui";
+
+interface Props { lang: Sprache }
+const { lang } = Astro.props;
+const w = t(lang);
 ---
 <footer class="wrap" transition:persist="fuss">
   <div style="padding-top:9vh;"><Wortmarke /></div>
   <div class="in-f mono" style="margin-top:7vh;">
-    <span><a class="lnk" href="mailto:administration@fernand-cina.ch">administration@fernand-cina.ch</a></span>
-    <span><a href="/kulinarik">Kulinarik</a> · <a href="/wein">Wein</a> · <a href="/organisation">Organisation</a> · <a href="/anmeldung">Anmeldung</a></span>
-    <span><a href="/agb">AGB</a> · <a href="/teilnahmebedingungen">Teilnahme</a> · <a href="/impressum">Impressum</a> · <a href="/datenschutz">Datenschutz</a></span>
-    <span>im-stah.ch</span>
+    <span><a class="lnk" href={`mailto:${anlass.mail}`}>{anlass.mail}</a></span>
+    <span><a href={pfad(lang, "kulinarik")}>{w.nav.kulinarik}</a> · <a href={pfad(lang, "wein")}>{w.nav.wein}</a> · <a href={pfad(lang, "organisation")}>{w.nav.organisation}</a> · <a href={pfad(lang, "anmeldung")}>{w.nav.anmeldung}</a></span>
+    <span><a href={pfad(lang, "agb")}>{w.recht.agb}</a> · <a href={pfad(lang, "teilnahme")}>{w.recht.teilnahme}</a> · <a href={pfad(lang, "impressum")}>{w.recht.impressum}</a> · <a href={pfad(lang, "datenschutz")}>{w.recht.datenschutz}</a></span>
+    <span>{anlass.domain}</span>
   </div>
 </footer>

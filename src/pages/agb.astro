@@ -2,8 +2,13 @@
 import Legal from "../layouts/Legal.astro";
 import { anlass } from "../data/anlass";
 const schluss = `${anlass.anmeldeschluss} ${anlass.anmeldeschlussIso.slice(0, 4)}`;
+// Der Tag nach dem Anmeldeschluss, ab dem der volle Betrag geschuldet ist
+const danach = new Date(`${anlass.anmeldeschlussIso}T12:00:00Z`);
+danach.setUTCDate(danach.getUTCDate() + 1);
+const monate = ["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
+const tagDanach = `${danach.getUTCDate()}. ${monate[danach.getUTCMonth()]} ${danach.getUTCFullYear()}`;
 ---
-<Legal title="AGB" kicker="AGB" h1={`Allgemeine Geschäftsbedingungen`} sub="Bedingungen für Anmeldung, Ticket und Teilnahme am Anlass z’Wallis im Stah.">
+<Legal lang="de" seite="agb" title="AGB" kicker="AGB" h1={`Allgemeine Geschäftsbedingungen`} sub="Bedingungen für Anmeldung, Ticket und Teilnahme am Anlass z’Wallis im Stah.">
 <section>
 <h2>1 · Geltung</h2>
 <p>Diese Allgemeinen Geschäftsbedingungen gelten für alle Leistungen rund um den Anlass «z'Wallis im Stah» vom 19. September 2026 im Clos du Cornalin über Salgesch.</p>
@@ -60,7 +65,7 @@ const schluss = `${anlass.anmeldeschluss} ${anlass.anmeldeschlussIso.slice(0, 4)
 <h2>6 · Stornierung und Ersatzperson</h2>
 <h3>6.1 Rücktritt</h3>
 <p>Bis am {schluss} ist ein Rücktritt kostenfrei möglich. Der Betrag wird vollständig zurückerstattet.</p>
-<p>Ab dem 13. September 2026 wird der volle Betrag verrechnet. Grund ist der Einkauf der Küche, der zu diesem Zeitpunkt getätigt ist.</p>
+<p>Ab dem {tagDanach} wird der volle Betrag verrechnet. Grund ist der Einkauf der Küche, der zu diesem Zeitpunkt getätigt ist.</p>
 <h3>6.2 Verhinderung</h3>
 <p>Eine Weitergabe des Platzes an eine andere Person erfolgt nur nach vorgängiger Absprache. Bitte melde dich per E-Mail, wir prüfen den Fall und suchen eine Lösung.</p>
 <p>Ein Anspruch auf Übertragung besteht keiner. Massgebend sind die Essenswahl, die Platzzahl und der Stand der Vorbereitung.</p>
@@ -117,6 +122,7 @@ const schluss = `${anlass.anmeldeschluss} ${anlass.anmeldeschlussIso.slice(0, 4)
 <section>
 <h2>13 · Recht und Gerichtsstand</h2>
 <p>Es gilt schweizerisches Recht unter Ausschluss des UN-Kaufrechts. Gerichtsstand ist Sitten, Kanton Wallis.</p>
+<p>Diese Bedingungen bestehen in deutscher, französischer und englischer Fassung. Bei Abweichungen zwischen den Sprachfassungen gilt die deutsche Fassung.</p>
 <p>Sollte eine Bestimmung unwirksam sein, bleibt der übrige Vertrag gültig.</p>
 </section>
 </Legal>

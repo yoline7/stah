@@ -5,31 +5,41 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import Partner from "../components/Partner.astro";
 import { anlass } from "../data/anlass";
+import { fassungen, kuerzel, standard, type Sprache, type Seite } from "../i18n/ui";
 
 interface Props {
+  lang: Sprache;
+  seite: Seite;
   title: string;
   description: string;
   jsonld?: boolean;
 }
-const { title, description, jsonld = false } = Astro.props;
+const { lang, seite, title, description, jsonld = false } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const preview = new URL("/preview.jpg", Astro.site);
+const alternativen = fassungen(seite).map((f) => ({ ...f, url: new URL(f.weg, Astro.site).href }));
+const standardweg = alternativen.find((f) => f.lang === standard)!.url;
 ---
 <!DOCTYPE html>
-<html lang="de-CH">
+<html lang={kuerzel[lang].html}>
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{title}</title>
   <meta name="description" content={description} />
   <link rel="canonical" href={canonical} />
+  {alternativen.map((f) => <link rel="alternate" hreflang={f.html} href={f.url} />)}
+  <link rel="alternate" hreflang="x-default" href={standardweg} />
   <meta name="theme-color" content="#08090A" />
   <link rel="icon" href="/favicon.svg" />
   <ClientRouter />
 
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content={anlass.name} />
-  <meta property="og:locale" content="de_CH" />
+  <meta property="og:locale" content={kuerzel[lang].og} />
+  {alternativen.filter((f) => f.lang !== lang).map((f) => (
+    <meta property="og:locale:alternate" content={kuerzel[f.lang].og} />
+  ))}
   <meta property="og:url" content={canonical} />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
@@ -53,7 +63,7 @@ const preview = new URL("/preview.jpg", Astro.site);
       eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
       image: preview.href,
       url: canonical.href,
-      inLanguage: "de-CH",
+      inLanguage: ["de-CH", "fr-CH", "en"],
       maximumAttendeeCapacity: anlass.plaetze,
       typicalAgeRange: `${anlass.mindestalter}-`,
       location: {
@@ -73,10 +83,10 @@ const preview = new URL("/preview.jpg", Astro.site);
 <body>
   <div id="pg"></div>
   <div id="cur"><div class="ring"></div><div class="dot"></div></div>
-  <Header />
+  <Header lang={lang} seite={seite} />
   <slot />
-  <Partner />
-  <Footer />
+  <Partner lang={lang} />
+  <Footer lang={lang} />
   <script src="../scripts/site.js"></script>
 </body>
 </html>

@@ -1,0 +1,147 @@
+---
+import "../styles/anmeldung.css";
+import Wortmarke from "../components/logos/Wortmarke.astro";
+import Yoline from "../components/logos/Yoline.astro";
+import Sprachen from "../components/Sprachen.astro";
+import { anlass } from "../data/anlass";
+import { t, pfad, kuerzel, standard, fassungen, type Sprache } from "../i18n/ui";
+
+interface Props { lang: Sprache }
+const { lang } = Astro.props;
+const w = t(lang);
+const a = w.anmeldung;
+const alternativen = fassungen("anmeldung").map((f) => ({ ...f, url: new URL(f.weg, Astro.site).href }));
+const anzahlen = [1, 2, 3, 4, 5, 6];
+/* Die Zustimmung traegt zwei Verweise, beide in der Sprache der Seite. */
+const zustimmung = a.zustimmung
+  .replace("%agb%", `<a href="${pfad(lang, "agb")}">${w.rechtLang.agb}</a>`)
+  .replace("%teil%", `<a href="${pfad(lang, "teilnahme")}">${w.rechtLang.teilnahme}</a>`);
+const gastText = { erste: a.erstePerson, weitere: a.nPerson, wieOben: a.wieOben,
+                   name: a.name, namePlatz: a.namePlatz, essen: a.essen,
+                   fleisch: a.fleisch, vegetarisch: a.vegetarisch,
+                   platzEin: a.platzEin, platzMehr: a.platzMehr };
+---
+<!DOCTYPE html>
+<html lang={kuerzel[lang].html}>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{a.h1} · {anlass.name}</title>
+  <meta name="robots" content="noindex" />
+  <meta name="theme-color" content="#F4F4F2" />
+  <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+  {alternativen.map((f) => <link rel="alternate" hreflang={f.html} href={f.url} />)}
+  <link rel="alternate" hreflang="x-default" href={alternativen.find((f) => f.lang === standard)!.url} />
+</head>
+<body>
+<header id="hd">
+  <a class="brand" href={pfad(lang, "start")}><Wortmarke /></a>
+  <div class="rechts">
+    <Sprachen lang={lang} seite="anmeldung" />
+    <a class="back mono" href={pfad(lang, "start")}><span class="n">&#8599;</span><span>{w.kopf.zurueck}</span></a>
+  </div>
+</header>
+
+<section class="wrap top">
+  <div class="grid">
+    <h1 class="disp">{a.h1}</h1>
+    <p class="sub">{a.sub}</p>
+  </div>
+</section>
+
+<section class="wrap main">
+  <div class="grid">
+    <div class="form" id="formular">
+
+      <fieldset>
+        <legend class="mono">( {a.werKommt} )</legend>
+        <div class="fl"><span class="mono">{a.name}</span><input type="text" id="name" placeholder={a.namePlatz}></div>
+        <div class="two">
+          <div class="fl"><span class="mono">{a.mail}</span><input type="email" id="mail" placeholder={a.mailPlatz}></div>
+          <div class="fl"><span class="mono">{a.telefon}</span><input type="tel" id="tel" placeholder={a.telefonPlatz}></div>
+        </div>
+        <div class="fl">
+          <span class="mono">{a.sprache}</span>
+          <div class="chips" id="sprache">
+            <label class="chip"><input type="radio" name="sprache" value="de" checked={lang === "de"}><span>Deutsch</span></label>
+            <label class="chip"><input type="radio" name="sprache" value="fr" checked={lang === "fr"}><span>Français</span></label>
+            <label class="chip"><input type="radio" name="sprache" value="en" checked={lang === "en"}><span>English</span></label>
+          </div>
+          <small class="hinweis">{a.spracheHinweis}</small>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend class="mono">( {a.plaetzeUndEssen} )</legend>
+        <div class="fl">
+          <span class="mono">{a.anzahl}</span>
+          <div class="chips" id="anzahl">
+            {anzahlen.map((n) => (
+              <label class="chip"><input type="radio" name="anzahl" value={n} checked={n === 2}><span>{n}</span></label>
+            ))}
+          </div>
+        </div>
+        <div id="gaeste" data-text={JSON.stringify(gastText)}></div>
+      </fieldset>
+
+      <fieldset>
+        <legend class="mono">( {a.bestaetigung} )</legend>
+        <div class="ck"><input type="checkbox" id="zustimmung"><p><Fragment set:html={zustimmung} /><small>{a.zustimmungKlein}</small></p></div>
+        <div class="ck"><input type="checkbox" id="news"><p>{a.post}<small>{a.postKlein}</small></p></div>
+      </fieldset>
+
+      <button class="send" type="button" id="senden"><span>{a.senden}</span><span class="n">&#8599;</span></button>
+      <p class="err mono" id="fehler">{a.fehler}</p>
+      <p class="note">{a.note}</p>
+    </div>
+
+    <div class="side">
+      <span class="mono sec">( {a.total} )</span>
+      <b id="totalwert">CHF 290.00</b>
+      <span class="mono sec" id="teiler">2 {a.platzMehr} · {anlass.preisText}</span>
+      <ul>
+        {a.enthalten.map((e, i) => (
+          <li class:list={{ mono: i === a.enthalten.length - 1 }}
+              style={i === a.enthalten.length - 1 ? "padding-top:16px;" : undefined}>{e}</li>
+        ))}
+      </ul>
+    </div>
+
+    <!-- YoSuite: bei 50 vergebenen Plaetzen #formular und .side ausblenden, #warteliste einblenden -->
+    <div class="form" id="warteliste" hidden>
+      <fieldset>
+        <legend class="mono">( {a.warteliste} )</legend>
+        <p style="color:var(--sec-dark);max-width:44ch;margin-bottom:5vh;">{a.wartelisteText}</p>
+        <div class="fl"><span class="mono">{a.name}</span><input type="text" id="w_name" placeholder={a.namePlatz}></div>
+        <div class="two">
+          <div class="fl"><span class="mono">{a.mail}</span><input type="email" id="w_mail" placeholder={a.mailPlatz}></div>
+          <div class="fl"><span class="mono">{a.anzahl}</span><input type="text" id="w_anz" placeholder={a.wAnzahlPlatz}></div>
+        </div>
+      </fieldset>
+      <button class="send" type="button"><span>{a.wartelisteSenden}</span><span class="n">&#8599;</span></button>
+      <p class="note">{a.wartelisteNote}</p>
+    </div>
+
+    <div class="danke" id="danke">
+      <h2 class="head">{a.dankeH2}</h2>
+      <p>{a.dankeText}</p>
+      <p class="mono" style="color:var(--paper);">Alisha Cina und Alain Lerjen</p>
+    </div>
+  </div>
+</section>
+
+<footer class="wrap">
+  <div class="in mono">
+    <span><a href={`mailto:${anlass.mail}`}>{anlass.mail}</a></span>
+    <span>
+      <a href={pfad(lang, "agb")}>{w.recht.agb}</a> ·
+      <a href={pfad(lang, "teilnahme")}>{w.recht.teilnahme}</a> ·
+      <a href={pfad(lang, "impressum")}>{w.recht.impressum}</a> ·
+      <a href={pfad(lang, "datenschutz")}>{w.recht.datenschutz}</a>
+    </span>
+    <span><a href="https://yoline.ch" target="_blank" rel="noopener" style="display:inline-block;vertical-align:middle;line-height:0;"><Yoline class="yo" /></a></span>
+  </div>
+</footer>
+<script src="../scripts/anmeldung.js"></script>
+</body>
+</html>

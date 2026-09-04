@@ -1,0 +1,95 @@
+---
+import { Image } from "astro:assets";
+import Base from "../layouts/Base.astro";
+import { t, pfad, type Sprache } from "../i18n/ui";
+import i_rebhaus_drohne from "../assets/img/rebhaus-drohne.jpg";
+import i_alisha_cina from "../assets/img/alisha-cina.jpg";
+
+interface Props { lang: Sprache }
+const { lang } = Astro.props;
+const w = t(lang);
+const v = w.wein;
+---
+<Base lang={lang} seite="wein" title={w.meta.wein.titel} description={w.meta.wein.text}>
+<!-- KOPF -->
+<section class="wrap" style="padding-top:22vh;padding-bottom:12vh;">
+  <div class="grid">
+    <div class="lab mono sec fu"><span class="stick">( {v.lab} )</span></div>
+    <div class="col-7">
+      <h1 class="disp" style="max-width:13ch;">{v.h1}</h1>
+      <p class="bodyl fu d2" style="max-width:44ch;margin-top:7vh;">{v.p1}</p>
+      <p class="fu d3 sec" style="max-width:46ch;margin-top:3vh;">{v.p2}</p>
+    </div>
+  </div>
+</section>
+
+<!-- BEGLEITUNG -->
+<section class="wrap s-c">
+  <div class="grid">
+    <div class="lab mono sec fu"><span class="stick">( {v.begleitung.lab} )</span></div>
+    <div class="col-8 fu">
+      <h2 class="head fu" style="max-width:18ch;margin-bottom:5vh;">{v.begleitung.h2}</h2>
+      <div class="reg">
+        {v.begleitung.zeilen.map((r) => (
+          <div class="r"><div class="k mono sec">{r.k}</div><div class="v">{r.v}</div><div class="a mono">{r.a}</div></div>
+        ))}
+      </div>
+      <p class="fu d2 sec" style="max-width:46ch;margin-top:5vh;">{v.begleitung.nach}</p>
+    </div>
+  </div>
+</section>
+
+<!-- BAND -->
+<section class="band mm">
+  <div class="px" data-px="0.18"><Image src={i_rebhaus_drohne}
+         alt="Drohnenblick auf das Rebhaus zwischen den Rebzeilen des Clos du Cornalin"
+         widths={[960, 1440, 2000]} sizes="100vw" quality={72} format="webp" loading="lazy" /></div>
+  <div class="q">
+    <h2 class="head fu">{v.band.h2}</h2>
+    <span class="mono fu d2">{v.band.sub}</span>
+  </div>
+</section>
+
+<!-- HAUS -->
+<section class="wrap s-d on-dark">
+  <div class="grid">
+    <div class="lab mono sec fu"><span class="stick">( {v.haus.lab} )</span></div>
+    <div class="col-7">
+      <h2 class="head fu" style="max-width:16ch;">{v.haus.h2}</h2>
+      <p class="fu d2 sec" style="max-width:48ch;margin-top:4vh;">{v.haus.p1}</p>
+      <p class="fu d2 sec" style="max-width:48ch;margin-top:2.4vh;">{v.haus.p2}</p>
+      <p class="fu d2 sec" style="max-width:48ch;margin-top:2.4vh;">{v.haus.p3}</p>
+    </div>
+  </div>
+</section>
+
+<!-- WINZERIN -->
+<section class="wrap s-c">
+  <div class="grid">
+    <div class="lab mono sec fu"><span class="stick">( {v.winzerin.lab} )</span></div>
+    <div class="duo" style="grid-template-columns:1fr;">
+      <figure style="max-width:520px;">
+        <div class="ph mm"><div class="px" data-px="0.08"><Image src={i_alisha_cina}
+               alt="Alisha Cina im schwarzen Shirt, lächelnd vor dem Rhonetal"
+               widths={[480, 760, 1000]} sizes="(min-width: 900px) 520px, 100vw"
+               quality={80} format="webp" loading="lazy" /></div></div>
+        <h3 class="fu">Alisha Cina</h3>
+        <span class="mono fu d1">{v.winzerin.rolle}</span>
+        <p class="fu d2" style="max-width:46ch;">{v.winzerin.p1}</p>
+        <p class="fu d2" style="max-width:46ch;margin-top:14px;">{v.winzerin.p2}</p>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- AUFRUF -->
+<section class="wrap s-e alt">
+  <div class="grid">
+    <div class="col-8">
+      <h2 class="head fu" style="max-width:16ch;">{v.aufruf.h2}</h2>
+      <p class="fu d2 sec" style="max-width:40ch;margin-top:3vh;">{v.aufruf.p}</p>
+      <a class="send fu d3" href={pfad(lang, "anmeldung")}><span>{w.zurAnmeldung}</span><span class="n">&#8599;</span></a>
+    </div>
+  </div>
+</section>
+</Base>

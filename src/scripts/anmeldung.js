@@ -1,6 +1,8 @@
 (function(){
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   var PREIS = 145, gaeste = document.getElementById('gaeste');
+  /* Beschriftungen kommen aus dem Woerterbuch der Seite, siehe src/i18n. */
+  var W = JSON.parse(gaeste.getAttribute('data-text'));
   function chf(n){
     var p = n.toFixed(2).split('.'), g = p[0];
     if (g.length > 3) g = g.slice(0, g.length - 3) + "'" + g.slice(g.length - 3);
@@ -19,12 +21,12 @@
       var d = document.createElement('div');
       d.className = 'pers'; d.setAttribute('data-i', i);
       d.innerHTML =
-        '<span class="mono">' + (i === 1 ? 'Erste Person' : i + '. Person') + '</span>' +
-        '<div class="row"><div class="fl" style="margin:0;"><span class="mono">Name</span>' +
-        '<input type="text" placeholder="' + (i === 1 ? 'wie oben' : 'Vor- und Nachname') + '"></div>' +
-        '<div class="fl" style="margin:0;"><span class="mono">Essen</span><div class="chips">' +
-        '<label class="chip"><input type="radio" name="e' + i + '" value="fleisch" checked><span>Fleisch</span></label>' +
-        '<label class="chip"><input type="radio" name="e' + i + '" value="vegetarisch"><span>Vegetarisch</span></label>' +
+        '<span class="mono">' + (i === 1 ? W.erste : W.weitere.replace('%n', i)) + '</span>' +
+        '<div class="row"><div class="fl" style="margin:0;"><span class="mono">' + W.name + '</span>' +
+        '<input type="text" placeholder="' + (i === 1 ? W.wieOben : W.namePlatz) + '"></div>' +
+        '<div class="fl" style="margin:0;"><span class="mono">' + W.essen + '</span><div class="chips">' +
+        '<label class="chip"><input type="radio" name="e' + i + '" value="fleisch" checked><span>' + W.fleisch + '</span></label>' +
+        '<label class="chip"><input type="radio" name="e' + i + '" value="vegetarisch"><span>' + W.vegetarisch + '</span></label>' +
         '</div></div></div>';
       gaeste.appendChild(d);
     }
@@ -34,7 +36,7 @@
       if (keep['s'+i]){ var t = b.querySelector('input[value="'+keep['s'+i]+'"]'); if (t) t.checked = true; }
     });
     document.getElementById('totalwert').textContent = chf(n * PREIS);
-    document.getElementById('teiler').textContent = n + (n === 1 ? ' Platz' : ' Plätze') + ' · CHF 145.00';
+    document.getElementById('teiler').textContent = n + ' ' + (n === 1 ? W.platzEin : W.platzMehr) + ' · ' + chf(PREIS);
   }
   document.getElementById('anzahl').addEventListener('change', bauen);
   bauen();

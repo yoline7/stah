@@ -1,0 +1,206 @@
+---
+import { Image } from "astro:assets";
+import Base from "../layouts/Base.astro";
+import { t, pfad, standard, type Sprache } from "../i18n/ui";
+import i_clos_morgenlicht from "../assets/img/clos-morgenlicht.jpg";
+import i_mood_messer from "../assets/img/mood-messer.jpg";
+import i_rebberg from "../assets/img/rebberg.jpg";
+import i_alisha_cina from "../assets/img/alisha-cina.jpg";
+import i_alain_lerjen from "../assets/img/alain-lerjen.jpg";
+
+interface Props { lang: Sprache }
+const { lang } = Astro.props;
+const w = t(lang);
+const s = w.start;
+const laufband = [...w.laufband, ...w.laufband];
+---
+<Base lang={lang} seite="start" title={w.meta.start.titel} description={w.meta.start.text} jsonld={lang === standard}>
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="px" data-px="0.16"><Image src={i_clos_morgenlicht}
+         alt="Rebhaus im Clos du Cornalin über den Rebzeilen, dahinter das Rhonetal im Morgenlicht"
+         widths={[960, 1440, 2000]} sizes="100vw" quality={72} format="webp"
+         loading="eager" fetchpriority="high" /></div>
+  <div class="veil"></div>
+  <div class="in-b">
+    {w.bruecke && <span class="bruecke mono">{w.bruecke}</span>}
+    <h1 class="disp">
+      {s.h1.map((z) => <span class="rl"><span>{z}</span></span>)}
+    </h1>
+  </div>
+  <span class="sc mono">{w.scrollen}</span>
+</section>
+
+<!-- LAUFBAND -->
+<div class="tick" aria-hidden="true">
+  <div class="track mono">
+    <span>{laufband.map((z) => <Fragment>{z}<i></i></Fragment>)}</span>
+    <span>{laufband.map((z) => <Fragment>{z}<i></i></Fragment>)}</span>
+  </div>
+</div>
+
+<!-- AUSSAGE -->
+<section class="wrap s-a">
+  <div class="grid">
+    <div class="lab mono sec fu"><span class="stick">( {s.anlass.lab} )</span></div>
+    <div class="col-7">
+      <h2 class="disp" style="max-width:11ch;">
+        {s.anlass.h2.map((z) => <span class="rl"><span>{z}</span></span>)}
+      </h2>
+      <p class="bodyl fu d2" style="max-width:42ch;margin-top:9vh;">{s.anlass.p1}</p>
+      <p class="fu d3 sec" style="max-width:46ch;margin-top:4vh;">{s.anlass.p2}</p>
+      <p class="fu d3 sec" style="max-width:46ch;margin-top:3vh;">{s.anlass.p3}</p>
+    </div>
+  </div>
+</section>
+
+<!-- FAKTEN -->
+<section class="wrap" style="padding-top:2vh;padding-bottom:16vh;">
+  <div class="grid">
+    <div class="col-full">
+      <div class="facts fu">
+        {s.fakten.map((f) => <div><b>{f.zahl}</b><span class="mono">{f.text}</span></div>)}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AUFTAKT -->
+<section class="wrap s-c">
+  <div class="grid">
+    <div class="lab mono sec fu"><span class="stick">( {s.auftakt.lab} )</span></div>
+    <div class="col-7">
+      <h2 class="head fu" style="max-width:15ch;">{s.auftakt.h2}</h2>
+      <p class="bodyl fu d2" style="max-width:44ch;margin-top:5vh;">{s.auftakt.p1}</p>
+      <p class="fu d2 sec" style="max-width:46ch;margin-top:3vh;">{s.auftakt.p2}</p>
+      <p class="fu d2 sec" style="max-width:46ch;margin-top:2.4vh;">{s.auftakt.p3}</p>
+    </div>
+  </div>
+</section>
+
+<!-- ZWEI -->
+<section class="wrap s-c" id="zwei" style="padding-top:4vh;">
+  <div class="grid">
+    <div class="lab mono sec fu"><span class="stick">( {s.zwei.lab} )</span></div>
+    <div class="duo">
+      <figure>
+        <div class="ph mm"><div class="px" data-px="0.08"><Image src={i_alisha_cina}
+               alt="Alisha Cina im schwarzen Shirt, lächelnd vor dem Rhonetal"
+               widths={[480, 760, 1000]} sizes="(min-width: 900px) 34vw, 100vw"
+               quality={80} format="webp" loading="lazy" /></div></div>
+        <h3 class="fu">Alisha Cina</h3>
+        <span class="mono fu d1">{s.zwei.alisha.rolle}</span>
+        <span class="mono fu d1">{s.zwei.sprachen}</span>
+        <p class="fu d2">{s.zwei.alisha.text}</p>
+      </figure>
+      <figure>
+        <div class="ph mm"><div class="px" data-px="0.08"><Image src={i_alain_lerjen}
+               alt="Alain Lerjen im weissen Kochhemd im Profil, hinter ihm die Felswand"
+               widths={[480, 760, 1000]} sizes="(min-width: 900px) 34vw, 100vw"
+               quality={80} format="webp" loading="lazy" /></div></div>
+        <h3 class="fu">Alain Lerjen</h3>
+        <span class="mono fu d1">{s.zwei.alain.rolle}</span>
+        <span class="mono fu d1">{s.zwei.sprachen}</span>
+        <p class="fu d2">{s.zwei.alain.text}</p>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- BAND 1 -->
+<section class="band mm">
+  <div class="px" data-px="0.2"><Image src={i_mood_messer}
+         alt="Kochmesser mit Holzgriff auf verwitterten Holzbrettern"
+         widths={[960, 1440, 2000]} sizes="100vw" quality={72} format="webp" loading="lazy" /></div>
+  <div class="q">
+    <h2 class="head fu">{s.band1.h2}</h2>
+    <span class="mono fu d2">{s.band1.sub}</span>
+  </div>
+</section>
+
+<!-- TAG -->
+<section class="wrap s-c" id="tag">
+  <div class="grid">
+    <div class="lab mono sec fu"><span class="stick">( {s.tag.lab} )</span></div>
+    <div class="col-8 fu">
+      <div class="reg">
+        {s.tag.zeilen.map((r) => (
+          <div class="r"><div class="k mono sec">{r.k}</div><div class="v">{r.v}</div><div class="a mono">{r.a}</div></div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NACHMITTAG -->
+<section class="wrap s-e on-dark">
+  <div class="grid">
+    <div class="lab mono sec fu"><span class="stick">( {s.nachmittag.lab} )</span></div>
+    <div class="col-7">
+      <h2 class="head fu" style="max-width:16ch;">{s.nachmittag.h2}</h2>
+      <p class="fu d2 sec" style="max-width:46ch;margin-top:4vh;">{s.nachmittag.p1}</p>
+      <p class="fu d2 sec" style="max-width:46ch;margin-top:2.4vh;">{s.nachmittag.p2}</p>
+    </div>
+  </div>
+</section>
+
+<!-- ORT -->
+<section class="wrap s-c">
+  <div class="grid">
+    <div class="lab mono sec fu"><span class="stick">( {s.ort.lab} )</span></div>
+    <div class="col-7">
+      <h2 class="head fu" style="max-width:14ch;">{s.ort.h2}</h2>
+      <p class="bodyl fu d2" style="max-width:44ch;margin-top:5vh;">{s.ort.p1}</p>
+      <p class="fu d2 sec" style="max-width:46ch;margin-top:3vh;">{s.ort.p2}</p>
+      <div class="weg fu d2">
+        {s.ort.posten.map((o) => <div><span class="mono">{o.m}</span><p>{o.t}</p></div>)}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEASER -->
+<section class="wrap s-b">
+  <div class="grid">
+    <div class="lab mono sec fu"><span class="stick">( {s.mehr.lab} )</span></div>
+    <div class="col-8 fu">
+      <div class="arrows">
+        {s.mehr.zeilen.map((z) => (
+          <a class="arw" href={pfad(lang, z.s)}>
+            <span><span class="t">{z.t}</span><em class="sub">{z.sub}</em></span>
+            <span class="n">&#8599;</span></a>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BAND 2 -->
+<section class="band mm">
+  <div class="px" data-px="0.18"><Image src={i_rebberg}
+         alt="Rebberge über Salgesch, dahinter das Rhonetal und die Hänge des Pfynwaldes"
+         widths={[960, 1440, 2000]} sizes="100vw" quality={72} format="webp" loading="lazy" /></div>
+  <div class="q">
+    <h2 class="head fu">{s.band2.h2}</h2>
+    <span class="mono fu d2">{s.band2.sub}</span>
+  </div>
+</section>
+
+<!-- ABSCHLUSS -->
+<section class="wrap s-d alt" id="anmeldung">
+  <div class="grid">
+    <div class="col-8">
+      <h2 class="disp">
+        {s.abschluss.h2.map((z) => <span class="rl"><span>{z}</span></span>)}
+      </h2>
+      <div class="facts fu d2" style="margin-top:8vh;">
+        {s.abschluss.fakten.map((f) => (
+          <div><b>{f.zahl}{f.zusatz && <i>{f.zusatz}</i>}</b><span class="mono">{f.text}</span></div>
+        ))}
+      </div>
+      <a class="send fu d3" style="margin-top:7vh;" href={pfad(lang, "anmeldung")}><span>{w.zurAnmeldung}</span><span class="n">&#8599;</span></a>
+      <p class="fu d3 sec" style="margin-top:4vh;max-width:40ch;">{s.abschluss.nach}</p>
+    </div>
+  </div>
+</section>
+</Base>

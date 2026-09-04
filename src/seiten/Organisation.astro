@@ -1,0 +1,135 @@
+---
+import { Image } from "astro:assets";
+import Base from "../layouts/Base.astro";
+import { anlass } from "../data/anlass";
+import { t, pfad, type Sprache } from "../i18n/ui";
+import i_team from "../assets/img/team.jpg";
+
+interface Props { lang: Sprache }
+const { lang } = Astro.props;
+const w = t(lang);
+const o = w.organisation;
+const fahrplan = `https://www.sbb.ch/${lang}`;
+const karte = "https://www.google.com/maps/search/?api=1&query=Fernand+Cina+Bahnhofstrasse+27+3970+Salgesch";
+---
+<Base lang={lang} seite="organisation" title={w.meta.organisation.titel} description={w.meta.organisation.text}>
+<!-- KOPF -->
+<section class="wrap" style="padding-top:22vh;padding-bottom:12vh;">
+  <div class="grid">
+    <div class="lab mono sec fu"><span class="stick">( {o.lab} )</span></div>
+    <div class="col-7">
+      <h1 class="disp" style="max-width:13ch;">{o.h1}</h1>
+      <p class="bodyl fu d2" style="max-width:44ch;margin-top:7vh;">{o.p1}</p>
+    </div>
+  </div>
+</section>
+
+<!-- TAG -->
+<section class="wrap s-c" id="tag" style="padding-top:4vh;">
+  <div class="grid">
+    <div class="lab mono sec fu"><span class="stick">( {o.tag.lab} )</span></div>
+    <div class="col-8 fu">
+      <div class="reg">
+        {o.tag.zeilen.map((r) => (
+          <div class="r"><div class="k mono sec">{r.k}</div><div class="v">{r.v}</div><div class="a mono">{r.a}</div></div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DURCH -->
+<section class="wrap s-c">
+  <div class="grid">
+    <div class="lab mono sec fu"><span class="stick">( {o.durch.lab} )</span></div>
+    <div class="col-7">
+      <h2 class="head fu" style="max-width:16ch;">{o.durch.h2}</h2>
+      <p class="bodyl fu d2" style="max-width:44ch;margin-top:5vh;">{o.durch.p1}</p>
+      <p class="fu d2 sec" style="max-width:46ch;margin-top:3vh;">{o.durch.p2}</p>
+    </div>
+  </div>
+</section>
+
+<!-- BAND -->
+<section class="band mm">
+  <div class="px" data-px="0.18"><Image src={i_team}
+         alt="Alisha Cina und Alain Lerjen im Kochhemd, hinter ihnen die Berge über dem Rhonetal"
+         widths={[960, 1440, 2000]} sizes="100vw" quality={72} format="webp" loading="lazy" /></div>
+  <div class="q">
+    <h2 class="head fu">{o.band.h2}</h2>
+    <span class="mono fu d2">{o.band.sub}</span>
+  </div>
+</section>
+
+<!-- WEG -->
+<section class="wrap s-c" id="weg">
+  <div class="grid">
+    <div class="lab mono sec fu"><span class="stick">( {o.weg.lab} )</span></div>
+    <div class="col-7">
+      <h2 class="head fu" style="max-width:16ch;">{o.weg.h2}</h2>
+      <div class="weg fu d2">
+        {o.weg.posten.map((p) => <div><span class="mono">{p.m}</span><p>{p.t}</p></div>)}
+        <div><span class="mono">{o.weg.adresse.m}</span><p>{o.weg.adresse.t}</p>
+          <p style="margin-top:14px;"><a class="lnk" href={karte} target="_blank" rel="noopener">{o.weg.adresse.route}</a> &nbsp;·&nbsp; <a class="lnk" href={fahrplan} target="_blank" rel="noopener">{o.weg.adresse.fahrplan}</a></p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GUT ZU WISSEN -->
+<section class="wrap s-e on-dark">
+  <div class="grid">
+    <div class="lab mono sec fu"><span class="stick">( {o.wissen.lab} )</span></div>
+    <div class="col-7">
+      <div class="weg fu" style="margin-top:0;">
+        {o.wissen.posten.map((p) => <div><span class="mono">{p.m}</span><p>{p.t}</p></div>)}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FRAGEN -->
+<section class="wrap s-e" id="fragen">
+  <div class="grid">
+    <div class="lab mono sec fu"><span class="stick">( {o.fragen.lab} )</span></div>
+    <div class="col-7 fu">
+      <div class="faq">
+        {o.fragen.liste.map((q) => (
+          <details><summary>{q.f}</summary>
+            <p>{q.a}{"agb" in q && q.agb && <> <a class="lnk" href={pfad(lang, "agb")}>{w.recht.agb}</a></>}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KONTAKT -->
+<section class="wrap s-e alt" id="kontakt">
+  <div class="grid">
+    <div class="lab mono sec fu"><span class="stick">( {o.kontakt.lab} )</span></div>
+    <div class="col-7">
+      <div class="weg fu" style="margin-top:0;">
+        <div><span class="mono">{o.kontakt.fragen.m}</span>
+          <p><a class="lnk" href={`mailto:${anlass.mail}`}>{anlass.mail}</a><br>
+          <a class="lnk" href={`tel:${anlass.telefonHref}`}>{anlass.telefon}</a></p>
+          <p style="margin-top:14px;color:var(--sec-light);">{o.kontakt.fragen.adresse}</p></div>
+        <div><span class="mono">{o.kontakt.gruppen.m}</span>
+          <p>{o.kontakt.gruppen.t1}</p>
+          <p style="margin-top:14px;color:var(--sec-light);">{o.kontakt.gruppen.t2}</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AUFRUF -->
+<section class="wrap s-e alt">
+  <div class="grid">
+    <div class="col-8">
+      <h2 class="head fu" style="max-width:18ch;">{o.aufruf.h2}</h2>
+      <p class="fu d2 sec" style="max-width:40ch;margin-top:3vh;">{o.aufruf.p}</p>
+      <a class="send fu d3" href={pfad(lang, "anmeldung")}><span>{w.zurAnmeldung}</span><span class="n">&#8599;</span></a>
+    </div>
+  </div>
+</section>
+</Base>

@@ -4,13 +4,18 @@ import Maison13 from "./logos/Maison13.astro";
 import Yoline from "./logos/Yoline.astro";
 import i_fernand_cina from "../assets/img/partner/fernand-cina.png";
 import i_bergbox from "../assets/img/partner/bergbox.png";
+import { t, type Sprache } from "../i18n/ui";
+
+interface Props { lang: Sprache }
+const { lang } = Astro.props;
+const w = t(lang);
 ---
 <!-- PARTNER -->
 <section class="wrap deep" style="padding-top:4vh;padding-bottom:12vh;">
   <div class="grid">
     <div class="col-full fu">
       <div class="partners">
-        <span class="mono sec">Ein Anlass von</span>
+        <span class="mono sec">{w.partner.anlassVon}</span>
         <div class="row">
           <figure class="fc"><Image src={i_fernand_cina} alt="Wortmarke Fernand Cina" format="png" densities={[1]} loading="lazy" /></figure>
           <figure><Maison13 class="pl" /></figure>
@@ -18,11 +23,9 @@ import i_bergbox from "../assets/img/partner/bergbox.png";
         </div>
         <div class="yorow">
           <a class="yolink" href="https://yoline.ch" target="_blank" rel="noopener"><Yoline class="yo" /></a>
-          <span class="mono sec">Konzept, Produktentwicklung, Website und Anmeldung</span>
+          <span class="mono sec">{w.partner.yoline}</span>
         </div>
       </div>
     </div>
   </div>
 </section>
-
-

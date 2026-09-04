@@ -102,3 +102,14 @@ footer .in{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;pa
   .side{position:static;margin-top:8vh;}
   .two,.pers .row{grid-template-columns:1fr;}
 }
+
+/* ---------- Sprachumschalter ---------- */
+#hd .rechts{display:flex;align-items:center;gap:clamp(14px,2vw,26px);}
+.spr{display:inline-flex;align-items:center;gap:7px;color:var(--sec-dark);white-space:nowrap;}
+.spr .it{display:inline-flex;align-items:center;gap:7px;}
+.spr b{font-weight:inherit;opacity:.5;}
+.spr a{transition:color .24s var(--ease);}
+.spr a:hover,.spr a.an{color:var(--paper);}
+@media(max-width:560px){
+  #hd .rechts .back span:last-child{display:none;}
+}

@@ -1,18 +1,24 @@
 ---
 import Wortmarke from "./logos/Wortmarke.astro";
+import Sprachen from "./Sprachen.astro";
 import { anlass } from "../data/anlass";
+import { t, pfad, type Sprache, type Seite } from "../i18n/ui";
 
-const seiten = [
-  { titel: "Kulinarik", weg: "/kulinarik" },
-  { titel: "Wein", weg: "/wein" },
-  { titel: "Organisation", weg: "/organisation" },
-  { titel: "Anmeldung", weg: "/anmeldung" },
+interface Props { lang: Sprache; seite: Seite }
+const { lang, seite } = Astro.props;
+const w = t(lang);
+
+const seitenliste = [
+  { titel: w.nav.kulinarik, weg: pfad(lang, "kulinarik") },
+  { titel: w.nav.wein, weg: pfad(lang, "wein") },
+  { titel: w.nav.organisation, weg: pfad(lang, "organisation") },
+  { titel: w.nav.anmeldung, weg: pfad(lang, "anmeldung") },
 ];
 ---
 <header id="hd" transition:persist="kopf">
   <div class="mnu" id="menu">
     <nav>
-      {seiten.map((s) => (
+      {seitenliste.map((s) => (
         <span class="ln">
           <a href={s.weg}><span class="t">{s.titel}</span><span class="n">&#8599;</span></a>
         </span>
@@ -21,10 +27,11 @@ const seiten = [
     <div class="fuss mono">
       <div>
         <span><a href={`mailto:${anlass.mail}`}>{anlass.mail}</a></span>
-        <span><a href="/agb">AGB</a> · <a href="/teilnahmebedingungen">Teilnahme</a> · <a href="/impressum">Impressum</a> · <a href="/datenschutz">Datenschutz</a></span>
+        <span><a href={pfad(lang, "agb")}>{w.recht.agb}</a> · <a href={pfad(lang, "teilnahme")}>{w.recht.teilnahme}</a> · <a href={pfad(lang, "impressum")}>{w.recht.impressum}</a> · <a href={pfad(lang, "datenschutz")}>{w.recht.datenschutz}</a></span>
+        <Sprachen lang={lang} seite={seite} class="im-menu" />
       </div>
       <div class="eck">
-        <span>{anlass.datum}</span>
+        <span>{w.datum}</span>
         <span>{anlass.ort}, {anlass.dorf}</span>
         <span>{anlass.preisText}</span>
       </div>
@@ -32,13 +39,17 @@ const seiten = [
   </div>
 
   <div class="bar">
-    <a class="brand" href="/"><Wortmarke /></a>
-    <a class="cta mono" href="/anmeldung">
-      <span class="lang">Platz sichern</span><span class="kurz">Anmelden</span><span class="n">&#8599;</span>
+    <a class="brand" href={pfad(lang, "start")}><Wortmarke /></a>
+    <a class="cta mono" href={pfad(lang, "anmeldung")}>
+      <span class="lang">{w.kopf.platzSichern}</span><span class="kurz">{w.kopf.anmelden}</span><span class="n">&#8599;</span>
     </a>
-    <button class="bg" id="bg" type="button"
-            aria-expanded="false" aria-controls="menu" aria-label="Menü öffnen">
-      <span></span><span></span>
-    </button>
+    <div class="rechts">
+      <Sprachen lang={lang} seite={seite} class="in-bar" />
+      <button class="bg" id="bg" type="button"
+              aria-expanded="false" aria-controls="menu" aria-label={w.kopf.menueOeffnen}
+              data-auf={w.kopf.menueOeffnen} data-zu={w.kopf.menueSchliessen}>
+        <span></span><span></span>
+      </button>
+    </div>
   </div>
 </header>

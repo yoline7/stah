@@ -1,0 +1,119 @@
+---
+import { Image } from "astro:assets";
+import Base from "../layouts/Base.astro";
+import { t, pfad, type Sprache } from "../i18n/ui";
+import i_clos_du_cornalin from "../assets/img/clos-du-cornalin.jpg";
+import i_alain_lerjen from "../assets/img/alain-lerjen.jpg";
+
+interface Props { lang: Sprache }
+const { lang } = Astro.props;
+const w = t(lang);
+const k = w.kulinarik;
+---
+<Base lang={lang} seite="kulinarik" title={w.meta.kulinarik.titel} description={w.meta.kulinarik.text}>
+<!-- KOPF -->
+<section class="wrap" style="padding-top:22vh;padding-bottom:12vh;">
+  <div class="grid">
+    <div class="lab mono sec fu"><span class="stick">( {k.lab} )</span></div>
+    <div class="col-7">
+      <h1 class="disp" style="max-width:13ch;">{k.h1}</h1>
+      <p class="bodyl fu d2" style="max-width:44ch;margin-top:7vh;">{k.p1}</p>
+      <p class="fu d3 sec" style="max-width:46ch;margin-top:3vh;">{k.p2}</p>
+    </div>
+  </div>
+</section>
+
+<!-- MENUE -->
+<section class="wrap s-d on-dark" id="menu" style="padding-top:12vh;">
+  <div class="grid">
+    <div class="lab mono sec fu"><span class="stick">( {k.menue.lab} )</span></div>
+    <div class="col-8">
+      <h2 class="head fu" style="max-width:18ch;">{k.menue.h2}</h2>
+      <p class="fu d2 sec" style="max-width:46ch;margin:3vh 0 4vh 0;">{k.menue.p}</p>
+      <p class="fu d3 sec" style="max-width:50ch;margin:0 0 9vh 0;padding-top:22px;border-top:1px solid var(--hair-dark);">{k.menue.beleg}</p>
+      <div class="mn fu">
+        {k.menue.gaenge.map((g) => (
+          <div class="g"><div class="rn mono">{g.n}</div>
+            <div class="ti">{g.t}{"v" in g && g.v && <em>{g.v}</em>}</div>
+            <div class="wn mono">{g.w}</div></div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WAHL -->
+<section class="wrap s-c">
+  <div class="grid">
+    <div class="lab mono sec fu"><span class="stick">( {k.wahl.lab} )</span></div>
+    <div class="col-7">
+      <h2 class="head fu" style="max-width:14ch;">{k.wahl.h2}</h2>
+      <p class="bodyl fu d2" style="max-width:44ch;margin-top:5vh;">{k.wahl.p1}</p>
+      <p class="fu d2 sec" style="max-width:46ch;margin-top:3vh;">{k.wahl.p2}</p>
+    </div>
+  </div>
+</section>
+
+<!-- BAND -->
+<section class="band mm">
+  <div class="px" data-px="0.18"><Image src={i_clos_du_cornalin}
+         alt="Rebhaus im Clos du Cornalin über Salgesch, dahinter das Rhonetal im Morgenlicht"
+         widths={[960, 1440, 2000]} sizes="100vw" quality={72} format="webp" loading="lazy" /></div>
+  <div class="q">
+    <h2 class="head fu">{k.band.h2}</h2>
+    <span class="mono fu d2">{k.band.sub}</span>
+  </div>
+</section>
+
+<!-- KOCH -->
+<section class="wrap s-c">
+  <div class="grid">
+    <div class="lab mono sec fu"><span class="stick">( {k.koch.lab} )</span></div>
+    <div class="col-7">
+      <h2 class="head fu" style="max-width:15ch;">{k.koch.h2}</h2>
+    </div>
+    <div class="duo" style="grid-template-columns:1fr;margin-top:6vh;">
+      <figure style="max-width:520px;">
+        <div class="ph mm"><div class="px" data-px="0.08"><Image src={i_alain_lerjen}
+               alt="Alain Lerjen im weissen Kochhemd im Profil, hinter ihm die Felswand"
+               widths={[480, 760, 1000]} sizes="(min-width: 900px) 520px, 100vw"
+               quality={80} format="webp" loading="lazy" /></div></div>
+        <h3 class="fu">Alain Lerjen</h3>
+        <span class="mono fu d1">{k.koch.rolle}</span>
+        <p class="fu d2 sec" style="max-width:48ch;">{k.koch.p1}</p>
+        <p class="fu d2 sec" style="max-width:48ch;margin-top:2.4vh;">{k.koch.p2}</p>
+      </figure>
+    </div>
+    <div class="col-7">
+      <div class="weg fu d2">
+        {k.koch.posten.map((o) => <div><span class="mono">{o.m}</span><p>{o.t}</p></div>)}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HERKUNFT -->
+<section class="wrap s-e alt">
+  <div class="grid">
+    <div class="lab mono sec fu"><span class="stick">( {k.herkunft.lab} )</span></div>
+    <div class="col-7">
+      <h2 class="head fu" style="max-width:15ch;">{k.herkunft.h2}</h2>
+      <p class="fu d2 sec" style="max-width:46ch;margin-top:3vh;">{k.herkunft.p}</p>
+      <div class="weg fu d2">
+        {k.herkunft.posten.map((o) => <div><span class="mono">{o.m}</span><p>{o.t}</p></div>)}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AUFRUF -->
+<section class="wrap s-e alt">
+  <div class="grid">
+    <div class="col-8">
+      <h2 class="head fu" style="max-width:20ch;">{k.aufruf.h2}</h2>
+      <p class="fu d2 sec" style="max-width:40ch;margin-top:3vh;">{k.aufruf.p}</p>
+      <a class="send fu d3" href={pfad(lang, "anmeldung")}><span>{w.zurAnmeldung}</span><span class="n">&#8599;</span></a>
+    </div>
+  </div>
+</section>
+</Base>
