@@ -207,6 +207,10 @@ als Squash, Vercel baut aus `main`.
 6. **Fernbranches werden über die GitHub-Oberfläche gelöscht.** Die Zugangsdaten
    einer Claude-Code-Sitzung dürfen keine Referenzen löschen, `git push --delete`
    endet mit HTTP 403. Belegt am 3. und am 4. September 2026.
+7. **Je Runde ein neuer Branch mit sprechendem Namen.** Kein Wiederverwenden,
+   kein Zurücksetzen auf `main`, kein Force-Push. Gilt ab der Runde nach
+   `claude/astro-repo-restructure-6pqpq1`. Damit entfallen die Lagen aus
+   Regel 2 und Regel 3.
 
 ---
 
