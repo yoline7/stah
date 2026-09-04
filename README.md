@@ -172,7 +172,7 @@ Ein Muster im ganzen Repository, nicht drei.
 | Stile und Skripte | klein, ohne Trenner | `site.css`, `anmeldung.js` |
 | Bilder | klein, mit Bindestrich, sprechend | `clos-du-cornalin.jpg` |
 | Wörterbücher | Sprachkürzel | `de.ts`, `fr.ts`, `en.ts` |
-| Dokumente in `docs/` | Referenz, dann Titel | `YL-STAH-2026-001_Bewegung.md` |
+| Dokumente in `docs/` | Referenz, dann Titel | `YL-FC-2026-010_Bewegung.md` |
 
 **Zwei Ausnahmen, beide begründet.**
 
@@ -204,6 +204,9 @@ als Squash, Vercel baut aus `main`.
    das Verfahren in `docs/`.
 5. **Vor dem Umbau der Struktur eine Bestandsaufnahme.** Erst Liste, dann
    verschieben. Nichts wird auf Verdacht gelöscht.
+6. **Fernbranches werden über die GitHub-Oberfläche gelöscht.** Die Zugangsdaten
+   einer Claude-Code-Sitzung dürfen keine Referenzen löschen, `git push --delete`
+   endet mit HTTP 403. Belegt am 3. und am 4. September 2026.
 
 ---
 
@@ -343,7 +346,7 @@ Ein Taktgeber führt alle Bewegungen: Farbpuls, Neonwolken, Kantenlauf, Zahlenwe
 Laufbandspur, Knöpfe, Zeiger, Seitenübergang. Nie laufen zwei gleichzeitig.
 
 **Der ganze Abschnitt mit allen gemessenen Werten liegt in
-[`docs/YL-STAH-2026-001_Bewegung.md`](docs/YL-STAH-2026-001_Bewegung.md).**
+[`docs/YL-FC-2026-010_Bewegung.md`](docs/YL-FC-2026-010_Bewegung.md).**
 Wer eine Bewegung ändert, misst dort neu und trägt den Wert nach.
 
 ---
@@ -355,7 +358,7 @@ Er ist die niedrigste Stufe, die über drei Sprachen und vier Breiten 4.5 zu 1 t
 kleinster Wert 4.53 zu 1 im ungünstigsten Bild der Wolkenbewegung.
 
 **Verfahren und Messreihe liegen in
-[`docs/YL-STAH-2026-002_Schleier.md`](docs/YL-STAH-2026-002_Schleier.md).**
+[`docs/YL-FC-2026-011_Schleier.md`](docs/YL-FC-2026-011_Schleier.md).**
 Wer die Titelzeile ändert, misst neu.
 
 ---
@@ -441,7 +444,7 @@ Tag danach jetzt aus `src/data/anlass.ts` aus.
 YoSuite. Die Beschriftungen kommen je Sprache aus `src/i18n/<sprache>.ts` unter `anmeldung`.
 
 **Felder, Kennungen und Regeln liegen in
-[`docs/YL-STAH-2026-003_Feldtabelle-Anmeldung.md`](docs/YL-STAH-2026-003_Feldtabelle-Anmeldung.md).**
+[`docs/YL-FC-2026-012_Feldtabelle-Anmeldung.md`](docs/YL-FC-2026-012_Feldtabelle-Anmeldung.md).**
 
 ---
 
@@ -524,9 +527,7 @@ Jeder Punkt nennt die Ursache und den nächsten Schritt.
 13. **Titelbild aus einem Bildschirmfoto.** `clos-morgenlicht.jpg` ist eine Bildschirmaufnahme, 1782 mal 970 Pixel. Nächster Schritt: Aufnahme aus dem Bestand ab 2000 Pixel Breite holen, danach den Schleier neu messen.
 14. **Mehrfach komprimierte Bänder.** `rebhaus-drohne.jpg` und `rebberg.jpg` wachsen beim Umrechnen auf WebP. Nächster Schritt: Originale aus dem Bestand holen. Die Qualität bleibt bei 72.
 15. **Wortmarke des Anlasses.** Die SVG-Datei ist nachgezeichnet, die Konturen sind ab etwa 900 Pixel Breite sichtbar treppig. Nächster Schritt: Für Druck ab A2 die Marke aus der Originalschrift setzen.
-16. **Aktenzeichen der Dokumente in `docs/` ist neu vergeben.** Die Reihe `YL-STAH-2026-###` habe ich angelegt, weil kein Schema vorlag. Ursache: Die genannten Dokumente `YL-SGU-2026-001` und `YL-SGU-2026-002` liegen nicht im Repository. Nächster Schritt: Liegt bei Yoline ein Register vor, werden die drei Dateien umbenannt und die Verweise im README nachgeführt.
-17. **`content/` deckt nur Deutsch.** Für Französisch und Englisch gibt es keinen Quelltext, sie leben nur in den Wörterbüchern. Ursache: Beide entstanden in der Sprachrunde direkt dort. Nächster Schritt: Entscheiden, ob der Nachweis der Herkunft für alle drei Sprachen geführt werden soll. Heute ist er es nur für Deutsch.
-18. **Branch lässt sich aus dieser Sitzung nicht löschen.** `git push origin --delete` endet mit HTTP 403. Ursache: Die Zugangsdaten dieser Sitzung dürfen keine Referenzen löschen. Nächster Schritt: Branch nach dem Merge über die GitHub-Oberfläche löschen.
+16. **Fernbranch lässt sich aus dieser Sitzung nicht löschen.** `git push origin --delete` endet mit HTTP 403. Ursache: Die Zugangsdaten dieser Sitzung dürfen keine Referenzen löschen. Zuletzt am 4. September 2026 versucht, wieder HTTP 403. Nächster Schritt: Branch nach dem Merge über die GitHub-Oberfläche löschen.
 
 ---
 

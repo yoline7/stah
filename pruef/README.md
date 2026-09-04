@@ -33,7 +33,10 @@ ausführbaren Datei steht in `wolkenmess.mjs` unter `EXE`.
 
 ## Verfahren
 
-Das Messverfahren steht in `docs/YL-STAH-2026-001_Messverfahren.md`.
+Das Messverfahren steht in zwei Dokumenten:
+
+- [`docs/YL-FC-2026-011_Schleier.md`](../docs/YL-FC-2026-011_Schleier.md) für die Tintenmaske und den Schleier
+- [`docs/YL-FC-2026-010_Bewegung.md`](../docs/YL-FC-2026-010_Bewegung.md) für Farbpuls, Wolken, Takt und Bildrate
 
 ## Erzeugnisse
 
