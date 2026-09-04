@@ -266,6 +266,20 @@ h1,h2,h3,.disp,.head,.facts b,.mn .ti,.arw .t,.mnu .ln .t,.reg .v,.duo h3,.side 
       ziehen var(--dauer) cubic-bezier(.45,.05,.55,.95) var(--versatz) infinite alternate,
       atmen  var(--atem)  cubic-bezier(.45,.05,.55,.95) var(--atemversatz) infinite alternate;
   }
+
+  /* Mittlere Verlaufsstufe 20 statt 14 Prozent, nur auf der dunklen Passage
+     und der Menueueberlagerung. Beide liegen auf nahezu schwarzem Grund, dort
+     traegt die Wolke mehr. Titelbild, Fakten und Fuss bleiben bei 14.
+     Vor dem Setzen gemessen, im unguenstigsten Bild der Bewegung, drei
+     Sprachen mal vier Breiten: dunkle Passage kleinster Wert 6.07 zu 1
+     gegen 6.26 bei 14, Menueueberlagerung 6.20 gegen 6.21. Grenze 4.5. */
+  .wolken[data-flaeche="dunkel"] .wolke,
+  .wolken[data-flaeche="menue"] .wolke{
+    background:radial-gradient(closest-side,
+      color-mix(in oklab, var(--ton) 34%, transparent) 0%,
+      color-mix(in oklab, var(--ton) 20%, transparent) 44%,
+      transparent 82%);
+  }
 }
 
 @keyframes ziehen{
