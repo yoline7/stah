@@ -1,9 +1,9 @@
 ---
 import { Image } from "astro:assets";
 import Base from "../layouts/Base.astro";
-import { t, pfad, standard, type Sprache } from "../i18n/ui";
+import { t, pfad, standard, type Sprache } from "../i18n/sprachen";
 import i_clos_morgenlicht from "../assets/img/clos-morgenlicht.jpg";
-import i_mood_messer from "../assets/img/mood-messer.jpg";
+import i_stimmung_messer from "../assets/img/stimmung-messer.jpg";
 import i_rebberg from "../assets/img/rebberg.jpg";
 import i_alisha_cina from "../assets/img/alisha-cina.jpg";
 import i_alain_lerjen from "../assets/img/alain-lerjen.jpg";
@@ -112,7 +112,7 @@ const laufband = [...w.laufband, ...w.laufband];
 
 <!-- BAND 1 -->
 <section class="band mm">
-  <div class="px" data-px="0.2"><Image src={i_mood_messer}
+  <div class="px" data-px="0.2"><Image src={i_stimmung_messer}
          alt={w.bilder.moodMesser}
          widths={[960, 1440, 2000]} sizes="100vw" quality={72} format="webp" loading="lazy" /></div>
   <div class="q">

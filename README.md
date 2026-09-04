@@ -49,7 +49,7 @@ Kein Framework im Auslieferungsergebnis. Der Build erzeugt reines HTML, CSS und 
 | `impressum` | `/impressum` | `/fr/mentions-legales` | `/en/imprint` | nein, `noindex` |
 | `datenschutz` | `/datenschutz` | `/fr/protection-des-donnees` | `/en/privacy` | nein, `noindex` |
 
-Die Wegtabelle steht einmal, in `src/i18n/ui.ts` unter `wege`. Kopf, Fuss, Umschalter,
+Die Wegtabelle steht einmal, in `src/i18n/sprachen.ts` unter `wege`. Kopf, Fuss, Umschalter,
 `hreflang` und die Sitemap ziehen ihre Adressen von dort. Ein neuer Seitenname wird
 dort geändert, nicht in den Seiten.
 
@@ -72,7 +72,7 @@ Inhaltsseiten, dazu Kopf, Fuss, Metadaten, Bildbeschreibungen und das Anmeldefor
 Vorlage, `Texte = typeof de` erzwingt beim Prüflauf, dass keine Fassung einen Eintrag
 verliert.
 
-**Seiten.** Die fünf Inhaltsseiten stehen einmal als Baustein unter `src/seiten/` und
+**Seiten.** Die fünf Inhaltsseiten stehen einmal als Baustein unter `src/ansichten/` und
 nehmen `lang` als Eigenschaft. Die 15 Dateien unter `src/pages/` sind vier Zeilen lang
 und reichen nur die Sprache durch.
 
@@ -102,7 +102,7 @@ Verzeichniseintrag, die 15 mit `noindex` bleiben draussen.
 **Sprache im Formular.** Das Feld «Sprache» steht auf der Sprache der Seite. Auf
 `/fr/inscription` ist Französisch vorgewählt, auf `/en/booking` Englisch.
 
-**Neue Sprache aufnehmen.** Kürzel in `sprachen` (`src/i18n/ui.ts`), Spalte in `wege`,
+**Neue Sprache aufnehmen.** Kürzel in `sprachen` (`src/i18n/sprachen.ts`), Spalte in `wege`,
 Eintrag in `kuerzel`, Wörterbuch `src/i18n/<kürzel>.ts` nach dem Muster von `de.ts`,
 fünf Routendateien unter `src/pages/<kürzel>/`, vier Rechtsseiten. Der Prüflauf nennt
 jeden fehlenden Eintrag.
@@ -111,77 +111,99 @@ jeden fehlenden Eintrag.
 
 ## Aufbau
 
+Je Ordner eine Zeile: was hineingehört und was nicht.
+
 ```
 im-stah/
-├── .gitignore
-├── astro.config.mjs              Domain, Sprachen, Sitemap, Ausgabeformat
-├── package.json
-├── package-lock.json
-├── tsconfig.json
-├── README.md
-├── content/                      Quelltexte der Seiten, nicht gebaut
-│   ├── README.md
-│   ├── index.md
-│   ├── kulinarik.md
-│   ├── wein.md
-│   └── organisation.md
-├── public/                       favicon.svg · robots.txt · preview.jpg
+├── .gitignore · astro.config.mjs · package.json · package-lock.json
+├── tsconfig.json · README.md
+├── content/                Archiv. Quelltexte, die die Seite nicht mehr speisen
+│   └── archiv-2026-09/     erster Textauftrag, nur Deutsch, mit eigenem README
+├── docs/                   Arbeitsdokumente. Belegen Zahlen und Entscheide,
+│                           speisen keine Seite, laufen nicht im Build
+├── pruef/                  Prüfskripte. Die Zahlen der Berichte, nicht im Build
+├── public/                 wird unverändert ausgeliefert, ohne Prüfsumme im Namen
 └── src/
-    ├── data/
-    │   ├── anlass.ts             Eckdaten des Anlasses, einzige Quelle
-    │   └── wolken.ts             die fuenf bewolkten Flaechen und ihre Anzahl
-    ├── i18n/
-    │   ├── ui.ts                 Sprachen, Wegtabelle, Kürzel, Nachschlag
-    │   ├── de.ts                 Wörterbuch Deutsch, zugleich die Vorlage
-    │   ├── fr.ts                 Wörterbuch Französisch
-    │   └── en.ts                 Wörterbuch Englisch
-    ├── layouts/
-    │   ├── Base.astro            Metadaten, hreflang, JSON-LD, Kopf und Fuss
-    │   └── Legal.astro           Rahmen für die Rechtsseiten, Vorrangvermerk
-    ├── components/
-    │   ├── Header.astro          Kopfzeile, Menü, Umschalter
-    │   ├── Footer.astro          Fusszeile
-    │   ├── Partner.astro         Partnerband
-    │   ├── Sprachen.astro        Umschalter DE · FR · EN
-    │   ├── Wolken.astro          Wolkenschicht einer Flaeche
-    │   └── logos/                Wortmarke · Maison13 · Yoline
-    ├── seiten/                   die fünf Inhaltsseiten, je einmal
-    │   ├── Start.astro
-    │   ├── Kulinarik.astro
-    │   ├── Wein.astro
-    │   ├── Organisation.astro
-    │   └── Anmeldung.astro
-    ├── pages/                    27 Adressen, siehe Gliederung
-    │   ├── index.astro · kulinarik · wein · organisation · anmeldung
-    │   ├── agb · teilnahmebedingungen · impressum · datenschutz
-    │   ├── fr/                   neun Adressen
-    │   └── en/                   neun Adressen
-    ├── styles/
-    │   ├── fonts.css             @font-face für Switzer und Cabinet Grotesk
-    │   ├── site.css
-    │   ├── anmeldung.css
-    │   └── legal.css
-    ├── scripts/
-    │   ├── site.js               Taktgeber, Farbpuls, Parallaxe, Zeiger, Band
-    │   └── anmeldung.js
-    └── assets/
-        ├── fonts/
-        │   ├── switzer/
-        │   │   ├── Switzer-Variable.woff2
-        │   │   ├── Switzer-VariableItalic.woff2
-        │   │   └── LICENSE       ITF Free Font License 2.0, unverändert
-        │   └── cabinet-grotesk/
-        │       ├── sieben Schnitte als woff2 mit woff als Rückfall
-        │       └── LICENSE       ITF Free Font License 2.0, unverändert
-        └── img/
-            ├── clos-morgenlicht.jpg · clos-du-cornalin.jpg
-            ├── rebhaus-drohne.jpg · rebberg.jpg · team.jpg
-            ├── mood-messer.jpg · alisha-cina.jpg · alain-lerjen.jpg
-            └── partner/fernand-cina.png · bergbox.png
+    ├── assets/
+    │   ├── fonts/          je Schrift ein Ordner, nur woff2, Lizenz daneben
+    │   └── img/            Fotos für astro:assets, partner/ für Partnermarken
+    ├── components/         Bausteine unter einer Seite, logos/ für Vektormarken
+    ├── data/               sprachneutrale Fakten, eine Datei je Gegenstand
+    ├── i18n/               Wörterbücher je Sprache und die Wegtabelle
+    ├── layouts/            Seitengerüste, Kopf bis Fuss
+    ├── ansichten/          ganze Seiten als Baustein, recht/ je Sprache
+    ├── pages/              nur Adressen, je Datei vier Zeilen
+    ├── scripts/            Browserskripte, kein Modul, kein Bündler
+    └── styles/             ein Blatt je Gerüst, fonts.css für alle
 ```
+
+**Was wohin gehört**
+
+| Ordner | gehört hinein | gehört nicht hinein |
+|---|---|---|
+| `content/` | Nachweis der Herkunft von Text | Text, der eine Seite speist |
+| `docs/` | Verfahren, Messreihen, Übergaben | Anleitung zum Bauen, die steht hier |
+| `pruef/` | Messskripte | Erzeugnisse, siehe `pruef/.gitignore` |
+| `public/` | `robots.txt`, `favicon.svg`, `preview.jpg` | Bilder, die über `astro:assets` laufen |
+| `src/assets/fonts/` | `woff2` und `LICENSE` | `ttf`, `otf`, `woff`, Einzelschnitte neben einer variablen Fassung |
+| `src/assets/img/` | jedes Bild genau einmal | Bilder ohne Einbindung |
+| `src/components/` | Bausteine, die in eine Seite gehen | ganze Seiten |
+| `src/data/` | Zahlen, Daten, Preise, Strukturlisten | Text in einer Sprache |
+| `src/i18n/` | jeder sichtbare Text, je Sprache | Zahlen, die aus `data/` kommen |
+| `src/ansichten/` | eine Ansicht je Seite, `lang` als Eigenschaft | Routen |
+| `src/pages/` | Import und Aufruf einer Ansicht | Inhalt, Prosa, Auszeichnung |
+
+**Der ganze Baum mit Dateinamen und Grössen** entsteht mit
+`find . -type d \( -name node_modules -o -name dist -o -name .astro \) -prune -o -type f -print`.
 
 Der Build legt die Startseite als `index.html` ab, die 26 Unterseiten je als Ordner
 mit `index.html`.
+
+---
+
+## Benennung
+
+Ein Muster im ganzen Repository, nicht drei.
+
+| Was | Muster | Beispiel |
+|---|---|---|
+| Astro-Bausteine | Grossbuchstabe, ohne Trenner | `Header.astro`, `Start.astro` |
+| Astro-Routen | klein, mit Bindestrich | `infos-pratiques.astro` |
+| Stile und Skripte | klein, ohne Trenner | `site.css`, `anmeldung.js` |
+| Bilder | klein, mit Bindestrich, sprechend | `clos-du-cornalin.jpg` |
+| Wörterbücher | Sprachkürzel | `de.ts`, `fr.ts`, `en.ts` |
+| Dokumente in `docs/` | Referenz, dann Titel | `YL-STAH-2026-001_Bewegung.md` |
+
+**Zwei Ausnahmen, beide begründet.**
+
+`src/pages/` trägt den Namen nicht aus Wahl. Astro leitet daraus die Adressen ab.
+
+Die Schriftdateien behalten die Schreibweise der Foundry, etwa
+`CabinetGrotesk-Bold.woff2`. Die Lizenz verbietet jede Änderung an den Dateien,
+und ein Dateiname gehört dazu.
+
+**Jeder Bildname ist eine Adresse.** Astro versieht ihn beim Bauen mit einer
+Prüfsumme. Wer ein Bild umbenennt, ändert die Adresse jeder umgerechneten Fassung.
+
+---
+
+## Arbeitsweise
+
+**Ein Weg, keine Nebenstrecke.** Entwicklung auf einem Branch, Merge nach `main`
+als Squash, Vercel baut aus `main`.
+
+1. **Nach jedem Merge auf Inhaltsgleichheit prüfen.** `git diff origin/main HEAD`
+   muss leer sein. Ein Squash-Merge gegen einen veralteten Kopf lässt sonst
+   Commits liegen, geschehen bei PR #1.
+2. **Nach jedem Squash-Merge den lokalen Branch löschen, nicht zurücksetzen.**
+   Ein zurückgesetzter Branch weicht vom Fernstand ab und braucht einen
+   Force-Push. Ein gelöschter Branch erzeugt die Lage nicht.
+3. **Kein Force-Push,** ausser der Fernstand trägt nur bereits gemergte Geschichte.
+   Das ist vorher zu belegen, mit `git diff origin/<branch> origin/main`.
+4. **Jede Zahl wird gemessen, nicht geschätzt.** Die Skripte liegen in `pruef/`,
+   das Verfahren in `docs/`.
+5. **Vor dem Umbau der Struktur eine Bestandsaufnahme.** Erst Liste, dann
+   verschieben. Nichts wird auf Verdacht gelöscht.
 
 ---
 
@@ -199,26 +221,31 @@ npm run check     # Typen und Vorlagen prüfen
 
 ## Texte
 
-Die deutschen Texte der vier Inhaltsseiten liegen als Quelle in `content/`. Der
-Astro-Quelltext ist die Umsetzung, nicht die Quelle. Wer einen deutschen Text ändert,
-ändert ihn zuerst dort, danach in `src/i18n/de.ts`.
+**Die Quelle sind die drei Wörterbücher unter `src/i18n/`.** Wer Text ändert, ändert
+das Wörterbuch. `de.ts` ist die Vorlage, `Texte = typeof de` erzwingt beim Prüflauf,
+dass keine Fassung einen Eintrag verliert.
 
-| Datei | Speist | Deckt |
-|---|---|---|
-| `content/index.md` | `src/i18n/de.ts` → `start` | Titel, Der Anlass, Der Auftakt, Die zwei, Der Tag, Ab vierzehn Uhr, Der Ort, Abschluss |
-| `content/kulinarik.md` | `src/i18n/de.ts` → `kulinarik` | Kopf, Sechs Gänge, Die Wahl, Der Koch, Aus dem Wallis, Aufruf |
-| `content/wein.md` | `src/i18n/de.ts` → `wein` | Kopf, Die Begleitung, Das Weingut, Die Weinbegleitung, Aufruf |
-| `content/organisation.md` | `src/i18n/de.ts` → `organisation` | Kopf, Der Tag, Durch den Tag, Anfahrt, Gut zu wissen, Fragen, Kontakt, Aufruf |
+`content/archiv-2026-09/` trägt die deutschen Quelltexte des ersten Textauftrags vom
+3. September 2026. Sie speisen die Website nicht mehr, sie belegen die Herkunft.
+Für Französisch und Englisch hat dort nie ein Quelltext existiert, beide entstanden
+direkt in den Wörterbüchern.
+
+| Archivdatei | Deckte |
+|---|---|
+| `index.md` | Titel, Der Anlass, Der Auftakt, Die zwei, Der Tag, Ab vierzehn Uhr, Der Ort, Abschluss |
+| `kulinarik.md` | Kopf, Sechs Gänge, Die Wahl, Der Koch, Aus dem Wallis, Aufruf |
+| `wein.md` | Kopf, Die Begleitung, Das Weingut, Die Weinbegleitung, Aufruf |
+| `organisation.md` | Kopf, Der Tag, Durch den Tag, Anfahrt, Gut zu wissen, Fragen, Kontakt, Aufruf |
 
 `content/` wird nicht gebaut. Astro liest ausschliesslich `src/`.
 
-**Was nicht aus den Quelltexten kommt.** Die Bildunterschriften der Bänder, die drei
-Pfeilzeilen unter «Mehr dazu», das Laufband, die Anmeldung und die zwölf Rechtsseiten.
-Für sie liegt kein Quelltext vor.
+**Was nie aus einem Quelltext kam.** Die Bildunterschriften der Bänder, die drei
+Pfeilzeilen unter «Mehr dazu», das Laufband, die Bildbeschreibungen, die Anmeldung
+und die zwölf Rechtsseiten.
 
-**Zahlen führen aus der Datendatei.** Steht in einem Quelltext eine Zahl, ein Datum
-oder ein Preis, gilt trotzdem `src/data/anlass.ts`. Datum und Uhrzeit stehen zusätzlich
-je Sprache im Wörterbuch, weil die Schreibweise sich unterscheidet: «19. September 2026»,
+**Zahlen führen aus der Datendatei.** Steht in einem Text eine Zahl, ein Datum oder
+ein Preis, gilt `src/data/anlass.ts`. Datum und Uhrzeit stehen zusätzlich je Sprache
+im Wörterbuch, weil die Schreibweise sich unterscheidet: «19. September 2026»,
 «19 septembre 2026», «19 September 2026».
 
 **Übersetzung.** Französisch duzt, Englisch nutzt «you». Eigennamen bleiben stehen:
@@ -239,7 +266,7 @@ Server. `fontshare` kommt im Build nicht vor.
 
 | Rolle | Schrift | Woher |
 |---|---|---|
-| Anzeige, alle Grade ab 20 Pixel | Cabinet Grotesk | `src/assets/fonts/cabinet-grotesk/`, sieben Schnitte als `woff2` mit `woff` als Rückfall |
+| Anzeige, alle Grade ab 20 Pixel | Cabinet Grotesk | `src/assets/fonts/cabinet-grotesk/`, sieben Schnitte als `woff2` |
 | Fliesstext und Mikro-Marken | Switzer | `src/assets/fonts/switzer/`, variabel, Achse `wght` von 100 bis 900, aufrecht und kursiv |
 
 **Switzer.** Von der Indian Type Foundry. Eingebaut sind zwei Dateien, `Switzer-Variable.woff2`
@@ -251,6 +278,9 @@ die variable Fassung deckt jedes Gewicht ab. Familienname im CSS: `"Switzer"`.
 bis 800. Die Seite selbst nutzt 400 und 500, die übrigen Schnitte lädt der Browser nie,
 weil kein Element sie anfragt. Eine variable Fassung liegt nicht vor, geprüft an der
 fehlenden `fvar`-Tabelle. `ttf` und `eot` sind entfernt, sie gehören nicht in einen Build.
+
+Der `woff`-Rückfall ist am 4. September 2026 entfernt, sieben Dateien und 192 KB.
+Jeder Browser mit Unterstützung für `@font-face` liest seit 2016 `woff2`.
 
 **Keine Änderung an den Dateien.** Die Lizenz verbietet jede Änderung, ausdrücklich auch
 Teilsätze und Formatwandlung. Beide Schriften liegen unverändert aus dem Paket der Indian
@@ -274,7 +304,7 @@ demselben Bestand, die Sprache ändert an den Bildern nichts.
 | Bild | Seite | Stelle |
 |---|---|---|
 | `clos-morgenlicht.jpg` | Start | Titelbild |
-| `mood-messer.jpg` | Start | Bildband nach «Die zwei» |
+| `stimmung-messer.jpg` | Start | Bildband nach «Die zwei» |
 | `rebberg.jpg` | Start | Bildband vor dem Abschluss |
 | `clos-du-cornalin.jpg` | Kulinarik | Bildband nach dem Menü |
 | `rebhaus-drohne.jpg` | Wein | Bildband nach der Begleitung |
@@ -301,7 +331,7 @@ Die Beschreibung nennt, was zu sehen ist, und wiederholt weder Titel noch Bildun
 Im Build tragen alle drei Sprachen je 18 `alt`, zusammen 54.
 
 **Neues Bild einsetzen.** Datei nach `src/assets/img/`, im Frontmatter des Bausteins unter
-`src/seiten/` importieren, im Rumpf über `<Image>` einsetzen. Das `<img>` bleibt im
+`src/ansichten/` importieren, im Rumpf über `<Image>` einsetzen. Das `<img>` bleibt im
 `<div class="px">`, sonst hält die Parallaxe nicht. Jedes Bild braucht einen Schlüssel unter
 `bilder` in allen drei Wörterbüchern, sonst hält der Prüflauf an.
 
@@ -309,237 +339,24 @@ Im Build tragen alle drei Sprachen je 18 `alt`, zusammen 54.
 
 ## Bewegung
 
-Ein Taktgeber in `src/scripts/site.js` führt alle Bewegungen. **Nie laufen zwei
-gleichzeitig**, zwischen zwei Bewegungen liegen mindestens zwei Sekunden Ruhe. Gemessen
-über 45 Bewegungen: höchstens eine gleichzeitig, kleinste Ruhe 2050 Millisekunden.
+Ein Taktgeber führt alle Bewegungen: Farbpuls, Neonwolken, Kantenlauf, Zahlenwelle,
+Laufbandspur, Knöpfe, Zeiger, Seitenübergang. Nie laufen zwei gleichzeitig.
 
-### Farbpuls
-
-Vier Töne, drei Grüne und ein Orange als Ausreisser. Sie stehen in `site.css` als
-`--puls-1` bis `--puls-4`. Der Taktgeber setzt vor jeder Bewegung `--puls` auf einen davon.
-
-| Marke | Wert | Rolle | Kontrast auf `--deep` |
-|---|---|---|---|
-| `--puls-1` | `#C2D9A6` | Grün, hell | 13.07 : 1 |
-| `--puls-2` | `#96C9A8` | Grün, mittel | 10.64 : 1 |
-| `--puls-3` | `#7FB6B0` | Grün, kühl | 8.75 : 1 |
-| `--puls-4` | `#F0A868` | Orange, der Ausreisser | 9.97 : 1 |
-
-**Orange ist selten.** Höchstens jeder fünfte Lauf, nie zweimal hintereinander. Gemessen
-über 45 Läufe: 8-mal Orange, kleinster Abstand fünf Läufe, kein Ton zweimal hintereinander.
-
-**Farbe erscheint an fünf Stellen, sonst nirgends.**
-
-1. Kantenlauf, `conic-gradient` und waagrechter Lauf
-2. Zahlenwelle im Faktenfeld
-3. Spur durch das Laufband
-4. Füllung des Knopfes «Zur Anmeldung»
-5. Zeigerring über den beiden Knöpfen
-
-Gemessen auf sechs Seiten in Ruhe, in drei Sprachen: jede Seite wird zweimal aufgenommen,
-einmal mit der Palette und einmal mit vier ausgegrauten Pulsfarben. Der Unterschied beträgt
-auf allen sechs Seiten 0.0000 Prozent. Was an farbigen Bildpunkten übrig bleibt, steht in
-beiden Aufnahmen gleich und ist Subpixel-Kantenglättung der Schrift, kein Gestaltungsmittel.
-
-### Neonwolken
-
-Der Kantenlauf ist ein Puls von 1.4 Sekunden. Die Wolke ist Licht und bleibt. Grosse,
-weiche Farbfelder ziehen dauerhaft und sehr langsam über die dunklen Flächen und leuchten
-sie aus, statt sie zu bemalen. Reine CSS-Animation, kein Taktgeber.
-
-**Fünf Flächen, sonst keine.**
-
-| Fläche | Wolken | Grunddeckkraft | Töne |
-|---|---|---|---|
-| Titelbild, über dem Foto und unter dem Schleier | 2 | 0.28 | Petrolgrün, Salbei |
-| Menü und Ausklang, die dunkle Passage | 3 | 0.40 | Petrolgrün, Salbei, Orange |
-| Faktenfeld | 2 | 0.34 | Petrolgrün, Salbei |
-| Menüüberlagerung, wenn offen | 2 | 0.46 | Petrolgrün, Orange |
-| Partnerband und Fuss | je 1 | 0.22 | Salbei |
-
-Die Töne sind dieselben wie beim Kantenlauf, `--wolke-1` bis `--wolke-3` zeigen auf
-`--puls-3`, `--puls-2` und `--puls-4`. Ein Farbsystem, nicht zwei.
-
-Kein Orange auf dem Titelbild und keines im Faktenfeld. Beide Flächen tragen Text, der
-den Kontrast hält, und die Zahlen bleiben kühl. Auf keiner Fläche stehen zwei Orange.
-
-**Bewegung.** Zwei Kreisläufe je Wolke, mit eigener Dauer. Der Weg läuft über 78 bis
-128 Sekunden, die Deckkraft schwingt über 61 bis 97 Sekunden zwischen 0.55 und 1.0 der
-Grunddeckkraft. Beide `alternate`, endlos, auf `cubic-bezier(.45,.05,.55,.95)`. Jede Wolke
-startet mit eigenem Vorlauf, zwei Wolken derselben Fläche laufen nie in dieselbe Richtung.
-Der Weg beträgt höchstens 9vw waagrecht und 7vh senkrecht.
-
-**Lage.** Jede Wolke hängt zu einem guten Teil ausserhalb ihrer Fläche. So liest sich die
-Wolke als Licht von aussen, nicht als Fleck in der Mitte.
-
-**Korn.** Ein feines Korn liegt still auf denselben Flächen, `feTurbulence` mit
-`baseFrequency` 0.9 und `numOctaves` 3, in Graustufen, Kachel 180 mal 180 Pixel, als
-Data-URI eingebettet. Keine zusätzliche Anfrage, keine Animation. Es liegt in der
-Wolkenschicht und damit unter dem Text.
-
-**Grenzen.**
-
-- Ohne `color-mix` entsteht keine Wolke. Die Regeln hängen an einem `@supports`-Block, ohne Unterstützung bleibt `.wolke` auf `display:none`.
-- Bei reduzierter Bewegung stehen die Wolken still und bleiben sichtbar. Der halbe Vorlauf hält sie in mittlerer Stellung und Deckkraft.
-- Ohne JavaScript erscheinen sie unverändert, alle 13 stehen im Markup.
-- Ausserhalb des Sichtfelds ruhen sie, gesetzt über `IntersectionObserver`. Das ist eine Leistungsbremse, keine Führung.
-- Unter 700 Pixel Breite trägt jede Fläche höchstens zwei Wolken.
-- Kein Element ändert durch die Wolken Grösse oder Lage.
-
-**Gemessener Textkontrast auf den bewolkten Flächen,** im ungünstigsten Bild aus sechs
-Phasen, 1440 mal 900:
-
-| Stelle | Kontrast |
-|---|---|
-| Menüzeile in der Überlagerung | 16.60 : 1 |
-| Menüzeile im Menü, Kulinarik | 16.41 : 1 |
-| Register, Organisation | 14.62 : 1 |
-| Zahl im Faktenfeld | 14.92 : 1 |
-| Kopf der dunklen Passage | 13.48 : 1 |
-| Fussverweise | 7.89 : 1 |
-| Partnermarke | 7.69 : 1 |
-| Fliesstext der dunklen Passage | 7.34 : 1 |
-| Weinspalte im Menü | 7.02 : 1 |
-| Mikro-Marke im Posten | 6.70 : 1 |
-| Fuss in der Überlagerung | 6.66 : 1 |
-| Beschriftung im Faktenfeld | 6.61 : 1 |
-
-Kleinster Wert 6.61 : 1. Grundlinie ohne Wolken 7.67 : 1, der Verlust beträgt also
-höchstens 1.06.
-
-**Gemessene Bildrate** beim Rollen über die dunkle Passage, vier Sekunden:
-
-| Breite | Bilder je Sekunde |
-|---|---|
-| 1920 mal 1080 | 59.7 |
-| 1440 mal 900 | 60.3 |
-| 1280 mal 800 | 60.3 |
-| 390 mal 844 | 60.3 |
-
-### Takt
-
-| Bewegung | Abstand | Dauer |
-|---|---|---|
-| Kantenlauf | 6 bis 10 Sekunden | 1.4 Sekunden |
-| Zahlenwelle | 12 bis 18 Sekunden | 1.4 Sekunden plus 140 ms Versatz je Zahl |
-| Laufbandspur | 18 bis 26 Sekunden | 1.8 Sekunden |
-| Mindestruhe dazwischen | | 2 Sekunden |
-
-Der Abstand wird je Durchgang neu gewürfelt. Eine Bewegung läuft nur im sichtbaren Bereich,
-gesteuert über `IntersectionObserver`. Liegt der Reiter im Hintergrund, hält der Takt an.
-Beim Zeigen auf einen Knopf läuft dessen Kante einmal sofort.
-
-### Kantenlauf
-
-Der Lauf sitzt auf der Kante, nie auf der Fläche. Nach 1.4 Sekunden ist er weg.
-
-| Element | Führung |
-|---|---|
-| Kopfleiste, `#hd .bar` | entlang der unteren Hairline, von links nach rechts |
-| Faktenfeld auf der Startseite | Aussenkante, im Uhrzeigersinn |
-| Faktenfeld im Abschluss | Aussenkante, im Uhrzeigersinn |
-| Knöpfe «Platz sichern» und «Zur Anmeldung» | Aussenkante, im Uhrzeigersinn |
-
-Sonst nirgends. Keine Bildbänder, keine Register, keine Porträts, keine Menüüberlagerung.
-
-### Zahlenwelle
-
-Die Farbe läuft durch die Ziffern, nicht dahinter: `background-clip: text` mit
-`-webkit-text-fill-color: transparent`. Der Versatz von 140 Millisekunden je Zahl macht aus
-vier Zahlen eine Welle von links nach rechts. `.facts b` trägt `width: fit-content`, sonst
-liefe die Welle neben der Ziffer durch den leeren Kasten.
-
-Unabhängig davon zählen die Zahlen beim ersten Erscheinen von 0 auf den Endwert,
-900 Millisekunden auf `cubic-bezier(.22,1,.36,1)`, genau einmal je Seitenaufruf.
-`font-variant-numeric: tabular-nums` hält die Zeichenbreite fest.
-
-### Laufbandspur
-
-Die Spur läuft über die Trennpunkte zwischen den Wörtern, von links nach rechts. Jeder
-Punkt bekommt seinen Versatz aus seiner Lage im Schirm, 0 bis 900 Millisekunden, und
-leuchtet dann 900 Millisekunden lang auf. Zusammen 1.8 Sekunden.
-
-### Knöpfe
-
-Beim Zeigen füllt sich der Knopf von unten nach oben, 0.42 Sekunden auf `var(--ease)`,
-in der Farbe des laufenden Pulses. Der Pfeil dreht gleichzeitig 45 Grad. Kein Anheben,
-keine Vergrösserung, kein Schlagschatten. Der Text im gefüllten Knopf steht auf `--deep`,
-Kontrast 8.75 bis 13.07 : 1 je nach Ton.
-
-Der Knopf «Platz sichern» in der Kopfleiste ist bereits weiss gefüllt und behält das.
-Eine Füllung von unten hätte dort nichts zu füllen.
-
-### Zeiger
-
-Grundzustand 34 Pixel, Nachführung 0.12. Über Verweisen und Knöpfen wächst er auf 70 Pixel,
-die Nachführung geht auf 0.20. Über den beiden Knöpfen nimmt der Ring über 0.24 Sekunden die
-Farbe des Pulses an, die Mischung schaltet dafür von `difference` auf `normal`. Über
-Bildbändern schrumpft er auf 8 Pixel. Auf Touch und bei reduzierter Bewegung bleibt er aus.
-
-### Laufband, Führung
-
-Beim Zeigen hält es mit Auslauf, beim Verlassen läuft es wieder an. Dafür führt `site.js`
-das Band, die CSS-Animation dient als Rückfall ohne JavaScript. Die Punkte stehen auf
-Deckung 0.45, damit die Wörter führen.
-
-### Seitenübergang
-
-Astro View Transitions über `<ClientRouter />` im Basis-Layout. Die neue Seite blendet über
-0.35 Sekunden auf, die alte über 0.25 ab. Kopfzeile und Fuss bleiben stehen, sie tragen
-`transition:persist`. Bei reduzierter Bewegung findet kein Übergang statt.
-
-Weil die Kopfzeile stehen bleibt, hängt `site.js` an `astro:page-load` statt an
-`DOMContentLoaded`. Die globalen Horcher und die Bildschleife laufen einmal, der Aufbau je
-Seite läuft neu. Beobachter auf bleibenden Elementen werden vor dem Neuaufbau abgeräumt.
-
-### Rückfall
-
-`site.js` prüft `CSS.registerProperty`, `mask-composite` und `conic-gradient` und setzt erst
-dann `hat-lauf` auf das Wurzelelement. Für Welle und Spur prüft es zusätzlich
-`background-clip: text` und setzt `hat-welle`. Die Wolken hängen nicht an JavaScript,
-sie hängen an einem `@supports`-Block mit `color-mix`. Alle Regeln hängen an diesen Klassen. Ohne
-Unterstützung, ohne JavaScript und bei reduzierter Bewegung entsteht kein Pseudoelement und
-keine Klasse. Nichts geht dadurch kaputt.
-
-Gemessen: 60.7 Bilder je Sekunde während Zahlenwelle und Kantenlauf zugleich.
+**Der ganze Abschnitt mit allen gemessenen Werten liegt in
+[`docs/YL-STAH-2026-001_Bewegung.md`](docs/YL-STAH-2026-001_Bewegung.md).**
+Wer eine Bewegung ändert, misst dort neu und trägt den Wert nach.
 
 ---
 
 ## Schleier über dem Titelbild
 
 `.hero .veil` liegt bei `rgba(26,18,12,.36)`. Der Wert ist gemessen, nicht geschätzt.
+Er ist die niedrigste Stufe, die über drei Sprachen und vier Breiten 4.5 zu 1 trägt,
+kleinster Wert 4.53 zu 1 im ungünstigsten Bild der Wolkenbewegung.
 
-**Verfahren.** Die Seite wird zweimal aufgenommen, einmal mit und einmal ohne die
-Titelzeile. Die Differenz beider Aufnahmen ergibt die Tintenmaske, also die Bildpunkte,
-auf denen wirklich ein Buchstabe steht. Unter dieser Maske wird die Leuchtdichte des
-Untergrunds über ein Fenster von Schriftgrad mal 0.10 gemittelt, davon der Höchstwert
-gegen die Schriftfarbe gerechnet.
-
-**Ergebnis, kleinster Wert über drei Sprachen und vier Breiten:**
-
-| Stufe | kleinster Kontrast | trägt 4.5 : 1 |
-|---|---|---|
-| .32 | 4.14 : 1 | nein |
-| .34 | 4.33 : 1 | nein |
-| **.36** | **4.53 : 1** | **ja** |
-| .38 | 4.68 : 1 | ja |
-| .40 | 4.91 : 1 | ja |
-
-Gesetzt ist .36, die niedrigste Stufe, die trägt. Der kritische Fall ist die englische und
-die französische Titelzeile bei 1920 Pixel Breite. Deutsch allein trüge schon .28. Wer die
-Titelzeile ändert, misst neu.
-
-**Nach dem Einbau der Wolken neu gemessen,** im ungünstigsten Bild der Wolkenbewegung,
-also bei voller Deckkraft und über sechs Stellungen des Weges:
-
-| Stufe | kleinster Kontrast | trägt 4.5 : 1 |
-|---|---|---|
-| **.36** | **4.53 : 1** | **ja** |
-| .38 | 4.67 : 1 | ja |
-
-Der Schleier bleibt auf .36. Die Wolken über dem Titelbild tragen nur 0.28 Grunddeckkraft
-und hängen über die Kanten hinaus, unter der Titelzeile ändern sie den Grund kaum. Der
-kleinste Wert liegt bei 4.53 gegen 4.53 ohne Wolken.
+**Verfahren und Messreihe liegen in
+[`docs/YL-STAH-2026-002_Schleier.md`](docs/YL-STAH-2026-002_Schleier.md).**
+Wer die Titelzeile ändert, misst neu.
 
 ---
 
@@ -556,11 +373,15 @@ Radius über 8 Pixel.
 3. September 2026 ist Farbe an fünf genau benannten Stellen zugelassen, siehe «Bewegung».
 Ausserhalb dieser fünf Stellen bleibt die Seite unbunt.
 
-**3 · Rechtstexte als Seiten, nicht als Wörterbuch.** Die vier Rechtstexte stehen je Sprache
-als eigene `.astro`-Datei, nicht als Einträge im Wörterbuch. Grund: Fliesstext mit
-Nummerierung, Zwischentiteln, Listen und Definitionslisten wird in einer Schlüssel-Wert-Liste
-unlesbar und fehleranfällig. Die fünf Inhaltsseiten stehen umgekehrt einmal als Baustein,
-weil sie aus vielen kurzen, gleich gebauten Feldern bestehen.
+**3 · Rechtstexte als Ansicht je Sprache, nicht als Wörterbuch.** Die vier Rechtstexte
+stehen je Sprache als eigene Datei unter `src/ansichten/recht/<sprache>/`, nicht als
+Einträge im Wörterbuch. Grund: Fliesstext mit Nummerierung, Zwischentiteln, Listen und
+Definitionslisten wird in einer Schlüssel-Wert-Liste unlesbar und fehleranfällig. Die
+fünf Inhaltsseiten stehen umgekehrt einmal als Baustein, weil sie aus vielen kurzen,
+gleich gebauten Feldern bestehen.
+
+Bis zum 4. September 2026 lag diese Prosa in den Routendateien. Damit trugen zwölf
+Routen 58 bis 128 Zeilen. Jetzt tragen alle 27 vier Zeilen.
 
 **4 · Laufbandspur über die Punkte, nicht durch die Buchstaben.** Vorgesehen war dieselbe
 Machart wie bei den Zahlen. Gemessen im Browser trägt sie dort nicht: `background-clip: text`
@@ -616,34 +437,11 @@ Tag danach jetzt aus `src/data/anlass.ts` aus.
 
 ## Feldtabelle Anmeldung
 
-`src/seiten/Anmeldung.astro` ist ein Entwurf. Die produktive Anmeldung läuft über YoSuite.
-Die Beschriftungen kommen je Sprache aus `src/i18n/<sprache>.ts` unter `anmeldung`.
+`src/ansichten/Anmeldung.astro` ist ein Entwurf. Die produktive Anmeldung läuft über
+YoSuite. Die Beschriftungen kommen je Sprache aus `src/i18n/<sprache>.ts` unter `anmeldung`.
 
-| Feld | Kennung | Typ | Pflicht | Vorgabe |
-|---|---|---|---|---|
-| Name | `name` | Text | ja | leer |
-| E-Mail | `mail` | E-Mail | ja | leer |
-| Telefon | `tel` | Telefon | nein | leer |
-| Sprache | `sprache` | Deutsch, Français, English | nein | Sprache der Seite |
-| Anzahl Personen | `anzahl` | 1 bis 6 | ja | 2 |
-| Name je Person | `--` | Text | nein | leer |
-| Essen je Person | `e1` bis `e6` | Fleisch oder vegetarisch | ja | Fleisch |
-| 18 Jahre und Bedingungen gelesen | `zustimmung` | Kontrollkästchen | ja | nicht gesetzt |
-| Post von Fernand Cina | `news` | Kontrollkästchen | nein | nicht gesetzt |
-| Warteliste, Name | `w_name` | Text | ja | leer |
-| Warteliste, E-Mail | `w_mail` | E-Mail | ja | leer |
-| Warteliste, Anzahl | `w_anz` | Text | nein | leer |
-
-**Regeln**
-
-1. Die Werbeeinwilligung steht getrennt von der Zustimmung zu den Bedingungen und ist nie vorangekreuzt. Grundlage: Art. 3 Abs. 1 lit. o UWG.
-2. Zur Einwilligung gehören Status, Zeitstempel, Quelle und IP, filterbar und als CSV exportierbar.
-3. Bei 50 vergebenen Plätzen `#formular` und `.side` ausblenden, `#warteliste` einblenden.
-4. Anmeldeschluss 15. September 2026, 23:59. Der Wert steht in `src/data/anlass.ts`.
-5. Preis: Anzahl mal CHF 145.00. Anzeige mit Apostroph ab vier Stellen.
-6. Die Küche erhält nur die Zahlen je Schiene und die gemeldeten Allergien, ohne Kontaktdaten.
-7. Die Sprachwahl ist freiwillig. Sie geht an Alisha Cina und Alain Lerjen, damit sie wissen, wie viele Gäste sie auf Französisch begleiten. Englisch steht zur Wahl, zugesichert wird es nicht.
-8. Die Bestätigungsmail geht in der gewählten Sprache raus, ersatzweise auf Deutsch.
+**Felder, Kennungen und Regeln liegen in
+[`docs/YL-STAH-2026-003_Feldtabelle-Anmeldung.md`](docs/YL-STAH-2026-003_Feldtabelle-Anmeldung.md).**
 
 ---
 
@@ -700,7 +498,7 @@ Beim Aufschalten der Domain der Reihe nach prüfen:
 2. **Kopf abfragen.** `curl -I https://im-stah.ch/` darf kein `x-robots-tag` mehr tragen. Dasselbe für `/fr/` und `/en/`.
 3. **Zugriffsschutz.** Die Vercel-Authentifizierung steht auf «all except custom domains», die eigene Domain ist damit offen. Prüfen, dass `https://im-stah.ch/` ohne Login antwortet.
 4. **Indexierbar bleiben zwölf Seiten.** Start, Kulinarik, Wein und Organisation, je in drei Sprachen. Sie tragen kein `noindex`.
-5. **Auf `noindex` bleiben 15 Seiten.** Anmeldung und die vier Rechtstexte, je in drei Sprachen. Das `noindex` steht in `src/layouts/Legal.astro` und `src/seiten/Anmeldung.astro`.
+5. **Auf `noindex` bleiben 15 Seiten.** Anmeldung und die vier Rechtstexte, je in drei Sprachen. Das `noindex` steht in `src/layouts/Legal.astro` und `src/ansichten/Anmeldung.astro`.
 6. **`robots.txt` trägt kein `Disallow`.** Eine gesperrte Seite wird nicht gelesen, also wird ihr `noindex` nie gesehen. Die Sperre gehört auf die Seite, nicht in `robots.txt`.
 7. **Sitemap abrufen.** `https://im-stah.ch/sitemap-index.xml` muss zwölf Adressen führen, jede mit drei `hreflang`-Alternativen.
 8. **Search Console.** Domain aufnehmen, Sitemap einreichen, danach die Abdeckung prüfen.
@@ -715,9 +513,9 @@ Jeder Punkt nennt die Ursache und den nächsten Schritt.
 2. **Übersetzung nicht muttersprachlich geprüft.** Die französische und die englische Fassung sind sorgfältig erstellt, aber von keiner muttersprachlichen Person gegengelesen. Ursache: kein Lektorat beauftragt. Nächster Schritt: Gegenlesen beauftragen, insbesondere für die zwölf Rechtsseiten.
 3. **Rechtstexte nur auf Deutsch verbindlich.** Die französischen und englischen Rechtstexte tragen den Vorrangvermerk, und AGB Ziffer 13 hält die deutsche Fassung fest. Ursache: Übersetzungen sind nicht anwaltlich geprüft. Nächster Schritt: Prüfung der deutschen Fassung beauftragen, danach die Übersetzungen abgleichen.
 4. **Juristische Prüfung.** AGB, Teilnahmebedingungen, Impressum und Datenschutzerklärung sind nach bestem Wissen erstellt, jedoch nicht anwaltlich geprüft. Nächster Schritt: Prüfung vor dem Aufschalten der Anmeldung.
-5. **Zwei Antworten fehlen im Quelltext.** `content/organisation.md` trägt bei «Was passiert bei Regen?» und «Ich kann doch nicht teilnehmen?» nur Platzhalter. Nächster Schritt: beide Antworten im Wortlaut liefern.
-6. **Verweis ohne Ziel.** `content/organisation.md` nennt «[Übernachtungsmöglichkeiten entdecken]» ohne Adresse. Nächster Schritt: Adresse liefern, etwa Valais Wallis Promotion.
-7. **Schreibweise des Namens.** Die Quelltexte schreiben «Z Wallis im Stah», die Datendatei «z'Wallis im Stah» mit Apostroph. Auf der Seite gilt die Datendatei. Nächster Schritt: die Schreibweise in `content/` angleichen.
+5. **Zwei Antworten fehlen im Quelltext.** `content/archiv-2026-09/organisation.md` trägt bei «Was passiert bei Regen?» und «Ich kann doch nicht teilnehmen?» nur Platzhalter. Nächster Schritt: beide Antworten im Wortlaut liefern.
+6. **Verweis ohne Ziel.** `content/archiv-2026-09/organisation.md` nennt «[Übernachtungsmöglichkeiten entdecken]» ohne Adresse. Nächster Schritt: Adresse liefern, etwa Valais Wallis Promotion.
+7. **Schreibweise des Namens.** Die Quelltexte schreiben «Z Wallis im Stah», die Datendatei «z'Wallis im Stah» mit Apostroph. Auf der Seite gilt die Datendatei. Nächster Schritt: nur die Datendatei zählt, das Archiv bleibt wie es ist.
 8. **Wortmarke Fernand Cina mit Wappen.** Die Datei trägt das Wappen über dem Schriftzug. Der Kasten steht im Partnerband höher als Maison 13, die sichtbare Wortmarke liest sich dadurch kleiner. Nächster Schritt: eine Fassung ohne Wappen beschaffen.
 9. **Zeiger, Wort und Zahl widersprechen sich.** Die Vorgabe nennt 0.12 «enger» und 0.20 «Widerstand». Bei `cx += (x - cx) * f` bedeutet ein kleineres `f` mehr Nachlauf. Gesetzt sind die genannten Zahlen. Nächster Schritt: entscheiden, ob die Zahlen oder die Worte gelten.
 10. **Maison 13 Catering.** Firmenname, Rechtsform und Adresse fehlen im Impressum, in allen drei Sprachen. Nächster Schritt: bei Maison 13 einholen.
@@ -726,7 +524,9 @@ Jeder Punkt nennt die Ursache und den nächsten Schritt.
 13. **Titelbild aus einem Bildschirmfoto.** `clos-morgenlicht.jpg` ist eine Bildschirmaufnahme, 1782 mal 970 Pixel. Nächster Schritt: Aufnahme aus dem Bestand ab 2000 Pixel Breite holen, danach den Schleier neu messen.
 14. **Mehrfach komprimierte Bänder.** `rebhaus-drohne.jpg` und `rebberg.jpg` wachsen beim Umrechnen auf WebP. Nächster Schritt: Originale aus dem Bestand holen. Die Qualität bleibt bei 72.
 15. **Wortmarke des Anlasses.** Die SVG-Datei ist nachgezeichnet, die Konturen sind ab etwa 900 Pixel Breite sichtbar treppig. Nächster Schritt: Für Druck ab A2 die Marke aus der Originalschrift setzen.
-16. **Branch lässt sich aus dieser Sitzung nicht löschen.** `git push origin --delete` endet mit HTTP 403. Ursache: Die Zugangsdaten dieser Sitzung dürfen keine Referenzen löschen. Nächster Schritt: Branch nach dem Merge über die GitHub-Oberfläche löschen.
+16. **Aktenzeichen der Dokumente in `docs/` ist neu vergeben.** Die Reihe `YL-STAH-2026-###` habe ich angelegt, weil kein Schema vorlag. Ursache: Die genannten Dokumente `YL-SGU-2026-001` und `YL-SGU-2026-002` liegen nicht im Repository. Nächster Schritt: Liegt bei Yoline ein Register vor, werden die drei Dateien umbenannt und die Verweise im README nachgeführt.
+17. **`content/` deckt nur Deutsch.** Für Französisch und Englisch gibt es keinen Quelltext, sie leben nur in den Wörterbüchern. Ursache: Beide entstanden in der Sprachrunde direkt dort. Nächster Schritt: Entscheiden, ob der Nachweis der Herkunft für alle drei Sprachen geführt werden soll. Heute ist er es nur für Deutsch.
+18. **Branch lässt sich aus dieser Sitzung nicht löschen.** `git push origin --delete` endet mit HTTP 403. Ursache: Die Zugangsdaten dieser Sitzung dürfen keine Referenzen löschen. Nächster Schritt: Branch nach dem Merge über die GitHub-Oberfläche löschen.
 
 ---
 
