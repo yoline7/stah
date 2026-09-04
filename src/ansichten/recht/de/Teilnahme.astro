@@ -1,0 +1,106 @@
+---
+import Legal from "../../../layouts/Legal.astro";
+import { anlass } from "../../../data/anlass";
+const schluss = `${anlass.anmeldeschluss} ${anlass.anmeldeschlussIso.slice(0, 4)}`;
+---
+<Legal lang="de" seite="teilnahme" title="Teilnahmebedingungen" kicker="Teilnahme" h1={`Teilnahme&shy;bedingungen`} sub="Was am Anlasstag gilt. Zutritt, Ablauf, Verpflegung, Verhalten und Sicherheit.">
+<section>
+<h2>1 · Grundsatz</h2>
+<p>Diese Bedingungen ergänzen die <a href="/agb">AGB</a>. Sie regeln das Verhalten am Anlass selbst.</p>
+<p>Mit dem Zutritt anerkennt die teilnehmende Person diese Bedingungen und die Anweisungen des Personals.</p>
+</section>
+
+<section>
+<h2>2 · Zutritt</h2>
+<p>Der Zutritt gilt nur mit gültiger Anmeldung und ab 18 Jahren. Die Anmeldung wird beim Empfang in der Kellerei geprüft.</p>
+<p>Treffpunkt ist um 10:00 Uhr die Kellerei Fernand Cina an der Bahnhofstrasse 27 in Salgesch. Wer später eintrifft, meldet sich telefonisch.</p>
+<p>Ein Anspruch auf verpasste Gänge oder Weine besteht keiner.</p>
+</section>
+
+<section>
+<h2>3 · Ablauf und Zeiten</h2>
+<dl class="def">
+<div><dt>10:00</dt><dd>Empfang in der Kellerei, erster Wein, Musik ab dem ersten Glas</dd></div>
+<div><dt>ab 10:30</dt><dd>Fahrt oder Fussweg zum Clos du Cornalin</dd></div>
+<div><dt>11:15</dt><dd>Erster Gang</dd></div>
+<div><dt>bis 14:00</dt><dd>Sechs Gänge, geführt</dd></div>
+<div><dt>ab 14:00</dt><dd>Bar und ausgebaute Musik, Konsumation separat</dd></div>
+<div><dt>18:00</dt><dd>Ende</dd></div>
+</dl>
+<p>Die Zeiten sind Richtwerte. Verschiebungen im Ablauf sind möglich.</p>
+</section>
+
+<section>
+<h2>4 · Weg zum Clos du Cornalin</h2>
+<p>Der Shuttle fährt ab 10:30 Uhr bei der Kellerei ab. Die letzte Rückfahrt erfolgt um 18:00 Uhr.</p>
+<p>Der Fussweg führt durch die Rebberge und steigt an. Er wird auf eigene Verantwortung begangen. Festes Schuhwerk ist nötig.</p>
+<p>Für die Anreise nach Salgesch empfehlen wir den Zug. Über den Tag werden sieben Weine ausgeschenkt.</p>
+</section>
+
+<section>
+<h2>5 · Verpflegung</h2>
+<p>Die Gänge werden an bemannten Stationen ausgegeben. Ein Selbstbedienungsbuffet gibt es keines.</p>
+<p>Die bei der Anmeldung gewählte Schiene gilt für alle Gänge. Ein Wechsel vor Ort ist ausgeschlossen.</p>
+<h3>5.1 Allergien und Unverträglichkeiten</h3>
+<p>Allergien und Unverträglichkeiten sind bis spätestens {schluss} per Antwort auf die Bestätigungsmail zu melden. Die Küche berücksichtigt sie im Rahmen des Möglichen.</p>
+<p>Eine vollständige Freiheit von Spuren einzelner Zutaten kann die Küche nicht zusichern. Bei schweren Allergien liegt die Entscheidung zur Teilnahme bei der betroffenen Person.</p>
+<h3>5.2 Rohe Zutaten</h3>
+<p>Ein Gang enthält rohes Fleisch. Personen mit geschwächtem Immunsystem, Schwangere und Kinder verzichten üblicherweise darauf. Die vegetarische Schiene bietet eine Alternative.</p>
+</section>
+
+<section>
+<h2>6 · Alkohol und Verantwortung</h2>
+<p>Der Weinausschank ist Teil des Anlasses und läuft über mehrere Stunden. Wasser steht durchgehend bereit.</p>
+<p>Jede Person entscheidet selbst über ihren Konsum. Das Personal kann den Ausschank jederzeit einstellen.</p>
+<p>Wer mit dem Auto angereist ist, plant die Rückfahrt entsprechend. Die Veranstalterin übernimmt dafür keine Verantwortung.</p>
+</section>
+
+<section>
+<h2>7 · Witterung und Ausrüstung</h2>
+<p>Der Anlass findet bei jeder Witterung statt und läuft teilweise im Freien.</p>
+<p>Empfohlen sind Schuhe, in denen längeres Stehen und Gehen möglich ist, sowie eine Jacke für den Abend.</p>
+<p>Der Anlass ist als Stehformat gebaut. Sitzgelegenheiten stehen bereit, ein persönlicher Sitzplatz ist keiner zugeteilt.</p>
+</section>
+
+<section>
+<h2>8 · Verhalten und Hausrecht</h2>
+<p>Der Clos du Cornalin ist ein bewirtschafteter Rebberg. Die Reben, die Mauern und die Anlagen sind zu schonen.</p>
+<p>Die Veranstalterin übt das Hausrecht aus. Sie kann Personen wegweisen bei:</p>
+<ul>
+<li>Gefährdung anderer Gäste oder des Personals</li>
+<li>Beschädigung von Reben, Anlagen oder Material</li>
+<li>erheblicher Störung des Anlasses</li>
+<li>Missachtung von Anweisungen</li>
+</ul>
+<p>Eine Rückerstattung erfolgt in diesen Fällen keine.</p>
+</section>
+
+<section>
+<h2>9 · Tiere, Gepäck, Wertsachen</h2>
+<p>Hunde und andere Tiere bleiben zu Hause.</p>
+<p>Für mitgebrachte Gegenstände haftet die teilnehmende Person selbst. Eine bewachte Garderobe gibt es keine.</p>
+</section>
+
+<section>
+<h2>10 · Zugänglichkeit</h2>
+<p>Der Zugang zum Clos du Cornalin führt über Naturwege und Kies. Für Rollstühle und Kinderwagen ist er wenig geeignet.</p>
+<p>Bei eingeschränkter Mobilität melde dich vor der Anmeldung. Wir prüfen, was möglich ist.</p>
+</section>
+
+<section>
+<h2>11 · Notfall</h2>
+<p>Wende dich im Notfall an das Serviceteam vor Ort.</p>
+<dl class="def">
+<div><dt>Sanität</dt><dd>144</dd></div>
+<div><dt>Polizei</dt><dd>117</dd></div>
+<div><dt>Feuerwehr</dt><dd>118</dd></div>
+<div><dt>Rega</dt><dd>1414</dd></div>
+<div><dt>Notruf Europa</dt><dd>112</dd></div>
+</dl>
+</section>
+
+<section>
+<h2>12 · Aufnahmen</h2>
+<p>Am Anlass entstehen Foto- und Filmaufnahmen für die Kommunikation der Veranstalterin. Wer damit nicht einverstanden ist, meldet dies beim Empfang.</p>
+</section>
+</Legal>

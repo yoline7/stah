@@ -30,59 +30,54 @@
   font-style:italic;
 }
 
-/* Anzeige, Einzelschnitte, keine variable Fassung im Paket */
+/* Anzeige, Einzelschnitte, keine variable Fassung im Paket.
+   Nur woff2. Der woff-Rueckfall ist entfernt, jeder Browser mit
+   @font-face-Unterstuetzung liest seit 2016 woff2. */
 @font-face{
   font-family:"Cabinet Grotesk";
-  src:url("../assets/fonts/cabinet-grotesk/CabinetGrotesk-Thin.woff2") format("woff2"),
-      url("../assets/fonts/cabinet-grotesk/CabinetGrotesk-Thin.woff") format("woff");
+  src:url("../assets/fonts/cabinet-grotesk/CabinetGrotesk-Thin.woff2") format("woff2");
   font-weight:100;
   font-display:swap;
   font-style:normal;
 }
 @font-face{
   font-family:"Cabinet Grotesk";
-  src:url("../assets/fonts/cabinet-grotesk/CabinetGrotesk-Extralight.woff2") format("woff2"),
-      url("../assets/fonts/cabinet-grotesk/CabinetGrotesk-Extralight.woff") format("woff");
+  src:url("../assets/fonts/cabinet-grotesk/CabinetGrotesk-Extralight.woff2") format("woff2");
   font-weight:200;
   font-display:swap;
   font-style:normal;
 }
 @font-face{
   font-family:"Cabinet Grotesk";
-  src:url("../assets/fonts/cabinet-grotesk/CabinetGrotesk-Light.woff2") format("woff2"),
-      url("../assets/fonts/cabinet-grotesk/CabinetGrotesk-Light.woff") format("woff");
+  src:url("../assets/fonts/cabinet-grotesk/CabinetGrotesk-Light.woff2") format("woff2");
   font-weight:300;
   font-display:swap;
   font-style:normal;
 }
 @font-face{
   font-family:"Cabinet Grotesk";
-  src:url("../assets/fonts/cabinet-grotesk/CabinetGrotesk-Regular.woff2") format("woff2"),
-      url("../assets/fonts/cabinet-grotesk/CabinetGrotesk-Regular.woff") format("woff");
+  src:url("../assets/fonts/cabinet-grotesk/CabinetGrotesk-Regular.woff2") format("woff2");
   font-weight:400;
   font-display:swap;
   font-style:normal;
 }
 @font-face{
   font-family:"Cabinet Grotesk";
-  src:url("../assets/fonts/cabinet-grotesk/CabinetGrotesk-Medium.woff2") format("woff2"),
-      url("../assets/fonts/cabinet-grotesk/CabinetGrotesk-Medium.woff") format("woff");
+  src:url("../assets/fonts/cabinet-grotesk/CabinetGrotesk-Medium.woff2") format("woff2");
   font-weight:500;
   font-display:swap;
   font-style:normal;
 }
 @font-face{
   font-family:"Cabinet Grotesk";
-  src:url("../assets/fonts/cabinet-grotesk/CabinetGrotesk-Bold.woff2") format("woff2"),
-      url("../assets/fonts/cabinet-grotesk/CabinetGrotesk-Bold.woff") format("woff");
+  src:url("../assets/fonts/cabinet-grotesk/CabinetGrotesk-Bold.woff2") format("woff2");
   font-weight:700;
   font-display:swap;
   font-style:normal;
 }
 @font-face{
   font-family:"Cabinet Grotesk";
-  src:url("../assets/fonts/cabinet-grotesk/CabinetGrotesk-Extrabold.woff2") format("woff2"),
-      url("../assets/fonts/cabinet-grotesk/CabinetGrotesk-Extrabold.woff") format("woff");
+  src:url("../assets/fonts/cabinet-grotesk/CabinetGrotesk-Extrabold.woff2") format("woff2");
   font-weight:800;
   font-display:swap;
   font-style:normal;

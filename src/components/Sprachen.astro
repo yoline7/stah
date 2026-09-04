@@ -1,6 +1,6 @@
 ---
 /** Sprachumschalter. Zeigt alle drei Fassungen derselben Seite. */
-import { fassungen, type Sprache, type Seite } from "../i18n/ui";
+import { fassungen, type Sprache, type Seite } from "../i18n/sprachen";
 
 interface Props { lang: Sprache; seite: Seite; class?: string }
 const { lang, seite, class: klasse = "" } = Astro.props;

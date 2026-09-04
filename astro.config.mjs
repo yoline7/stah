@@ -1,6 +1,6 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
-import { sprachen, seiten, pfad, kuerzel, standard } from './src/i18n/ui';
+import { sprachen, seiten, pfad, kuerzel, standard } from './src/i18n/sprachen';
 
 /* Seiten ohne Eintrag im Verzeichnis: Anmeldung und die vier Rechtstexte tragen noindex. */
 const verborgen = new Set(['anmeldung', 'agb', 'teilnahme', 'impressum', 'datenschutz']);
