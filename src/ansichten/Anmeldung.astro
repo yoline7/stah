@@ -29,6 +29,7 @@ const gastText = { erste: a.erstePerson, weitere: a.nPerson, wieOben: a.wieOben,
   <title>{a.h1} · {anlass.name}</title>
   <meta name="robots" content="noindex" />
   <meta name="theme-color" content="#F4F4F2" />
+  <link rel="icon" href="/favicon.svg" />
   <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
   {alternativen.map((f) => <link rel="alternate" hreflang={f.html} href={f.url} />)}
   <link rel="alternate" hreflang="x-default" href={alternativen.find((f) => f.lang === standard)!.url} />

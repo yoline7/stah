@@ -9,12 +9,11 @@ nicht im Build.
 | YL-FC-2026-010 | [Bewegung](YL-FC-2026-010_Bewegung.md) | Farbpuls, Neonwolken, Takt, Kantenlauf, Zahlenwelle, Laufbandspur, Knöpfe, Zeiger, Seitenübergang, mit allen gemessenen Werten | 4. September 2026 |
 | YL-FC-2026-011 | [Schleier](YL-FC-2026-011_Schleier.md) | Verfahren der Tintenmaske und Messreihe je Deckungsstufe, drei Sprachen, vier Breiten | 4. September 2026 |
 | YL-FC-2026-012 | [Feldtabelle Anmeldung](YL-FC-2026-012_Feldtabelle-Anmeldung.md) | Felder, Kennungen, Typen und Regeln des Anmeldeformulars, Übergabe an YoSuite | 4. September 2026 |
-| YL-SGU-2026-001 | Umsetzungs-Methodik Sichtbarkeit | Auftragsgrundlage, Seitenstruktur, Entitäten, Schema-Plan, Durchgangs-Protokoll, Wirkungs-Nachhaltung | folgt |
-| YL-SGU-2026-002 | Schema-Plan | Verifizierte Fakten mit Quellen, vollständiges JSON-LD je Seite, was nicht ausgezeichnet wird | folgt |
+| YL-SGU-2026-001 | [Umsetzungs-Methodik Sichtbarkeit](YL-SGU-2026-001_Umsetzungs-Methodik-Sichtbarkeit.md) | Auftragsgrundlage, Methodik in fünf Werkbänken, Seitenstruktur, Entitäten, Schema-Plan, Durchgangs-Protokoll, Wirkungs-Nachhaltung | 4. September 2026 |
+| YL-SGU-2026-002 | [Schema-Plan](YL-SGU-2026-002_Schema-Plan.md) | Verifizierte Fakten mit Quellen, vollständiges JSON-LD je Seite, was nicht ausgezeichnet wird | 4. September 2026 |
 
-Die beiden Zeilen mit «folgt» sind angekündigt und noch nicht eingereicht. Sie
-gehören unverändert nach `docs/`, als `YL-SGU-2026-001_Umsetzungs-Methodik-Sichtbarkeit.md`
-und `YL-SGU-2026-002_Schema-Plan.md`. Kein Umbau nötig, der Ordner nimmt sie so auf.
+Alle fünf Dokumente liegen vor. `YL-SGU-2026-001` und `-002` sind am
+4. September 2026 eingereicht und die Grundlage der Schema-Auszeichnung.
 
 ## Benennung
 

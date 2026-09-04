@@ -1,7 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import Base from "../layouts/Base.astro";
-import { t, pfad, standard, type Sprache } from "../i18n/sprachen";
+import { t, pfad, type Sprache } from "../i18n/sprachen";
 import i_clos_morgenlicht from "../assets/img/clos-morgenlicht.jpg";
 import i_stimmung_messer from "../assets/img/stimmung-messer.jpg";
 import i_rebberg from "../assets/img/rebberg.jpg";
@@ -15,7 +15,7 @@ const w = t(lang);
 const s = w.start;
 const laufband = [...w.laufband, ...w.laufband];
 ---
-<Base lang={lang} seite="start" title={w.meta.start.titel} description={w.meta.start.text} jsonld={lang === standard}>
+<Base lang={lang} seite="start" title={w.meta.start.titel} description={w.meta.start.text}>
 <!-- HERO -->
 <section class="hero" id="top">
   <div class="px" data-px="0.16"><Image src={i_clos_morgenlicht}

@@ -5,20 +5,56 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import Partner from "../components/Partner.astro";
 import { anlass } from "../data/anlass";
-import { fassungen, kuerzel, standard, type Sprache, type Seite } from "../i18n/sprachen";
+import { graph, type Brotkrume, type Frage } from "../data/graph";
+import { fassungen, kuerzel, pfad, standard, t, type Sprache, type Seite } from "../i18n/sprachen";
 
 interface Props {
   lang: Sprache;
   seite: Seite;
   title: string;
   description: string;
-  jsonld?: boolean;
 }
-const { lang, seite, title, description, jsonld = false } = Astro.props;
+const { lang, seite, title, description } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const preview = new URL("/preview.jpg", Astro.site);
 const alternativen = fassungen(seite).map((f) => ({ ...f, url: new URL(f.weg, Astro.site).href }));
 const standardweg = alternativen.find((f) => f.lang === standard)!.url;
+
+/* ---------- Auszeichnung, ein Graph je Seite ----------
+   Grundlage: docs/YL-SGU-2026-002_Schema-Plan.md. Dieses Gerüst trägt die
+   zwölf indexierbaren Seiten. Die Anmeldung und die zwölf Rechtstexte
+   laufen über eigene Gerüste und tragen kein Schema, sie tragen noindex. */
+const w = t(lang);
+const voll = (weg: string) => new URL(weg.endsWith("/") ? weg : `${weg}/`, Astro.site).href;
+
+/* Brotkrumen bilden Hierarchie ab, nie Sprungmarken. Zwei Stufen. */
+const brotkrumen: Brotkrume[] = seite === "start" ? [] : [
+  { name: anlass.name, url: voll(pfad(lang, "start")) },
+  { name: w.nav[seite as "kulinarik" | "wein" | "organisation"], url: voll(pfad(lang, seite)) },
+];
+
+/* Hauptentität je Unterseite */
+const hauptsache = seite === "kulinarik" ? "alain-lerjen"
+  : seite === "wein" ? "alisha-cina" : undefined;
+
+/* Die Fragen kommen wörtlich aus dem sichtbaren Fragenblock. Nichts
+   umgeschrieben, nichts gekürzt, nichts ergänzt. */
+const fragen: Frage[] | undefined = seite === "organisation"
+  ? w.organisation.fragen.liste.map((q) => ({ f: q.f, a: q.a }))
+  : undefined;
+
+const auszeichnung = graph({
+  seite: seite as "start" | "kulinarik" | "wein" | "organisation",
+  sprache: kuerzel[lang].html,
+  weg: canonical.href,
+  titel: title,
+  beschreibung: description,
+  bild: preview.href,
+  anmeldung: voll(pfad(lang, "anmeldung")),
+  brotkrumen,
+  hauptsache,
+  fragen,
+});
 ---
 <!DOCTYPE html>
 <html lang={kuerzel[lang].html}>
@@ -51,38 +87,10 @@ const standardweg = alternativen.find((f) => f.lang === standard)!.url;
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={preview} />
 
-  {jsonld && (
-    <script is:inline type="application/ld+json" set:html={JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "FoodEvent",
-      name: anlass.name,
-      description,
-      startDate: `${anlass.datumIso}T${anlass.beginn}:00+02:00`,
-      endDate: `${anlass.datumIso}T${anlass.ende}:00+02:00`,
-      eventStatus: "https://schema.org/EventScheduled",
-      eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-      image: preview.href,
-      url: canonical.href,
-      inLanguage: ["de-CH", "fr-CH", "en"],
-      maximumAttendeeCapacity: anlass.plaetze,
-      typicalAgeRange: `${anlass.mindestalter}-`,
-      location: {
-        "@type": "Place",
-        name: anlass.ort,
-        address: { "@type": "PostalAddress", addressLocality: anlass.dorf,
-                   postalCode: "3970", addressRegion: "Wallis", addressCountry: "CH" }
-      },
-      organizer: { "@type": "Organization", name: "Fernand Cina SA", url: "https://www.fernand-cina.ch/" },
-      performer: [ { "@type": "Person", name: "Alisha Cina" }, { "@type": "Person", name: "Alain Lerjen" } ],
-      offers: { "@type": "Offer", price: anlass.preis.toFixed(2), priceCurrency: "CHF",
-                url: `${Astro.site}anmeldung`, availability: "https://schema.org/InStock",
-                validThrough: `${anlass.anmeldeschlussIso}T23:59:00+02:00` }
-    })} />
-  )}
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(auszeichnung)} />
 </head>
 <body>
   <div id="pg"></div>
-  <div id="cur"><div class="ring"></div><div class="dot"></div></div>
   <Header lang={lang} seite={seite} />
   <slot />
   <Partner lang={lang} />

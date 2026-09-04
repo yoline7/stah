@@ -1,6 +1,5 @@
 (function(){
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var fine   = matchMedia('(hover: hover) and (pointer: fine)').matches;
 
   /* Kurve aus der Vorgabe, cubic-bezier(.22,1,.36,1) */
   function kurve(p1x, p1y, p2x, p2y){
@@ -35,7 +34,7 @@
   if (kannWelle) document.documentElement.classList.add('hat-welle');
 
   /* ---------- Zustand, wird bei jedem Seitenaufbau neu gefasst ---------- */
-  var pg = null, pxs = [], cur = null, hd = null, bg = null, mnu = null;
+  var pg = null, pxs = [], hd = null, bg = null, mnu = null;
   var offen = false;
   var laeufer = [], laeuft = false, laufEnde = -1e9, beobachter = [];
 
@@ -64,7 +63,6 @@
   var VERSATZ = 140;   /* Versatz je Zahl, daraus wird die Welle */
   var ABSTAND = 2000;  /* Mindestruhe zwischen zwei Bewegungen */
   var band = null, bandX = 0, bandBreite = 0, bandTempo = 0, bandZiel = 0, bandTau = .3;
-  var zeigerTempo = .12;
 
   /* ---------- Fortschritt und Parallaxe ---------- */
   function bild(){
@@ -186,13 +184,9 @@
     band.style.transform = 'translate3d(' + bandX.toFixed(2) + 'px,0,0)';
   }
 
-  /* ---------- Zeiger ---------- */
-  var zx = 0, zy = 0, zcx = 0, zcy = 0;
-
   /* ---------- Aufbau je Seite ---------- */
   function auf(){
     pg  = document.getElementById('pg');
-    cur = document.getElementById('cur');
     hd  = document.getElementById('hd');
     bg  = document.getElementById('bg');
     mnu = document.getElementById('menu');
@@ -315,29 +309,6 @@
       }
     }
 
-    /* Zeiger */
-    if (fine && !reduce && cur){
-      document.body.classList.add('cc');
-      document.querySelectorAll('a, button, summary, label, input').forEach(function(el){
-        if (el.dataset.zeiger) return;
-        el.dataset.zeiger = '1';
-        el.addEventListener('mouseenter', function(){ cur.classList.add('on'); zeigerTempo = .20; });
-        el.addEventListener('mouseleave', function(){ cur.classList.remove('on'); zeigerTempo = .12; });
-      });
-      document.querySelectorAll('#hd .cta, .send').forEach(function(el){
-        if (el.dataset.zeigerKnopf) return;
-        el.dataset.zeigerKnopf = '1';
-        el.addEventListener('mouseenter', function(){ cur.classList.add('knopf'); });
-        el.addEventListener('mouseleave', function(){ cur.classList.remove('knopf'); });
-      });
-      document.querySelectorAll('.band').forEach(function(el){
-        if (el.dataset.zeiger) return;
-        el.dataset.zeiger = '1';
-        el.addEventListener('mouseenter', function(){ cur.classList.add('klein'); });
-        el.addEventListener('mouseleave', function(){ cur.classList.remove('klein'); });
-      });
-    }
-
     bild();
   }
 
@@ -352,7 +323,6 @@
     bild();
     if (band){ bandBreite = band.scrollWidth; bandZiel = (bandBreite / 2) / 44000; }
   });
-  addEventListener('mousemove', function(e){ zx = e.clientX; zy = e.clientY; });
   document.addEventListener('visibilitychange', function(){
     if (!document.hidden){
       laufEnde = performance.now();
@@ -364,11 +334,6 @@
   (function schleife(jetzt){
     var dt = vorher ? Math.min(64, jetzt - vorher) : 16;
     vorher = jetzt;
-    if (fine && !reduce && cur){
-      zcx += (zx - zcx) * zeigerTempo;
-      zcy += (zy - zcy) * zeigerTempo;
-      cur.style.transform = 'translate(' + zcx.toFixed(1) + 'px,' + zcy.toFixed(1) + 'px)';
-    }
     bandBild(dt);
     requestAnimationFrame(schleife);
   })(0);

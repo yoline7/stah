@@ -109,12 +109,12 @@ console.log('\n5 · Reduzierte Bewegung');
     lauf: document.documentElement.classList.contains('hat-lauf'),
     welle: document.documentElement.classList.contains('hat-welle'),
     aktiv: document.querySelectorAll('.aktiv, .welle, .spur').length,
-    zeiger: getComputedStyle(document.getElementById('cur')).display,
+    zeiger: document.getElementById('cur') === null,
     sichtbar: document.querySelectorAll('.fu.in, .rl.in').length > 0,
   }));
   console.log('  ', z);
   pruef('kein Lichtlauf', !z.lauf && !z.welle && z.aktiv === 0);
-  pruef('kein eigener Zeiger', z.zeiger === 'none');
+  pruef('kein eigener Zeiger', z.zeiger === true);
   pruef('Inhalte sichtbar', z.sichtbar);
   await p.close();
 }

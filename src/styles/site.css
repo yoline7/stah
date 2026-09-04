@@ -24,8 +24,8 @@
 
   /* Farbpuls. Drei Gruene und ein Orange als Ausreisser.
      --puls traegt die Farbe des laufenden Pulses, gesetzt von site.js.
-     Farbe erscheint an fuenf Stellen: Kantenlauf, Zahlenwelle, Laufbandspur,
-     Knopffuellung, Zeiger ueber den Knoepfen. Sonst nirgends. */
+     Farbe erscheint an vier Stellen: Kantenlauf, Zahlenwelle, Laufbandspur,
+     Knopffuellung. Sonst nirgends. */
   --puls-1:#C2D9A6;
   --puls-2:#96C9A8;
   --puls-3:#7FB6B0;
@@ -250,7 +250,8 @@ h1,h2,h3,.disp,.head,.facts b,.mn .ti,.arw .t,.mnu .ln .t,.reg .v,.duo h3,.side 
     position:absolute;
     /* 52vw statt 78vw und Mischmodus normal statt screen. Gemessen: mit den
        Vorgabewerten haelt die Bildrate beim Blaettern nur 33.7 Bilder je
-       Sekunde, mit diesen zwei Aenderungen 60.3 bei 1440 und 58.7 bei 1920. Auf nahezu schwarzem Grund
+       Sekunde, mit diesen zwei Aenderungen 60.3 bei 1440. Der Fall 1920 streut in
+       der Messumgebung, siehe README. Auf nahezu schwarzem Grund
        liegt screen ohnehin fast auf normal, siehe Vermerk im README. */
     width:clamp(320px, 52vw, 640px);
     aspect-ratio:1.4 / 1;
@@ -265,6 +266,20 @@ h1,h2,h3,.disp,.head,.facts b,.mn .ti,.arw .t,.mnu .ln .t,.reg .v,.duo h3,.side 
     animation:
       ziehen var(--dauer) cubic-bezier(.45,.05,.55,.95) var(--versatz) infinite alternate,
       atmen  var(--atem)  cubic-bezier(.45,.05,.55,.95) var(--atemversatz) infinite alternate;
+  }
+
+  /* Mittlere Verlaufsstufe 20 statt 14 Prozent, nur auf der dunklen Passage
+     und der Menueueberlagerung. Beide liegen auf nahezu schwarzem Grund, dort
+     traegt die Wolke mehr. Titelbild, Fakten und Fuss bleiben bei 14.
+     Vor dem Setzen gemessen, im unguenstigsten Bild der Bewegung, drei
+     Sprachen mal vier Breiten: dunkle Passage kleinster Wert 6.07 zu 1
+     gegen 6.26 bei 14, Menueueberlagerung 6.20 gegen 6.21. Grenze 4.5. */
+  .wolken[data-flaeche="dunkel"] .wolke,
+  .wolken[data-flaeche="menue"] .wolke{
+    background:radial-gradient(closest-side,
+      color-mix(in oklab, var(--ton) 34%, transparent) 0%,
+      color-mix(in oklab, var(--ton) 20%, transparent) 44%,
+      transparent 82%);
   }
 }
 
@@ -376,14 +391,6 @@ footer .wolken[data-flaeche="fuss"] .w1{
   }
 }
 
-/* ---------- Zeiger, zusaetzlicher Zustand ueber Bildbaendern ---------- */
-#cur.klein .ring{width:8px;height:8px;background:#fff;}
-#cur.klein .dot{opacity:0;}
-/* Ueber den beiden Knoepfen nimmt der Ring die Farbe des Pulses an */
-#cur.knopf{mix-blend-mode:normal;}
-#cur.knopf .ring{border-color:var(--puls);}
-#cur.knopf .dot{background:var(--puls);}
-
 /* ---------- Seitenuebergang ----------
    Die neue Seite blendet ueber 0.35 Sekunden auf, die alte ueber 0.25 ab.
    Kopfzeile und Fuss bleiben stehen, sie tragen transition:persist. */
@@ -415,18 +422,6 @@ footer .wolken[data-flaeche="fuss"] .w1{
 }
 
 #pg{position:fixed;top:0;left:0;height:1px;width:0;background:var(--ink);z-index:71;mix-blend-mode:difference;}
-
-/* ---------- Zeiger ---------- */
-#cur{position:fixed;top:0;left:0;z-index:99;pointer-events:none;mix-blend-mode:difference;}
-#cur .ring{position:absolute;width:34px;height:34px;border:1px solid #fff;border-radius:50%;
-  transform:translate(-50%,-50%);display:grid;place-items:center;
-  transition:width .24s var(--soft),height .24s var(--soft),border-color .24s var(--soft);}
-#cur .dot{position:absolute;width:3px;height:3px;background:#fff;border-radius:50%;transform:translate(-50%,-50%);
-  transition:background-color .24s var(--soft);}
-#cur.on .ring{width:70px;height:70px;}
-#cur.on .dot{opacity:0;}
-@media(hover:none),(pointer:coarse){#cur{display:none;}}
-@media(hover:hover) and (pointer:fine){body.cc,body.cc a,body.cc button,body.cc summary,body.cc input,body.cc label{cursor:none;}}
 
 /* ---------- Enthuellung ---------- */
 .rl{display:block;overflow:hidden;padding-bottom:.18em;margin-bottom:-.18em;}
@@ -634,7 +629,6 @@ footer a:hover{color:var(--paper);}
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important;}
   .rl>span{transform:none;}.fu{opacity:1;transform:none;}.mm>.px{transform:none;}
-  #cur{display:none;}
   .mnu,#hd.open .mnu{transition:none;}
   .mnu .ln>a{transform:none;transition:none;}
   #hd .bg span{transition:none;}

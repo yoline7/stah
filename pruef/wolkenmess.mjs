@@ -15,7 +15,6 @@ export const ratio = (a, b) => (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05)
 export const ruhig = `
   .fu,.rl>span,.mm>.px,.px{opacity:1!important;transform:none!important;transition:none!important;}
   .tick .track{animation:none!important;transform:none!important;}
-  #cur{display:none!important;}
   #hd{display:none!important;}
   #pg{display:none!important;}
   .lauf::after,#hd .bar::after{display:none!important;}

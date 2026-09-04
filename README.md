@@ -207,6 +207,10 @@ als Squash, Vercel baut aus `main`.
 6. **Fernbranches werden über die GitHub-Oberfläche gelöscht.** Die Zugangsdaten
    einer Claude-Code-Sitzung dürfen keine Referenzen löschen, `git push --delete`
    endet mit HTTP 403. Belegt am 3. und am 4. September 2026.
+7. **Je Runde ein neuer Branch mit sprechendem Namen.** Kein Wiederverwenden,
+   kein Zurücksetzen auf `main`, kein Force-Push. Gilt ab der Runde nach
+   `claude/astro-repo-restructure-6pqpq1`. Damit entfallen die Lagen aus
+   Regel 2 und Regel 3.
 
 ---
 
@@ -343,7 +347,7 @@ Im Build tragen alle drei Sprachen je 18 `alt`, zusammen 54.
 ## Bewegung
 
 Ein Taktgeber führt alle Bewegungen: Farbpuls, Neonwolken, Kantenlauf, Zahlenwelle,
-Laufbandspur, Knöpfe, Zeiger, Seitenübergang. Nie laufen zwei gleichzeitig.
+Laufbandspur, Knöpfe, Seitenübergang. Nie laufen zwei gleichzeitig.
 
 **Der ganze Abschnitt mit allen gemessenen Werten liegt in
 [`docs/YL-FC-2026-010_Bewegung.md`](docs/YL-FC-2026-010_Bewegung.md).**
@@ -398,7 +402,15 @@ sind unverändert.
 Bildrate beim Rollen über die dunkle Passage nur 33.7 Bilder je Sekunde bei 1440 und
 23.3 bei 1920. Gesetzt sind deshalb `clamp(320px, 52vw, 640px)`, Mischmodus `normal`
 auf der Wolke und `normal` mit Deckung 0.05 auf dem Korn. Damit hält die Bildrate 60.3
-bei 1440 und 59.7 bei 1920.
+bei 1440 und 60.4 bei 1280.
+
+**Der Fall 1920 streut.** Fünf Läufe je Verlaufsstufe, am 4. September 2026 gemessen:
+14 Prozent 51.1 bis 59.9, 16 Prozent 50.6 bis 59.0, 18 Prozent 52.9 bis 59.7,
+20 Prozent 51.1 bis 57.0. Die Streuung innerhalb einer Stufe beträgt bis zu 8.8 Bilder,
+der Abstand zwischen den Stufen höchstens 2.0. Die Verlaufsstufe treibt die Bildrate bei
+1920 also nicht. Ursache der Streuung: Die Messumgebung rechnet ohne Grafikkarte, die
+Rasterung läuft in Software. Ein belastbares Urteil zu 1920 braucht ein Gerät mit
+Grafikkarte, siehe «Offene Punkte».
 
 Die Messreihe, 1440 mal 900, drei Sekunden, je eine Änderung gegenüber der Vorgabe:
 
@@ -468,6 +480,72 @@ Wörterbüchern und wird dort mitgeführt.
 
 ---
 
+## Sichtbarkeit
+
+Grundlage sind zwei Dokumente unter `docs/`. `YL-SGU-2026-001` hält die Methodik fest,
+`YL-SGU-2026-002` den Schema-Plan mit Quelle und Datum je Angabe. Beide sind am
+4. September 2026 eingereicht. Wer eine Angabe in der Auszeichnung ändert, ändert sie
+zuerst dort.
+
+**Verzeichnis oder nicht.** Zwölf Seiten gehören ins Verzeichnis, vier je Sprache:
+Startseite, Kulinarik, Wein, Organisation. Fünfzehn Seiten tragen `noindex`, also die
+Anmeldung und die zwölf Rechtsseiten. Die Steuerung sitzt in der Seitenkopfzeile, nicht in
+`robots.txt`. `robots.txt` sperrt keinen Weg, sonst könnte eine Suchmaschine den Vermerk
+nie lesen.
+
+**Ein Graph je Seite.** Jede der zwölf Seiten trägt genau einen Block
+`application/ld+json` mit einem `@graph`. Zehn Entitäten stehen in jedem Graphen, gebaut in
+`src/data/schema.ts`. Sie sind sprachneutral, jede trägt ihre Kennung auf
+`https://im-stah.ch/`, niemals auf einer Vorschauadresse.
+
+| Kennung | Typ | Gegenstand |
+|---|---|---|
+| `#website` | `WebSite` | die Website des Anlasses, drei Sprachen |
+| `#fernand-cina` | `Organization`, `Winery` | Fernand Cina SA, Salgesch, gegründet 1956 |
+| `#soulfood` | `Organization` | Soulfood by Alain GmbH, Zermatt |
+| `#maison-13` | `Organization` | Maison 13 GmbH, Visp |
+| `#bergbox` | `Organization` | BergBox GmbH, Visp |
+| `#yoline` | `Organization` | Yoline AG, Salgesch, Umsetzung |
+| `#alisha-cina` | `Person` | Winzerin und Weintechnologin |
+| `#alain-lerjen` | `Person` | Koch |
+| `#clos-du-cornalin` | `Place` | Rebbergparzelle oberhalb von Salgesch |
+| `#kellerei` | `Place` | Kellerei Fernand Cina |
+
+Eine Kennung mit weiteren Feldern ist die Festlegung, eine Kennung allein ist der Verweis.
+Jede Kennung wird je Seite genau einmal festgelegt, jeder Verweis findet sein Ziel.
+`src/data/graph.ts` baut daraus den Graphen je Seite und trägt selbst keinen Text, die
+Sprache kommt als Argument aus `src/layouts/Base.astro`.
+
+**Was je Seitenart dazukommt.**
+
+| Seite | Zusätzlich |
+|---|---|
+| Startseite | `WebPage`, `FoodEvent` `#anlass` mit `location`, `organizer`, `performer`, `sponsor` als Verweis, dazu `Offer` `#ticket` |
+| Kulinarik | `WebPage`, `BreadcrumbList`, Hauptsache `#alain-lerjen` |
+| Wein | `WebPage`, `BreadcrumbList`, Hauptsache `#alisha-cina` |
+| Organisation | `WebPage`, `BreadcrumbList`, `FAQPage` mit elf Fragen |
+| Anmeldung, Rechtsseiten | nichts, die Seiten tragen `noindex` |
+
+Der `FoodEvent` steht in allen drei Sprachen, jeweils mit `inLanguage` und mit einer
+`offers.url` in derselben Sprache. `validFrom` bleibt aus, für den Verkaufsstart liegt kein
+Datum vor. Die `FAQPage` wird aus dem sichtbaren Fragenblock erzeugt, Wort für Wort aus dem
+Wörterbuch. Elf Fragen je Sprache, keine Frage steht in der Auszeichnung, die nicht auf der
+Seite steht.
+
+**Was bewusst fehlt.** `HowTo` und `AggregateRating` sind nicht ausgezeichnet, die
+zugehörigen Darstellungen in der Suche sind eingestellt. `Menu` bleibt aus, das Menü des
+Anlasses ist keine dauerhafte Karte. `Review` bleibt aus, es liegt keine Bewertung vor.
+`LocalBusiness` bleibt aus, der Anlass ist kein Ladengeschäft mit Öffnungszeiten. `geo`
+liegt in `src/data/schema.ts` vorbereitet und ausgeklammert, die Koordinaten fehlen.
+
+**Prüfen.** Die Struktur wird örtlich geprüft: je Seite die Zahl der Festlegungen und der
+Verweise, jede Kennung genau einmal festgelegt, kein Verweis ohne Ziel, keine Kennung
+ausserhalb von `https://im-stah.ch/`. Der Rich-Results-Test von Google und der Validator
+von schema.org laufen von aussen, aus der Arbeitsumgebung sind beide Adressen gesperrt.
+Sie gehören vor dem Aufschalten von einem Arbeitsplatz mit freiem Zugang gefahren.
+
+---
+
 ## Veröffentlichen
 
 Vercel, Projekt `stah`. Ein Weg, keine Nebenstrecke. Astro wird erkannt,
@@ -520,15 +598,17 @@ Jeder Punkt nennt die Ursache und den nächsten Schritt.
 6. **Verweis ohne Ziel.** `content/archiv-2026-09/organisation.md` nennt «[Übernachtungsmöglichkeiten entdecken]» ohne Adresse. Nächster Schritt: Adresse liefern, etwa Valais Wallis Promotion.
 7. **Schreibweise des Namens.** Die Quelltexte schreiben «Z Wallis im Stah», die Datendatei «z'Wallis im Stah» mit Apostroph. Auf der Seite gilt die Datendatei. Nächster Schritt: nur die Datendatei zählt, das Archiv bleibt wie es ist.
 8. **Wortmarke Fernand Cina mit Wappen.** Die Datei trägt das Wappen über dem Schriftzug. Der Kasten steht im Partnerband höher als Maison 13, die sichtbare Wortmarke liest sich dadurch kleiner. Nächster Schritt: eine Fassung ohne Wappen beschaffen.
-9. **Zeiger, Wort und Zahl widersprechen sich.** Die Vorgabe nennt 0.12 «enger» und 0.20 «Widerstand». Bei `cx += (x - cx) * f` bedeutet ein kleineres `f` mehr Nachlauf. Gesetzt sind die genannten Zahlen. Nächster Schritt: entscheiden, ob die Zahlen oder die Worte gelten.
-10. **Maison 13 Catering.** Firmenname, Rechtsform und Adresse fehlen im Impressum, in allen drei Sprachen. Nächster Schritt: bei Maison 13 einholen.
-11. **Eringer und Munder Safran.** Beide Herkünfte sind nicht schriftlich bestätigt, beide stehen mehrfach auf der Seite. Nächster Schritt: Bestätigung einholen, sonst die Nennung streichen.
-12. **Zahlungsdienstleister und Hosting.** Beide Namen fehlen in der Datenschutzerklärung. Nächster Schritt: nach dem Entscheid eintragen, in allen drei Sprachen.
-13. **Titelbild aus einem Bildschirmfoto.** `clos-morgenlicht.jpg` ist eine Bildschirmaufnahme, 1782 mal 970 Pixel. Nächster Schritt: Aufnahme aus dem Bestand ab 2000 Pixel Breite holen, danach den Schleier neu messen.
-14. **Mehrfach komprimierte Bänder.** `rebhaus-drohne.jpg` und `rebberg.jpg` wachsen beim Umrechnen auf WebP. Nächster Schritt: Originale aus dem Bestand holen. Die Qualität bleibt bei 72.
-15. **Wortmarke des Anlasses.** Die SVG-Datei ist nachgezeichnet, die Konturen sind ab etwa 900 Pixel Breite sichtbar treppig. Nächster Schritt: Für Druck ab A2 die Marke aus der Originalschrift setzen.
-16. **Fernbranch lässt sich aus dieser Sitzung nicht löschen.** `git push origin --delete` endet mit HTTP 403. Ursache: Die Zugangsdaten dieser Sitzung dürfen keine Referenzen löschen. Zuletzt am 4. September 2026 versucht, wieder HTTP 403. Nächster Schritt: Branch nach dem Merge über die GitHub-Oberfläche löschen.
+9. **Maison 13 Catering.** Firmenname, Rechtsform und Adresse fehlen im Impressum, in allen drei Sprachen. Nächster Schritt: bei Maison 13 einholen.
+10. **Eringer und Munder Safran.** Beide Herkünfte sind nicht schriftlich bestätigt, beide stehen mehrfach auf der Seite. Nächster Schritt: Bestätigung einholen, sonst die Nennung streichen.
+11. **Zahlungsdienstleister und Hosting.** Beide Namen fehlen in der Datenschutzerklärung. Nächster Schritt: nach dem Entscheid eintragen, in allen drei Sprachen.
+12. **Titelbild aus einem Bildschirmfoto.** `clos-morgenlicht.jpg` ist eine Bildschirmaufnahme, 1782 mal 970 Pixel. Nächster Schritt: Aufnahme aus dem Bestand ab 2000 Pixel Breite holen, danach den Schleier neu messen.
+13. **Mehrfach komprimierte Bänder.** `rebhaus-drohne.jpg` und `rebberg.jpg` wachsen beim Umrechnen auf WebP. Nächster Schritt: Originale aus dem Bestand holen. Die Qualität bleibt bei 72.
+14. **Wortmarke des Anlasses.** Die SVG-Datei ist nachgezeichnet, die Konturen sind ab etwa 900 Pixel Breite sichtbar treppig. Nächster Schritt: Für Druck ab A2 die Marke aus der Originalschrift setzen.
+15. **Fernbranch lässt sich aus dieser Sitzung nicht löschen.** `git push origin --delete` endet mit HTTP 403. Ursache: Die Zugangsdaten dieser Sitzung dürfen keine Referenzen löschen. Zuletzt am 4. September 2026 versucht, wieder HTTP 403. Nächster Schritt: Branch nach dem Merge über die GitHub-Oberfläche löschen.
+16. **Geokoordinaten fehlen.** Die zwei `Place` der Auszeichnung, `#kellerei` und `#clos-du-cornalin`, tragen nur eine Postadresse. Ursache: Es liegen keine Koordinaten vor. Der Block `geo` liegt in `src/data/schema.ts` vorbereitet und ausgeklammert. Ohne Koordinaten fehlt beiden Orten der Ortsbezug, der für örtliche Antworten zählt. Nächster Schritt: Breite und Länge beider Orte auf sechs Stellen liefern, danach den Block einsetzen.
+17. **Rebfläche widerspricht sich in drei Quellen.** `fernand-cina.ch` nennt 20 Hektaren, `sierretourisme.ch` und `vinum-montis.ch` nennen 18, `valais.ch` nennt 16. Ursache: Die Fremdverzeichnisse sind nicht nachgeführt. Auf dieser Seite gilt die eigene Website, also 20 Hektaren, in allen drei Sprachen. In der Auszeichnung steht die Zahl nicht, der Schema-Plan führt sie nicht im Graphen. Zwei Zahlen zur gleichen Firma schwächen die Autorität der Entität. Nächster Schritt: Zahl beim Mandanten bestätigen, danach die drei Fremdverzeichnisse nachführen lassen.
 
+18. **Bildrate bei 1920 nicht belastbar messbar.** Fünf Läufe streuen zwischen 50.6 und 59.9 Bildern je Sekunde, bei jeder Verlaufsstufe der Wolken gleich. Ursache: Die Messumgebung rechnet ohne Grafikkarte, die Rasterung läuft in Software. Die Schwelle des Prüflaufs liegt bei 55, einzelne Läufe fallen darunter. Nächster Schritt: `node pruef/bildrate.mjs` auf einem Gerät mit Grafikkarte fahren, fünf Läufe je Breite, dann entscheiden, ob eine Entlastung nötig ist. Reihenfolge dafür steht fest: erst Anzahl, dann Grösse, zuletzt Deckkraft. Die Bewegungsdauer bleibt.
 ---
 
 ## Rechte
@@ -567,4 +647,4 @@ weiterhin bei sich.
 
 ---
 
-Stand 3. September 2026 · Yoline AG, Salgesch
+Stand 4. September 2026 · Yoline AG, Salgesch
