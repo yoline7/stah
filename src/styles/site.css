@@ -250,7 +250,8 @@ h1,h2,h3,.disp,.head,.facts b,.mn .ti,.arw .t,.mnu .ln .t,.reg .v,.duo h3,.side 
     position:absolute;
     /* 52vw statt 78vw und Mischmodus normal statt screen. Gemessen: mit den
        Vorgabewerten haelt die Bildrate beim Blaettern nur 33.7 Bilder je
-       Sekunde, mit diesen zwei Aenderungen 60.3 bei 1440 und 58.7 bei 1920. Auf nahezu schwarzem Grund
+       Sekunde, mit diesen zwei Aenderungen 60.3 bei 1440. Der Fall 1920 streut in
+       der Messumgebung, siehe README. Auf nahezu schwarzem Grund
        liegt screen ohnehin fast auf normal, siehe Vermerk im README. */
     width:clamp(320px, 52vw, 640px);
     aspect-ratio:1.4 / 1;

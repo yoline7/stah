@@ -402,7 +402,15 @@ sind unverändert.
 Bildrate beim Rollen über die dunkle Passage nur 33.7 Bilder je Sekunde bei 1440 und
 23.3 bei 1920. Gesetzt sind deshalb `clamp(320px, 52vw, 640px)`, Mischmodus `normal`
 auf der Wolke und `normal` mit Deckung 0.05 auf dem Korn. Damit hält die Bildrate 60.3
-bei 1440 und 59.7 bei 1920.
+bei 1440 und 60.4 bei 1280.
+
+**Der Fall 1920 streut.** Fünf Läufe je Verlaufsstufe, am 4. September 2026 gemessen:
+14 Prozent 51.1 bis 59.9, 16 Prozent 50.6 bis 59.0, 18 Prozent 52.9 bis 59.7,
+20 Prozent 51.1 bis 57.0. Die Streuung innerhalb einer Stufe beträgt bis zu 8.8 Bilder,
+der Abstand zwischen den Stufen höchstens 2.0. Die Verlaufsstufe treibt die Bildrate bei
+1920 also nicht. Ursache der Streuung: Die Messumgebung rechnet ohne Grafikkarte, die
+Rasterung läuft in Software. Ein belastbares Urteil zu 1920 braucht ein Gerät mit
+Grafikkarte, siehe «Offene Punkte».
 
 Die Messreihe, 1440 mal 900, drei Sekunden, je eine Änderung gegenüber der Vorgabe:
 
@@ -600,6 +608,7 @@ Jeder Punkt nennt die Ursache und den nächsten Schritt.
 16. **Geokoordinaten fehlen.** Die zwei `Place` der Auszeichnung, `#kellerei` und `#clos-du-cornalin`, tragen nur eine Postadresse. Ursache: Es liegen keine Koordinaten vor. Der Block `geo` liegt in `src/data/schema.ts` vorbereitet und ausgeklammert. Ohne Koordinaten fehlt beiden Orten der Ortsbezug, der für örtliche Antworten zählt. Nächster Schritt: Breite und Länge beider Orte auf sechs Stellen liefern, danach den Block einsetzen.
 17. **Rebfläche widerspricht sich in drei Quellen.** `fernand-cina.ch` nennt 20 Hektaren, `sierretourisme.ch` und `vinum-montis.ch` nennen 18, `valais.ch` nennt 16. Ursache: Die Fremdverzeichnisse sind nicht nachgeführt. Auf dieser Seite gilt die eigene Website, also 20 Hektaren, in allen drei Sprachen. In der Auszeichnung steht die Zahl nicht, der Schema-Plan führt sie nicht im Graphen. Zwei Zahlen zur gleichen Firma schwächen die Autorität der Entität. Nächster Schritt: Zahl beim Mandanten bestätigen, danach die drei Fremdverzeichnisse nachführen lassen.
 
+18. **Bildrate bei 1920 nicht belastbar messbar.** Fünf Läufe streuen zwischen 50.6 und 59.9 Bildern je Sekunde, bei jeder Verlaufsstufe der Wolken gleich. Ursache: Die Messumgebung rechnet ohne Grafikkarte, die Rasterung läuft in Software. Die Schwelle des Prüflaufs liegt bei 55, einzelne Läufe fallen darunter. Nächster Schritt: `node pruef/bildrate.mjs` auf einem Gerät mit Grafikkarte fahren, fünf Läufe je Breite, dann entscheiden, ob eine Entlastung nötig ist. Reihenfolge dafür steht fest: erst Anzahl, dann Grösse, zuletzt Deckkraft. Die Bewegungsdauer bleibt.
 ---
 
 ## Rechte

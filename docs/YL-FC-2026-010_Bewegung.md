@@ -110,10 +110,15 @@ höchstens 1.06.
 
 | Breite | Bilder je Sekunde |
 |---|---|
-| 1920 mal 1080 | 59.7 |
-| 1440 mal 900 | 60.3 |
-| 1280 mal 800 | 60.3 |
-| 390 mal 844 | 60.3 |
+| 1920 mal 1080 | 51.1 bis 59.9, streut |
+| 1440 mal 900 | 59.4 bis 60.3 |
+| 1280 mal 800 | 60.3 bis 60.4 |
+| 390 mal 844 | 60.3 bis 60.5 |
+
+Der Fall 1920 streut über fünf Läufe um bis zu 8.8 Bilder, und zwar bei jeder
+Verlaufsstufe der Wolken gleich. Zwischen 14 und 20 Prozent liegen höchstens 2.0 Bilder,
+also weniger als die Streuung. Ursache: Die Messumgebung rechnet ohne Grafikkarte. Die
+früher genannten 59.7 waren ein Einzellauf und tragen als Untergrenze nicht.
 
 ### Takt
 
