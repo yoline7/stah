@@ -18,7 +18,7 @@ const laufband = [...w.laufband, ...w.laufband];
 <!-- HERO -->
 <section class="hero" id="top">
   <div class="px" data-px="0.16"><Image src={i_clos_morgenlicht}
-         alt="Rebhaus im Clos du Cornalin über den Rebzeilen, dahinter das Rhonetal im Morgenlicht"
+         alt={w.bilder.closMorgenlicht}
          widths={[960, 1440, 2000]} sizes="100vw" quality={72} format="webp"
          loading="eager" fetchpriority="high" /></div>
   <div class="veil"></div>
@@ -85,7 +85,7 @@ const laufband = [...w.laufband, ...w.laufband];
     <div class="duo">
       <figure>
         <div class="ph mm"><div class="px" data-px="0.08"><Image src={i_alisha_cina}
-               alt="Alisha Cina im schwarzen Shirt, lächelnd vor dem Rhonetal"
+               alt={w.bilder.alishaCina}
                widths={[480, 760, 1000]} sizes="(min-width: 900px) 34vw, 100vw"
                quality={80} format="webp" loading="lazy" /></div></div>
         <h3 class="fu">Alisha Cina</h3>
@@ -95,7 +95,7 @@ const laufband = [...w.laufband, ...w.laufband];
       </figure>
       <figure>
         <div class="ph mm"><div class="px" data-px="0.08"><Image src={i_alain_lerjen}
-               alt="Alain Lerjen im weissen Kochhemd im Profil, hinter ihm die Felswand"
+               alt={w.bilder.alainLerjen}
                widths={[480, 760, 1000]} sizes="(min-width: 900px) 34vw, 100vw"
                quality={80} format="webp" loading="lazy" /></div></div>
         <h3 class="fu">Alain Lerjen</h3>
@@ -110,7 +110,7 @@ const laufband = [...w.laufband, ...w.laufband];
 <!-- BAND 1 -->
 <section class="band mm">
   <div class="px" data-px="0.2"><Image src={i_mood_messer}
-         alt="Kochmesser mit Holzgriff auf verwitterten Holzbrettern"
+         alt={w.bilder.moodMesser}
          widths={[960, 1440, 2000]} sizes="100vw" quality={72} format="webp" loading="lazy" /></div>
   <div class="q">
     <h2 class="head fu">{s.band1.h2}</h2>
@@ -178,7 +178,7 @@ const laufband = [...w.laufband, ...w.laufband];
 <!-- BAND 2 -->
 <section class="band mm">
   <div class="px" data-px="0.18"><Image src={i_rebberg}
-         alt="Rebberge über Salgesch, dahinter das Rhonetal und die Hänge des Pfynwaldes"
+         alt={w.bilder.rebberg}
          widths={[960, 1440, 2000]} sizes="100vw" quality={72} format="webp" loading="lazy" /></div>
   <div class="q">
     <h2 class="head fu">{s.band2.h2}</h2>

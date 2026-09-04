@@ -30,9 +30,24 @@ export const en = {
 
   laufband: ["Salgesch", "19 September 2026", "Clos du Cornalin", "Seven wines", "Six courses", "50 places"],
 
+  /* Image descriptions. They name what is visible and repeat neither the
+     heading nor the caption. One key per image. */
+  bilder: {
+    closMorgenlicht: "Vineyard house at the Clos du Cornalin above the rows of vines, behind it the Rhone valley in morning light",
+    closDuCornalin: "Vineyard house at the Clos du Cornalin above Salgesch, behind it the Rhone valley in morning light",
+    rebhausDrohne: "Drone view of the vineyard house between the rows of vines at the Clos du Cornalin",
+    rebberg: "Vineyards above Salgesch, behind them the Rhone valley and the slopes of the Pfynwald",
+    moodMesser: "Kitchen knife with a wooden handle on weathered wooden boards",
+    alishaCina: "Alisha Cina in a black shirt, smiling in front of the Rhone valley",
+    alainLerjen: "Alain Lerjen in profile in a white chef’s jacket, the rock face behind him",
+    team: "Alisha Cina and Alain Lerjen in chef’s jackets, the mountains above the Rhone valley behind them",
+    markeFernandCina: "Fernand Cina logotype",
+    markeBergbox: "BergBox logotype",
+  },
+
   start: {
     h1: ["Your day in the Valais", "with wine, food", "and music all day long"],
-    anlass: { lab: "The event", h2: ["Three partners.", "One day."],
+    anlass: { lab: "The event", h2: ["Three brands.", "One vineyard."],
       p1: "z’Wallis im Stah grew out of a shared idea from Fernand Cina, Maison 13 and BergBox.",
       p2: "Fernand Cina opens the vineyard and the cellar. Maison 13 brings the kitchen right in among the guests. BergBox holds the thread together and launched the project.",
       p3: "Seven wines. Six courses. Eight hours above the Rhone valley, with the DJs playing throughout. One date, 50 places." },
@@ -61,7 +76,7 @@ export const en = {
       { k: "from 14:00", v: "Bar, the music grows", a: "Wind-down" },
       { k: "18:00", v: "End and return", a: "Shuttle" },
     ] },
-    nachmittag: { lab: "From two o’clock", h2: "From two o’clock the day opens up.",
+    nachmittag: { lab: "From two o’clock", h2: "From two o’clock it grows.",
       p1: "The DJs play from the first glass on, quietly alongside the courses. From 14:00 the culinary day turns into a long afternoon. Bar. Music. Vineyard.",
       p2: "Stay with your glass. Move between the vines. Meet the people at your table." },
     ort: { lab: "The place", h2: "Clos du Cornalin",
@@ -100,7 +115,7 @@ export const en = {
         { n: "II", t: "Crisp rice ball with Mund saffron", w: "White" },
         { n: "III", t: "Eringer tartare on house bread", v: "Vegetarian: carrot and beetroot", w: "Red" },
         { n: "IV", t: "Valais hand roll", v: "Vegetarian without meat", w: "Red" },
-        { n: "V", t: "Cheese fondue on a hot stone", w: "White" },
+        { n: "V", t: "Cheese fondue in a hot stone", w: "White" },
         { n: "VI", t: "Yoghurt parfait with wild berries", w: "Sweet wine" },
       ] },
     wahl: { lab: "The choice", h2: "Meat or vegetarian.",
@@ -122,7 +137,7 @@ export const en = {
       posten: [
         { m: "Mund saffron", t: "From Mund, the only saffron village in Switzerland." },
         { m: "Eringer", t: "The meat of the Valais cattle breed." },
-        { m: "Valais alpine cheese", t: "For the fondue on the hot stone." },
+        { m: "Valais alpine cheese", t: "For the fondue in the hot stone." },
         { m: "Wild berries", t: "For the finish." },
         { m: "The wine", t: "From Fernand Cina’s own vines, 20 hectares around Salgesch." },
       ] },

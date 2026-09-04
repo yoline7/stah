@@ -1,5 +1,8 @@
+# Alles darf gelesen werden. Anmeldung und die vier Rechtstexte tragen
+# <meta name="robots" content="noindex"> auf der Seite selbst, in allen drei
+# Sprachen. Ein Disallow stuende dem im Weg: gesperrte Seiten werden nicht
+# gelesen, also wird das noindex nie gesehen.
 User-agent: *
 Allow: /
-Disallow: /anmeldung
 
 Sitemap: https://im-stah.ch/sitemap-index.xml
